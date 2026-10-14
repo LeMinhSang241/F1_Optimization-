@@ -1,0 +1,43 @@
+{
+  "track": "Monza",
+  "num_seeds": 10,
+  "dp_ground_truth": {
+    "time": 4497.9969999999985,
+    "strategy": [
+      [
+        "Medium",
+        20
+      ],
+      [
+        "Soft",
+        14
+      ],
+      [
+        "Medium",
+        19
+      ]
+    ]
+  },
+  "greedy": {
+    "time": 4508.8640000000005,
+    "gap_percent": 0.24159642614261442
+  },
+  "standard_ga": {
+    "mean": 4508.197,
+    "std": 7.609378613179393e-13,
+    "best": 4508.196999999999,
+    "gap_percent": 0.22676760344663727
+  },
+  "daga_f1": {
+    "mean": 4497.997,
+    "std": 9.094947017729282e-13,
+    "best": 4497.996999999999,
+    "gap_percent": 4.043998703302508e-14,
+    "avg_runtime_s": 0.1041675090789795,
+    "sc_reconverge_s": 0.010945796966552734
+  },
+  "wilcoxon_test": {
+    "statistic": 55.0,
+    "p_value": 0.0009765625
+  }
+}

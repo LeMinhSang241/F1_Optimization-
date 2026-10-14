@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tóm Tắt Tổng Quan Đề Án - DS106</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.6;
+    color: #111827;
+    max-width: 920px;
+    margin: 30px auto;
+    font-size: 13.5pt;
+  }
+  h1 {
+    font-size: 16pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1e3a8a;
+    margin-bottom: 20px;
+  }
+  h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 4px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+  }
+  p, li {
+    text-align: justify;
+    margin-bottom: 8px;
+  }
+  ul {
+    margin-top: 6px;
+    margin-bottom: 14px;
+    padding-left: 24px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #cbd5e1;
+    margin: 20px 0;
+  }
+  .highlight-box {
+    background-color: #f8fafc;
+    border-left: 4px solid #1e3a8a;
+    padding: 10px 16px;
+    margin: 14px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>TỔNG QUAN ĐỀ ÁN: TỐI ƯU HÓA CHIẾN LƯỢC PIT-STOP ĐUA XE F1</h1>
+
+<h2>1. Bản Chất Bài Toán Tối Ưu Hóa (Problem Formulation)</h2>
+<ul>
+  <li><strong>Đối tượng nghiên cứu:</strong> Tối ưu hóa chiến lược dừng pit và quản lý lốp trong giải đua xe Công thức 1 (chặng Monza: cự ly 305 km, 53 vòng đua).</li>
+  <li><strong>Mục tiêu tối ưu:</strong> Xác định bộ quyết định tối ưu gồm: <strong>Số lần dừng pit (<i>K</i> &isin; {1, 2, 3})</strong>, <strong>thời điểm vào pit (vòng <i>p</i><sub><i>k</i></sub>)</strong>, và <strong>lựa chọn hợp chất lốp (Soft, Medium, Hard)</strong> nhằm <strong>cực tiểu hóa tổng thời gian hoàn thành chặng đua</strong> trong điều kiện cấm tiếp nhiên liệu.</li>
+</ul>
+
+<hr>
+
+<h2>2. Hệ Thống Ràng Buộc & Động Lực Học Vật Lý Thực Tế (Constraints & Race Dynamics)</h2>
+<ul>
+  <li><strong>Ràng buộc pháp lý FIA:</strong> Bắt buộc sử dụng <strong>tối thiểu 2 loại hợp chất lốp khô khác nhau</strong> trong suốt chặng đua khô ráo (vi phạm bị truất quyền thi đấu).</li>
+  <li><strong>Ràng buộc bảo toàn hành trình:</strong> Tổng số vòng chạy của các chặng lốp phải bằng chính xác tổng số vòng quy định của cuộc đua (&sum; <i>l</i><sub><i>k</i></sub> = 53 vòng).</li>
+  <li><strong>Ràng buộc an toàn cơ học:</strong> Độ dài mỗi chặng lốp không được vượt quá tuổi thọ tối đa (<i>l</i><sub><i>k</i></sub> &le; <i>L</i><sub>max</sub>) nhằm ngăn chặn hiện tượng phá hủy cấu trúc và nổ lốp.</li>
+  <li><strong>Nghịch lý suy giảm hiệu suất lốp (Tyre Degradation Paradox):</strong> Hợp chất lốp mềm (Soft) cho tốc độ vòng nhanh hơn khoảng 1.2 giây/vòng nhưng suy thoái phi tuyến nhanh; khi chạm ngưỡng mòn giới hạn (Tyre Cliff), tốc độ sụt giảm từ 2–4 giây/vòng. Hợp chất lốp cứng (Hard) có tốc độ cơ sở chậm hơn nhưng duy trì độ ổn định qua 40–50 vòng.</li>
+  <li><strong>Chi phí tổn thất làn pit (Pit Lane Delta):</strong> Giới hạn tốc độ trong pit lane (80 km/h) gây tổn thất thời gian cố định lớn so với xe ngoài đường đua (<i>T</i><sub>pit</sub> &approx; 23.2 giây tại Monza). Việc gia tăng thêm một lần dừng pit chỉ có hiệu quả kinh tế khi số vòng đua còn lại đủ lớn để tốc độ lốp mới bù đắp được 23.2 giây đã mất.</li>
+  <li><strong>Biến cố Xe An Toàn (Safety Car Dynamics):</strong> Khi xuất hiện sự cố trên đường đua, tốc độ đoàn xe giảm ~40% khiến tổn thất thời gian tương đối của làn pit giảm từ <strong>23.2 giây xuống còn 12.5 giây</strong> (<em>Free Pit Stop</em>), mở ra cửa sổ chiến thuật khẩn cấp (3–5 giây) đòi hỏi tái tối ưu hóa lộ trình tức thời.</li>
+</ul>
+
+<hr>
+
+<h2>3. Phương Pháp Luận & Giải Thuật Thực Hiện (Methodology & Core Algorithms)</h2>
+<ul>
+  <li><strong>Giải thuật tối ưu đề xuất (Adaptive Genetic Algorithm - AGA):</strong>
+    <ul>
+      <li>Đóng vai trò bộ não tối ưu hóa tiến hóa với không gian tìm kiếm có số chiều biến thiên.</li>
+      <li>Tích hợp <strong>Toán tử sửa chữa định hướng vật lý (Physics-Guided Repair Operator)</strong> dựa trên đạo hàm suy giảm lốp để triệt tiêu 100% nghiệm bất khả thi; <strong>Đột biến cấu trúc đa hình (Split/Merge)</strong> tự động tiến hóa số lần dừng pit tối ưu; và <strong>Cơ chế tái tối ưu hóa tức thời (Warm-Start Pivot)</strong> phản ứng dưới 0.2 giây khi có biến cố Xe An Toàn.</li>
+    </ul>
+  </li>
+  <li><strong>Thước đo chuẩn tối ưu toàn cục (Bellman Dynamic Programming - DP Ground Truth):</strong>
+    <ul>
+      <li>Áp dụng phương pháp quy nạp ngược trên không gian 30.088 trạng thái rời rạc có mặt nạ bit FIA.</li>
+      <li>Thiết lập <strong>Nghiệm tối ưu toàn cục giải tích chính xác 100% (Ground Truth)</strong> đóng vai trò mốc chuẩn độc lập để định lượng sai số tối ưu (<em>Optimality Gap</em>) và kiểm chứng năng lực hội tụ của thuật toán AGA.</li>
+    </ul>
+  </li>
+</ul>
+
+</body>
+</html>

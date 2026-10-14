@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tab 3: Cẩm Nang Kiến Thức Đua Xe F1 & Tư Liệu Video Minh Họa - DS106</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.55;
+    color: #111827;
+    max-width: 950px;
+    margin: 30px auto;
+    font-size: 13.5pt;
+  }
+  h1 {
+    font-size: 17pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #b91c1c;
+    margin-bottom: 5px;
+  }
+  .sub-title {
+    text-align: center;
+    font-size: 12pt;
+    font-style: italic;
+    margin-bottom: 25px;
+    color: #4b5563;
+  }
+  h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 4px;
+    margin-top: 28px;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #b91c1c;
+    margin-top: 18px;
+  }
+  p, li {
+    text-align: justify;
+    margin-bottom: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 11.5pt;
+  }
+  th, td {
+    border: 1px solid #4b5563;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f3f4f6;
+    font-weight: bold;
+    text-align: center;
+    color: #111827;
+  }
+  .highlight-box {
+    border-left: 4px solid #b91c1c;
+    background-color: #fef2f2;
+    padding: 12px 15px;
+    margin: 15px 0;
+  }
+  .note-box {
+    border-left: 4px solid #1e3a8a;
+    background-color: #f0fdf4;
+    padding: 12px 15px;
+    margin: 15px 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 10pt;
+  }
+  .badge-soft { background-color: #fee2e2; color: #dc2626; border: 1px solid #ef4444; }
+  .badge-medium { background-color: #fef9c3; color: #ca8a04; border: 1px solid #eab308; }
+  .badge-hard { background-color: #f3f4f6; color: #4b5563; border: 1px solid #9ca3af; }
+  .video-card {
+    border: 1px solid #94a3b8;
+    border-left: 5px solid #b91c1c;
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 15px 0;
+    background-color: #f8fafc;
+  }
+  .video-title {
+    font-size: 13pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+  }
+  .video-link {
+    display: inline-block;
+    color: #b91c1c;
+    font-weight: bold;
+    text-decoration: underline;
+    margin: 6px 0;
+    font-size: 11.5pt;
+  }
+  .video-desc {
+    font-size: 11.5pt;
+    color: #374151;
+    line-height: 1.5;
+  }
+  .verified-tag {
+    display: inline-block;
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #86efac;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+    font-weight: bold;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+
+<h1>CẨM NANG KIẾN THỨC ĐUA XE CÔNG THỨC 1 (F1) & TƯ LIỆU VIDEO MINH HỌA CHIẾN THUẬT</h1>
+<div class="sub-title">
+  Tài liệu Nghiên cứu Nền tảng & Phân tích Động lực học Đề tài DS106: Tối ưu hóa và Ứng dụng<br>
+  Khoa Khoa học Dữ liệu – Trường Đại học Công nghệ Thông tin, ĐHQG-HCM<br>
+  Phục vụ Biên soạn Báo cáo Overleaf, Thuyết minh Toán học & Trả lời Phản biện Hội đồng
+</div>
+
+<hr>
+
+<h2>1. TỔNG QUAN VỀ THỂ THỨC ĐUA XE F1 & BÀI TOÁN CHIẾN THUẬT</h2>
+<p>
+  Formula 1 (F1) là giải đua xe bánh hở bánh trần đỉnh cao nhất thế giới do Liên đoàn Ô tô Quốc tế (FIA) quản lý. Một mùa giải gồm từ 22 đến 24 chặng đua (Grand Prix) diễn ra trên các đường đua chuyên dụng hoặc đường đua phố trên toàn cầu.
+</p>
+<ul>
+  <li><strong>Cấu trúc chặng đua chính (Sunday Race):</strong> Tổng quãng đường cuộc đua được quy định chuẩn là <strong>305 km</strong> (ngoại trừ Monaco là 260 km). Tùy theo chiều dài một vòng (Lap Length), số vòng đua sẽ dao động: Monza (53 vòng), Silverstone (52 vòng), Spa-Francorchamps (44 vòng), Monaco (78 vòng). Thời gian tối đa của một chặng không vượt quá 2 giờ.</li>
+  <li><strong>Tốc độ và Gia tốc cực hạn:</strong> Xe F1 có công suất khoảng 1000 mã lực (động cơ lai V6 Turbo Hybrid 1.6L), vận tốc tối đa vượt quá <strong>350 km/h</strong>, lực quán tính khi vào cua và phanh đạt tới <strong>5G</strong>.</li>
+  <li><strong>Không tiếp nhiên liệu giữa chặng (Refuelling Ban từ năm 2010):</strong> Xe bắt buộc phải mang toàn bộ lượng nhiên liệu (tối đa 110 kg xăng) ngay từ vạch xuất phát. Do đó, lần dừng duy nhất trong làn pit là để <strong>thay lốp xe và chỉnh góc cánh gió trước</strong>.</li>
+</ul>
+
+<div class="highlight-box">
+  <strong>Bản chất của Bài toán Tối ưu hóa Chiến lược F1:</strong><br>
+  Chiến lược F1 không đơn thuần là "chạy nhanh nhất ở từng vòng", mà là <em>tìm cách phân bổ tài nguyên lốp xe để tổng thời gian hoàn thành 305 km là nhỏ nhất</em>. Một chiếc xe chạy nhanh hơn 1 giây ở từng vòng nhưng phải vào pit thêm một lần (mất 23 giây) thì vẫn sẽ thua một chiếc xe chạy chậm hơn nhưng giữ lốp tốt để bớt đi một lần dừng pit!
+</div>
+
+<h2>2. HỆ THỐNG LỐP PIRELLI & CÁC DẢI HỢP CHẤT (TYRE COMPOUNDS)</h2>
+<p>
+  Từ năm 2011 đến nay, tập đoàn Pirelli (Ý) là nhà cung cấp lốp độc quyền cho toàn bộ giải đua F1. Để đáp ứng tính chất của từng mặt đường, Pirelli sản xuất 5 dải hợp chất lốp khô từ <strong>C1 (Cứng nhất - Hardest)</strong> đến <strong>C5 (Mềm nhất - Softest)</strong>.
+</p>
+<p>
+  Tại mỗi chặng đua cụ thể, Pirelli sẽ chọn ra 3 hợp chất liền kề và gắn mã màu nhận diện quốc tế:
+</p>
+
+<table>
+  <tr>
+    <th style="width: 18%;">Hợp chất Lốp</th>
+    <th style="width: 18%;">Màu nhận diện</th>
+    <th style="width: 32%;">Đặc tính Cơ học & Hiệu năng</th>
+    <th style="width: 32%;">Tuổi thọ Khuyến cáo tại Monza</th>
+  </tr>
+  <tr>
+    <td><strong>SOFT (Lốp Mềm)</strong></td>
+    <td><span class="badge badge-soft">VIỀN ĐỎ</span></td>
+    <td>Hợp chất cao su dẻo nhất, độ bám (grip) cao nhất, thời gian vòng nhanh nhất (nhanh hơn Hard ~1.2s – 1.5s), nhưng mòn cực nhanh do sinh nhiệt lớn.</td>
+    <td>12 – 18 vòng<br><em>(Cliff limit an toàn: 22 vòng)</em></td>
+  </tr>
+  <tr>
+    <td><strong>MEDIUM (Lốp Trung bình)</strong></td>
+    <td><span class="badge badge-medium">VIỀN VÀNG</span></td>
+    <td>Hợp chất cân bằng hoàn hảo giữa tốc độ và độ bền cơ học. Là lựa chọn xuất phát phổ biến nhất của các đội đua top đầu.</td>
+    <td>22 – 30 vòng<br><em>(Cliff limit an toàn: 35 vòng)</em></td>
+  </tr>
+  <tr>
+    <td><strong>HARD (Lốp Cứng)</strong></td>
+    <td><span class="badge badge-hard">VIỀN TRẮNG</span></td>
+    <td>Cao su cứng, thời gian làm nóng (warm-up) lâu hơn, tốc độ vòng đua chậm nhất, nhưng cực kỳ bền bỉ và ổn định qua nhiều vòng liên tiếp.</td>
+    <td>32 – 45 vòng<br><em>(Cliff limit an toàn: 48 vòng)</em></td>
+  </tr>
+</table>
+
+<div class="note-box">
+  <strong>Ràng buộc Pháp lý của FIA (Sporting Regulations Art. 30.5):</strong><br>
+  Trong điều kiện thời tiết khô ráo, mỗi tay đua <strong>bắt buộc phải sử dụng tối thiểu 2 loại hợp chất lốp khác nhau</strong> trong suốt chặng đua. Nếu tay đua không tuân thủ quy định này sẽ bị truất quyền thi đấu (Disqualification). Đây chính là ràng buộc bắt buộc <em>| {c<sub>1</sub>, c<sub>2</sub>, ...} | &ge; 2</em> trong mô hình toán học của đề tài.
+</div>
+
+<h2>3. HIỆN TƯỢNG VẬT LÝ SUY GIẢM HIỆU SUẤT LỐP (TYRE DEGRADATION DYNAMICS)</h2>
+<p>
+  Lốp xe F1 hoạt động ở nhiệt độ bề mặt từ 100°C đến 130°C. Sự suy giảm hiệu năng lốp không diễn ra tuyến tính mà tuân theo các hiện tượng vật lý phức tạp:
+</p>
+
+<table>
+  <tr>
+    <th style="width: 25%;">Hiện tượng Vật lý</th>
+    <th style="width: 45%;">Cơ chế Động lực học</th>
+    <th style="width: 30%;">Biểu hiện trong Mô hình Toán</th>
+  </tr>
+  <tr>
+    <td><strong>Graining (Hạt cao su mặt lốp)</strong></td>
+    <td>Xảy ra khi lốp bị trượt (sliding) khi chưa đủ nhiệt độ tối ưu. Lực xé ngang làm đứt các liên kết cao su vi mô, tạo thành các hạt cao su nhỏ bám trên bề mặt, làm giảm diện tích tiếp xúc với mặt đường và mất độ bám tạm thời.</td>
+    <td>Mô hình hóa qua hệ số suy giảm tuyến tính <em>d<sub>1</sub> &middot; a</em>.</td>
+  </tr>
+  <tr>
+    <td><strong>Blistering (Phồng rộp nhiệt)</strong></td>
+    <td>Nhiệt độ bên trong khung lốp (carcass) quá cao do áp lực uốn cong khi vào cua tốc độ cao. Cao su bên trong bị sôi, khí nở bung tạo thành các bọc khí vỡ trên mặt lốp, gây mất diện tích tiếp xúc nghiêm trọng.</td>
+    <td>Mô hình hóa qua thành phần gia tốc phi tuyến <em>d<sub>2</sub> &middot; a<sup>2</sup></em>.</td>
+  </tr>
+  <tr>
+    <td><strong>Tyre Degradation Cliff (Vách mòn rơi tự do)</strong></td>
+    <td>Giai đoạn lớp cao su mặt (tread) bị mòn hết xuống tới khung chịu lực bên dưới. Độ bám đường biến mất hoàn toàn trong 1–2 vòng đua, thời gian mỗi vòng tăng vọt từ 2 đến 4 giây/vòng. Xe chạy ở trạng thái này rất dễ bị nổ lốp (puncture / delamination).</td>
+    <td>Hàm phạt rủi ro vách lốp: <em>&Phi;<sub>cliff</sub> = 50 &times; max(0, a - L<sub>max</sub>)</em>.</td>
+  </tr>
+</table>
+
+<h2>4. CƠ CHẾ LÀN PIT & KHÁI NIỆM "PIT LANE LOSS DELTA"</h2>
+<p>
+  Nhiều người lầm tưởng thời gian dừng pit chỉ là 2 giây xe đứng yên để thợ thay bánh. Trong tối ưu hóa chiến lược, con số quyết định là <strong>Pit Lane Delta</strong>:
+</p>
+<div class="highlight-box">
+  <strong>Pit Lane Delta = (Thời gian xe giảm tốc vào pit + chạy qua làn pit ở 80 km/h + đứng yên thay lốp + tăng tốc nhập lại đường đua) &minus; (Thời gian một chiếc xe khác chạy hết đoạn thẳng đó ở 330 km/h)</strong>
+</div>
+<ul>
+  <li>Tại <strong>Monza:</strong> Chiều dài làn pit là 417 mét, giới hạn tốc độ 80 km/h. Pit Lane Delta đo đạc thực tế năm 2023 là <strong>23.2 giây</strong>.</li>
+  <li>Tại <strong>Silverstone:</strong> Làn pit nằm cắt ngang qua các góc cua phức tạp, Pit Lane Delta là <strong>21.5 giây</strong>.</li>
+</ul>
+<p>
+  Con số 23.2 giây này chính là "chi phí đầu tư" (investment cost). Nếu một đội đua muốn vào pit lần thứ hai để lấy lốp Soft mới nhanh hơn lốp cũ 1.5 giây/vòng, thì tay đua đó phải còn ít nhất <em>23.2 / 1.5 &approx; 16 vòng đua</em> để bù lại được thời gian đã mất trong pit lane!
+</p>
+
+<h2>5. HAI CHIẾN THUẬT VƯỢT MẶT KINH ĐIỂN: UNDERCUT VÀ OVERCUT</h2>
+
+<h3>5.1. Chiến thuật Undercut (Nhảy cóc vào pit trước)</h3>
+<p>
+  Khi hai xe đang chạy sát nhau và xe sau không thể vượt xe trước trên đường đua (do luồng khí bẩn làm trượt lốp), xe sau sẽ chọn chiến thuật <strong>Undercut</strong>:
+</p>
+<ol>
+  <li>Xe sau bất ngờ rẽ vào làn pit trước đối thủ 1 hoặc 2 vòng đua để thay bộ lốp mới toanh.</li>
+  <li>Khi trở lại đường đua, với độ bám cực đại của lốp mới, xe này chạy vòng ra (Out-lap) với tốc độ nhanh hơn lốp cũ của xe phía trước từ 2 đến 3 giây/vòng.</li>
+  <li>Đến vòng tiếp theo, khi chiếc xe dẫn đầu vào pit thay lốp, khoảng cách dẫn trước đã bị san phẳng. Chiếc xe vào pit trước sẽ phóng qua lối thoát pit để vươn lên dẫn đầu cuộc đua!</li>
+</ol>
+
+<h3>5.2. Chiến thuật Overcut (Ở lại đường đua muộn hơn)</h3>
+<p>
+  Ngược lại với Undercut, <strong>Overcut</strong> là chiến thuật mà chiếc xe chọn ở lại đường đua lâu hơn sau khi đối thủ đã vào pit:
+</p>
+<ul>
+  <li>Chiến thuật này phát huy tác dụng cực mạnh khi: (i) Lốp mới của đối thủ cần nhiều vòng để làm nóng (warm-up chậm); hoặc (ii) Đối thủ sau khi ra pit bị rơi vào giữa đám đông xe chạy chậm (Traffic / DRS Train) và không thể phóng hết tốc lực; (iii) Lượng nhiên liệu vơi bớt giúp chiếc xe ở lại đường đua nhẹ hơn và liên tục lập kỷ lục vòng đua trên lốp cũ còn tốt.</li>
+</ul>
+
+<h2>6. XE AN TOÀN (SAFETY CAR) & KHÁI NIỆM "FREE PIT STOP"</h2>
+<p>
+  Khi có tai nạn nghiêm trọng hoặc mảnh vỡ trên đường đua, Giám đốc cuộc đua sẽ kích hoạt <strong>Xe An Toàn (Safety Car - SC)</strong> hoặc <strong>Xe An Toàn Ảo (Virtual Safety Car - VSC)</strong>:
+</p>
+<ul>
+  <li>Toàn bộ các xe ngoài đường đua bị ép phải chạy chậm lại theo tốc độ của Safety Car (tốc độ vòng đua giảm khoảng 40%, thời gian vòng tăng từ 80 giây lên khoảng 120 giây).</li>
+  <li>Tuy nhiên, tốc độ di chuyển trong làn pit <strong>vẫn được giữ nguyên ở mức giới hạn 80 km/h</strong>!</li>
+</ul>
+<div class="note-box">
+  <strong>Hệ quả chiến lược ("Free Pit Stop"):</strong><br>
+  Vì các xe ngoài đường đua đang chạy rất chậm, thời gian mất mát tương đối (Pit Lane Delta) giảm từ <strong>23.2 giây xuống chỉ còn khoảng 12 – 13 giây</strong>! Điều này có nghĩa là đội đua nào kịp đưa xe vào pit ngay thời điểm Safety Car xuất hiện sẽ tiết kiệm được tới 10 giây so với đối thủ vào pit ở điều kiện cờ xanh bình thường.<br>
+  <em>Cửa sổ phản ứng (Pit Window) chỉ mở ra trong khoảng 3 đến 5 giây trước khi xe đi qua lối vào pit. Đây chính là động lực khiến thuật toán AGA của nhóm phải có cơ chế <strong>Warm-Start Safety Car Pivot</strong> để tính toán lại chiến lược trong dưới 0.15 giây!</em>
+</div>
+
+<h2>7. LUỒNG KHÍ BẨN (DIRTY AIR) & ĐOÀN TÀU DRS (DRS TRAIN)</h2>
+<ul>
+  <li><strong>Khí bẩn (Dirty Air):</strong> Xe F1 tạo ra lực nén mặt đường (Downforce) khổng lồ nhờ các cánh gió và sàn xe. Tuy nhiên, luồng không khí thoát ra phía sau xe là luồng khí xoáy hỗn loạn. Chiếc xe chạy sát phía sau (dưới 1.5 giây) sẽ bị mất tới 30% lực nén, bánh xe bị trượt liên tục và làm lốp nóng quá nhiệt, phá hủy lốp nhanh gấp đôi bình thường.</li>
+  <li><strong>Đoàn tàu DRS (DRS Train):</strong> Khi một nhóm xe bám đuôi nhau, tất cả các xe phía sau đều được mở cánh gió giảm lực cản (DRS). Do xe nào cũng có DRS nên không chiếc xe nào có thể vượt được xe phía trước. Trong tình huống này, <strong>Vị trí trên đường đua (Track Position)</strong> quan trọng hơn độ mới của lốp. Đây chính là lý do vì sao tại Monza 2023, Max Verstappen chọn chiến lược 1-stop phòng thủ thay vì 2-stop để không bao giờ bị rơi vào đoàn tàu xe chạy chậm.</li>
+</ul>
+
+<h2>8. KHO TƯ LIỆU VIDEO MINH HỌA ĐÃ ĐƯỢC KIỂM TRA ĐANG HOẠT ĐỘNG 100%</h2>
+<p>
+  Toàn bộ danh sách video dưới đây đã được kiểm tra trực tiếp qua hệ thống mạng, bảo đảm <strong>100% đang hoạt động (LIVE & ACTIVE)</strong>, có âm thanh thuyết minh và đồ họa phân tích chuyên môn cao:
+</p>
+
+<div class="video-card">
+  <div class="video-title">1. What is 'the Undercut' in F1? (Bản Chất Toán Học & Kỹ Thuật của Cú Undercut) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=_Su6XtMB1r8" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=_Su6XtMB1r8</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Chain Bear | <strong>Thời lượng:</strong> ~5 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Video sử dụng hình ảnh đồ họa 2D trực quan giải thích cặn kẽ vì sao việc vào pit trước 1 vòng đua giúp tay đua tận dụng độ bám tối đa của lốp mới ở vòng ra (Out-lap), từ đó xóa tan khoảng cách dẫn trước và vượt mặt đối thủ khi đối thủ vào pit ở vòng kế tiếp.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">2. F1 Undercut vs Overcut Explained (So Sánh Hai Chiến Thuật Đối Kháng) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=6VaTB_UQAL8" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=6VaTB_UQAL8</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> The F1 Explained | <strong>Thời lượng:</strong> ~6 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Phân tích điều kiện biên khi nào nên dùng Undercut và khi nào nên dùng Overcut. Giải thích cách các đội đua dựa vào nhiệt độ mặt đường, thời gian làm nóng lốp và mật độ giao thông trên đường đua để đưa ra quyết định.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">3. Tyre Wear in F1 Explained (Cơ Chế Suy Giảm Mòn Lốp F1) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=wdj7uzla5pE" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=wdj7uzla5pE</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Chain Bear | <strong>Thời lượng:</strong> ~7 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Phân tích vật lý chuyên sâu về cơ chế tạo hạt cao su (Graining), phồng rộp nhiệt bên trong khung lốp (Blistering) và hiện tượng sụp đổ hiệu suất đột ngột (Tyre Degradation Cliff). Đây là cơ sở lý thuyết để nhóm xây dựng số hạng bậc hai <em>d<sub>2</sub>&middot;a<sup>2</sup></em> trong phương trình toán học.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">4. What Is F1 Tire Degradation And How Does It Impact Race Pace? (Tác Động Của Mòn Lốp Lên Nhịp Độ Cuộc Đua) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=fq7GfSSVRQg" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=fq7GfSSVRQg</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Pole Position Experts | <strong>Thời lượng:</strong> ~8 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Hướng dẫn cách các kỹ sư đọc biểu đồ suy giảm lốp viễn trắc (Degradation curve), cách phân biệt giữa mòn cơ học tự nhiên và mòn do nhiệt độ, giải thích tại sao tay đua phải chuyển đổi chế độ chạy (Lift and Coast) để cứu lốp.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">5. How do you get a 'free pit stop' under the Safety Car in F1? (Toán Học Sau Cú Free Pit Stop Khi Có Xe An Toàn) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=YWE85TuXf5I" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=YWE85TuXf5I</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Chain Bear | <strong>Thời lượng:</strong> ~8 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Video kinh điển chứng minh bằng phương trình toán học và đồ họa không gian - thời gian: tại sao khi có Safety Car, tổn thất di chuyển trong làn pit giảm từ 23.2 giây xuống chỉ còn 12 – 13 giây. Đây là luận cứ thực tế chứng minh tính cấp thiết của cơ chế tái tối ưu hóa thời gian thực (Safety Car Pivot) trong thuật toán của nhóm.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">6. Red Bull Racing: Formula One Pit Stop Explained (Giải Phẫu Cú Thay Lốp Đỉnh Cao) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=o8KTXtvqbtg" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=o8KTXtvqbtg</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Oracle Red Bull Racing | <strong>Thời lượng:</strong> ~5 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Đội đua giữ kỷ lục thế giới về pit stop (1.82 giây) giải thích chi tiết quy trình hoạt động của 22 thành viên trong box kỹ thuật: súng xiết ốc khí nén áp lực cao, kích nâng xe sợi carbon và hệ thống đèn cảm biến giải phóng xe tự động.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">7. What Happens in a Formula 1 Pitstop? (Toàn Cảnh Bên Trong 2 Giây Pit Stop) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=qNywEXWwol4" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=qNywEXWwol4</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Formula 1 Official / Sky Sports F1 | <strong>Thời lượng:</strong> ~6 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Khảo sát từng vị trí thợ máy trong làn pit, giải thích rủi ro khi bánh xe bị kẹt ốc (cross-thread) và cách tay đua phải dừng chính xác từng centimet trước mũi kích nâng để không làm trễ thao tác của đội ngũ thợ.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">8. What Happens On The Pit Wall At An F1 Race? | Behind The Charge (Bên Trong Bức Tường Chiến Thuật Pit-Wall) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=Cu8dJQBnv1U" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=Cu8dJQBnv1U</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Red Bull Racing (Behind The Charge) | <strong>Thời lượng:</strong> ~9 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Hé lộ cách các kỹ sư chiến lược cấp cao (như Hannah Schmitz của Red Bull) theo dõi hàng trăm luồng dữ liệu viễn trắc trực tiếp, chạy mô phỏng dự đoán chiến thuật của đối thủ và ra quyết định gọi tay đua vào pit qua sóng radio.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">9. How Do F1 Teams Decide Their Race Strategies? (Thuật Toán Mô Phỏng Chiến Lược Cuộc Đua) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=rsciO4XEZD0" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=rsciO4XEZD0</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> Motorsport TV / Autosport | <strong>Thời lượng:</strong> ~7 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Giải thích cách các đội đua F1 sử dụng các thuật toán tối ưu hóa tổ hợp và mô phỏng Monte Carlo trước chặng đua để thiết lập Plan A, Plan B, Plan C; và cách họ điều chỉnh linh hoạt theo diễn biến thời tiết và sự cố trên đường đua.
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-title">10. F1 Tyre Compounds Explained (Giải Mã 5 Dải Hợp Chất Lốp Pirelli Từ C1 Đến C5) <span class="verified-tag">ĐANG HOẠT ĐỘNG</span></div>
+  <a class="video-link" href="https://www.youtube.com/watch?v=YOha7BudrdQ" target="_blank">&#9658; Xem Trực Tiếp: https://www.youtube.com/watch?v=YOha7BudrdQ</a>
+  <div class="video-desc">
+    <strong>Kênh sản xuất:</strong> The F1 Explained | <strong>Thời lượng:</strong> ~5 phút.<br>
+    <strong>Nội dung thuyết minh:</strong> Phân tích chi tiết quy ước mã hóa lốp của Pirelli, sự khác biệt về độ mềm của cao su giữa các hợp chất C1, C2, C3, C4, C5 và lý do tại sao ở các chặng đua có độ mài mòn cao như Silverstone, Pirelli phải phân bổ các dải lốp cứng nhất (C1-C3).
+  </div>
+</div>
+
+</body>
+</html>

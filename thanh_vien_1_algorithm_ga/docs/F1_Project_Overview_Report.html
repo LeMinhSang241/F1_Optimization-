@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Báo Cáo Tổng Quan Đồ Án DS106 - Tối Ưu Hóa Chiến Lược F1</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    line-height: 1.6;
+    color: #2c3e50;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+  }
+  h1 {
+    color: #1a365d;
+    border-bottom: 3px solid #2b6cb0;
+    padding-bottom: 12px;
+    font-size: 26px;
+    text-transform: uppercase;
+  }
+  h2 {
+    color: #2b6cb0;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+    margin-top: 35px;
+    font-size: 20px;
+  }
+  h3 {
+    color: #2d3748;
+    margin-top: 25px;
+    font-size: 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #cbd5e0;
+    padding: 10px 12px;
+    text-align: left;
+  }
+  th {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    font-weight: bold;
+  }
+  tr:nth-child(even) {
+    background-color: #f7fafc;
+  }
+  .callout {
+    background-color: #f0fff4;
+    border-left: 5px solid #38a169;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .callout-warning {
+    background-color: #fffaf0;
+    border-left: 5px solid #dd6b20;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+  }
+  .formula {
+    background-color: #edf2f7;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: #1a202c;
+    margin: 15px 0;
+  }
+  ul, ol {
+    padding-left: 25px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .badge-blue { background-color: #bee3f8; color: #2b6cb0; }
+  .badge-green { background-color: #c6f6d5; color: #276749; }
+</style>
+</head>
+<body>
+
+<h1>BÁO CÁO TỔNG QUAN ĐỒ ÁN DS106: TỐI ƯU HÓA CHIẾN LƯỢC PIT-STOP & QUẢN LÝ LỐP F1</h1>
+<p><strong>Môn học:</strong> DS106 - Tối ưu hóa và Ứng dụng | <strong>Khoa:</strong> Khoa học Dữ liệu - Trường ĐH Công nghệ Thông tin (UIT)</p>
+<p><strong>Giảng viên chấm điểm mục tiêu:</strong> TS. Nguyễn Tất Bảo Thiện</p>
+<p><strong>Quy mô nhóm:</strong> 5 thành viên | <strong>Thời lượng:</strong> 8 tuần (kèm Tuần 7 Buffer độc lập)</p>
+
+<hr>
+
+<h2>1. BẢN CHẤT BÀI TOÁN THỰC TẾ TRONG F1</h2>
+<p>Trong một chặng đua Công thức 1 (50–70 vòng, ~305 km), chiến lược pit-stop đóng vai trò quyết định thắng bại và bị chi phối bởi 3 nghịch lý vật lý:</p>
+<ul>
+  <li><strong>Nghịch lý Lốp:</strong> Lốp mới chạy nhanh nhưng bị thoái hóa cơ học (Degradation) khiến mỗi vòng xe chậm đi 0.1s - 0.3s.</li>
+  <li><strong>Nghịch lý Pit Loss:</strong> Vào pit thay lốp mới giúp xe lấy lại tốc độ tối đa nhưng phải đánh đổi mất 20 – 25 giây (Monza mất ~23.2s, Silverstone mất ~21.5s).</li>
+  <li><strong>Nghịch lý Nhiên liệu:</strong> Xe không được tiếp xăng giữa chặng, đầu chặng xe chở 110 kg xăng (nặng, chậm), càng về cuối chặng xe càng nhẹ và nhanh dần (~0.035s/vòng).</li>
+  <li><strong>Ràng buộc luật FIA:</strong> Bắt buộc dùng ít nhất 2 loại hợp chất lốp khô khác nhau trong cuộc đua.</li>
+</ul>
+
+<div class="callout">
+  <strong>MỤC TIÊU BÀI TOÁN:</strong> Tìm số lần dừng pit (K stops), thời điểm vào pit (laps) và loại lốp cho từng stint (Soft, Medium, Hard) sao cho <em>tổng thời gian hoàn thành toàn bộ cuộc đua là ngắn nhất</em>, thỏa mãn 100% luật lốp FIA và tối thiểu hóa nguy cơ nổ lốp.
+</div>
+
+<h2>2. DỮ LIỆU THỰC TẾ & KHỬ NHIỄU VẬT LÝ</h2>
+<p>Dữ liệu lấy từ API <strong>FastF1</strong> và tập dữ liệu sạch <code>VforVitorio/f1-strategy-dataset</code> (Hugging Face) của chặng Monza 2023 và Silverstone 2023.</p>
+<table>
+  <tr>
+    <th style="width: 25%;">Cạm bẫy dữ liệu</th>
+    <th style="width: 35%;">Hiện tượng vật lý</th>
+    <th style="width: 40%;">Giải pháp kỹ thuật bắt buộc</th>
+  </tr>
+  <tr>
+    <td><strong>Đa cộng tuyến Xăng & Cao su</strong></td>
+    <td>Xe nhẹ dần (-0.035s/vòng) và đường bám cao su hơn (-0.02s/vòng) triệt tiêu độ mòn lốp.</td>
+    <td>Trừ độ hao xăng vật lý ra khỏi lap time trước khi fit mô hình học máy: <code>t_clean = t_actual - 0.035*(N - lap)</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Lốp cũ phân hạng (Scrubbed)</strong></td>
+    <td>Tay đua xuất phát bằng lốp đã chạy 3-4 vòng ở vòng phân hạng.</td>
+    <td>Sử dụng biến <code>TyreLife</code> (tuổi thực của lốp), không dùng <code>LapNumberInStint</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Pit Stationary vs Pit Loss</strong></td>
+    <td>Xe đứng yên thay lốp mất 2.5s, nhưng tổng tổn thất do đi làn pit là 20-25s.</td>
+    <td>Cộng đúng Pit Loss Delta chuẩn vào hàm mục tiêu (Monza: 23.2s, Silverstone: 21.5s).</td>
+  </tr>
+</table>
+
+<h2>3. MÔ HÌNH TOÁN HỌC CỐT LÕI (DS106)</h2>
+<h3>3.1. Biến quyết định (Decision Vector)</h3>
+<div class="formula">
+  X = [ (c_1, &Delta;l_1), (c_2, &Delta;l_2), ..., (c_{K+1}, &Delta;l_{K+1}) ]
+</div>
+<p>Trong đó <em>c_k</em> là loại lốp (Soft, Medium, Hard), <em>&Delta;l_k</em> là số vòng của stint thứ <em>k</em>.</p>
+
+<h3>3.2. Hệ ràng buộc (Constraints)</h3>
+<ul>
+  <li>Bảo toàn số vòng đua: <strong>&sum; &Delta;l_k = N_total</strong> (Monza: 53 vòng, Silverstone: 52 vòng).</li>
+  <li>Độ dài tối thiểu mỗi stint: <strong>&Delta;l_k &ge; 4</strong>.</li>
+  <li>Luật lốp FIA: <strong>|unique(c_1, ..., c_{K+1})| &ge; 2</strong>.</li>
+</ul>
+
+<h3>3.3. Hàm mục tiêu (Objective Function)</h3>
+<div class="formula">
+  min J(X) = &sum; LapTime(c_k, a, lap) + K * T_pit_loss + &Phi;_FIA(X)
+</div>
+<p>Áp dụng <strong>Phương pháp hàm phạt (Penalty Function - Chương 6 đề cương)</strong>: Nếu vi phạm luật lốp FIA, cộng thêm <code>&Phi;_FIA = 100,000 giây</code> để đào thải cá thể vi phạm.</p>
+
+<h2>4. KIẾN TRÚC KỸ THUẬT 3 TẦNG</h2>
+<ul>
+  <li><strong>Tầng 1 (Học máy Vật lý - Kế thừa Kaya et al. 2024):</strong> Kết hợp 4 mô hình hồi quy (Ridge, Poly bậc 2, SVR, XGBoost). Dùng <em>Real-valued GA (RCGA)</em> tối ưu hóa véc-tơ trọng số liên tục &beta; thỏa mãn &sum; &beta;_i = 1 để giảm sai số RMSE &le; 0.38s.</li>
+  <li><strong>Tầng 2 (Thước đo Chuẩn Tuyệt đối - Dynamic Programming):</strong> Lập trình bộ giải Quy hoạch động Bellman trên lưới trạng thái <code>(lap, compound, age)</code> tìm nghiệm tối ưu toàn cục giải tích trong 50ms làm chuẩn đối chứng.</li>
+  <li><strong>Tầng 3 (Bộ não Tiến hóa Cải tiến - Kế thừa Zhao et al. 2024):</strong> Khởi tạo có trọng số (Heuristic Weighted Init), Đột biến thích nghi động (Dynamic Mutation), Mở rộng Đa mục tiêu (NSGA-II) tối ưu đồng thời Thời gian đua vs Rủi ro lốp, và Memetic Local Search tinh chỉnh &plusmn;1, 2 vòng pit.</li>
+</ul>
+
+<h2>5. BÍ QUYẾT PHẢN BIỆN ĐẠT ĐIỂM 10 TRƯỚC TS. NGUYỄN TẤT BẢO THIỆN</h2>
+<div class="callout-warning">
+  <strong>CÂU HỎI TỦ CỦA THẦY:</strong> <em>"Tại sao bài toán rời rạc này không dùng Quy hoạch động (Dynamic Programming - DP) mà lại dùng Giải thuật Di truyền (GA)?"</em><br><br>
+  <strong>CÁCH TRẢ LỜI ĐẠT ĐIỂM TỐI ĐA:</strong><br>
+  <em>"Dạ thưa Thầy, nhóm đã lập trình cả hai bộ giải để đối chứng: Đối với bài toán đơn giản 1 xe, DP tìm nghiệm chuẩn trong 45ms và GA của nhóm đạt 99.8% độ chính xác so với DP. Tuy nhiên, khi mở rộng sang bài toán Đa mục tiêu (NSGA-II) giữa thời gian đua và rủi ro nổ lốp, kèm theo biến cố ngẫu nhiên Xe An Toàn (Safety Car) và kẹt xe (Traffic), DP bị bùng nổ chiều không gian (Curse of Dimensionality) không giải nổi. Lúc này, Giải thuật Di truyền trong Tính toán mềm phát huy sức mạnh vượt trội!"</em>
+</div>
+
+<h2>6. BẢNG PHÂN CHIA CÔNG VIỆC THEO TUẦN (CHO NHÓM 5 NGƯỜI)</h2>
+<table>
+  <tr>
+    <th>Tuần</th>
+    <th>TV1 (GA & NSGA-II Lead)</th>
+    <th>TV2 (Data & FastF1 Lead)</th>
+    <th>TV3 (Tyre Modeler - Physics ML)</th>
+    <th>TV4 (Simulator & DP Solver)</th>
+    <th>TV5 (Paper, UI & QA Lead)</th>
+  </tr>
+  <tr>
+    <td><strong>Tuần 1</strong></td>
+    <td>Đặc tả toán học, thiết kế nhiễm sắc thể.</td>
+    <td>Tải dataset HuggingFace, cấu hình FastF1 cache.</td>
+    <td>Nghiên cứu công thức mòn lốp bậc hai Pirelli.</td>
+    <td>Thiết kế khung Simulator, đo Pit Loss chuẩn.</td>
+    <td>Cấu hình Git repo, tạo template paper IEEE.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 2</strong></td>
+    <td>Code khởi tạo trọng số, thuật toán Repair.</td>
+    <td>Lọc cờ xanh, In/Out lap, 107% Median filter.</td>
+    <td>Khử hao xăng, train 4 model hồi quy lốp.</td>
+    <td><strong>Code bộ giải Quy hoạch động (DP)</strong>.</td>
+    <td>Viết Section 1 & 2 paper, dựng khung Streamlit.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 3</strong></td>
+    <td>Toán tử đột biến split/merge stint linh hoạt.</td>
+    <td>Trích xuất chiến thuật Verstappen (Monza 2023).</td>
+    <td>Code Real-Valued GA (RCGA) tối ưu trọng số lốp.</td>
+    <td>Tích hợp model lốp vào Simulator, so khớp DP.</td>
+    <td>Thiết kế UI chọn chặng đua và thanh trượt.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 4</strong></td>
+    <td>Hoàn thiện lõi GA cải tiến với Elitism 5%.</td>
+    <td>Trích xuất dữ liệu chặng 2: Silverstone 2023.</td>
+    <td><strong>Chạy Ablation 1:</strong> Đánh giá RMSE mô hình lốp.</td>
+    <td>So sánh đối chứng GA vs nghiệm chuẩn của DP.</td>
+    <td>Vẽ đồ thị hội tụ GA và Gantt chart lên Web UI.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 5</strong></td>
+    <td><strong>Nâng cấp NSGA-II Đa mục tiêu</strong>.</td>
+    <td>Thu thập biến thiên nhiệt độ mặt đường (Track Temp).</td>
+    <td>Vector hóa hàm dự đoán lốp bằng NumPy.</td>
+    <td><strong>Code Memetic Local Search</strong> tinh chỉnh pit.</td>
+    <td>Thêm biểu đồ <strong>Pareto Front</strong> tương tác lên UI.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 6</strong></td>
+    <td><strong>Chạy Ablation 2:</strong> 30 seeds, kiểm định Wilcoxon.</td>
+    <td>So khớp nghiệm NSGA-II với Max Verstappen thực tế.</td>
+    <td>Giải thích ý nghĩa vật lý trọng số &beta; mô hình lốp.</td>
+    <td>Phân tích độ nhạy: Pit Loss &plusmn;3s, nhiệt độ +5&deg;C.</td>
+    <td>Hoàn thành Section 4 (Results) & Section 5 paper.</td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 7 (BUFFER)</strong></td>
+    <td colspan="5" style="text-align:center; background-color: #fffaf0; color: #c05621;">
+      <strong>TUẦN DỰ PHÒNG HOÀN TOÀN ĐỘC LẬP:</strong> Hấp thụ độ trễ, rà soát code, hoàn thiện slide Seminar (25 slides) và xuất bản Paper PDF (8–10 trang format IEEE).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Tuần 8</strong></td>
+    <td colspan="5" style="text-align:center; background-color: #f0fff4; color: #276749;">
+      <strong>TỔNG DUYỆT BÁO CÁO:</strong> Cả 5 thành viên diễn tập thuyết trình (Mock Seminar - mỗi người 3 phút), luyện bộ câu hỏi phản biện của TS. Thiện, nộp bài đồ án!
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
