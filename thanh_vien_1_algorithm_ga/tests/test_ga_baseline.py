@@ -208,6 +208,45 @@ class TestGABaselineBenchmark(unittest.TestCase):
         self.assertIsNotNone(strat)
         self.assertEqual(sum(l for _, l in strat), 53)
 
+    def test_08_short_race_fia_validity(self):
+        """Kiểm chứng Bellman DP không bị lỗi pit vòng cuối sinh ra chiến lược 1 loại lốp phạm luật FIA."""
+        class ShortRaceModel(PirelliPhysicsTyreModel):
+            def __init__(self):
+                super().__init__('Monza')
+                self.total_laps = 22
+                self.safe_limits = {'Soft': 22, 'Medium': 22, 'Hard': 22}
+                self.base_times = {'Soft': 80.0, 'Medium': 85.0, 'Hard': 90.0}
+
+        short_model = ShortRaceModel()
+        solver = BellmanDPSolver(short_model)
+        dp_t, dp_strat = solver.solve(max_stops=1)
+
+        # Nghiệm DP phải dùng ít nhất 2 hợp chất khác nhau
+        compounds = {c for c, _ in dp_strat}
+        self.assertGreaterEqual(len(compounds), 2, f"DP phải thỏa luật FIA (>= 2 compounds), nhận được: {dp_strat}")
+        self.assertEqual(sum(l for _, l in dp_strat), 22)
+
+        # Simulator phải ghi nhận 0 penalty
+        sim = F1RaceSimulator(total_laps=22, tyre_model=short_model)
+        sim_t, details = sim.evaluate_strategy(dp_strat)
+        self.assertTrue(details['is_valid_fia'])
+        self.assertEqual(details['penalty'], 0.0)
+        self.assertAlmostEqual(sim_t, dp_t, places=3)
+
+    def test_09_traffic_penalty_exact_match(self):
+        """Kiểm chứng tính nhất quán tuyệt đối giữa Bellman DP và Simulator khi có traffic penalty > 0."""
+        traffic = 0.75
+        dp = BellmanDPSolver(self.tyre_model, traffic_penalty=traffic)
+        dp_t, dp_strat = dp.solve()
+
+        sim = F1RaceSimulator(total_laps=self.total_laps, tyre_model=self.tyre_model, traffic_penalty=traffic)
+        sim_t, details = sim.evaluate_strategy(dp_strat)
+
+        self.assertAlmostEqual(sim_t, dp_t, places=3,
+                               msg=f"DP ({dp_t:.3f}s) và Simulator ({sim_t:.3f}s) phải khớp tuyệt đối khi có traffic penalty!")
+        self.assertEqual(details['penalty'], 0.0)
+        self.assertTrue(details['is_valid_fia'])
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

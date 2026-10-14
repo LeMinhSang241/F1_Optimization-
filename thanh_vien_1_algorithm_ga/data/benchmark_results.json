@@ -33,8 +33,8 @@
     "std": 9.094947017729282e-13,
     "best": 4497.996999999999,
     "gap_percent": 4.043998703302508e-14,
-    "avg_runtime_s": 0.1041675090789795,
-    "sc_reconverge_s": 0.010945796966552734
+    "avg_runtime_s": 0.2617377281188965,
+    "sc_reconverge_s": 0.00865936279296875
   },
   "wilcoxon_test": {
     "statistic": 55.0,

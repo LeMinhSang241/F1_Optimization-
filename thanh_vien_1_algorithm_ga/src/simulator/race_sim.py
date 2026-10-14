@@ -73,7 +73,8 @@ class F1RaceSimulator:
                 stint_time = self.tyre_model.closed_form_stint_lap_time(
                     compound=compound,
                     length=stint_length,
-                    start_lap=curr_lap
+                    start_lap=curr_lap,
+                    total_laps=self.total_laps
                 )
                 total_time += stint_time
                 curr_lap += stint_length

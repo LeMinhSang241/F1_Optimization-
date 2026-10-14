@@ -12,7 +12,7 @@ Dynamic Adaptive Genetic Algorithm for F1 Pit-Stop & Tyre Strategy Optimization.
 Phân công: Thành viên 1 (Algorithm & GA Lead) tích hợp hoàn chỉnh tài liệu mô hình lốp TV3.
 """
 
-from typing import List, Tuple, Dict, Optional, Union
+from typing import List, Tuple, Dict, Optional, Union, Any
 import random
 import numpy as np
 
@@ -45,33 +45,53 @@ BASE_TIMES: Dict[str, float] = {
 MIN_STINT_LENGTH: int = 4
 
 
+def _extract_d1_d2(val: Any) -> Tuple[float, float]:
+    """Trích xuất linh hoạt d1, d2 từ tuple/list hoặc dict (chuẩn TV3 compound_params)."""
+    if isinstance(val, dict):
+        return float(val.get('d1', 0.080)), float(val.get('d2', 0.0030))
+    elif isinstance(val, (tuple, list)) and len(val) >= 2:
+        return float(val[0]), float(val[1])
+    return 0.080, 0.0030
+
+
+def _extract_cliff(val: Any) -> int:
+    """Trích xuất linh hoạt ngưỡng vách lốp L_max từ số nguyên hoặc dict (chuẩn TV3)."""
+    if isinstance(val, dict):
+        return int(val.get('l_max', 35))
+    elif isinstance(val, (int, float)):
+        return int(val)
+    return 35
+
+
 def tyre_deg_derivative(
     compound: str,
     age: int,
-    deg_coeffs: Optional[Dict[str, Tuple[float, float]]] = None
+    deg_coeffs: Optional[Union[Dict[str, Tuple[float, float]], Dict[str, Any]]] = None
 ) -> float:
     """Tính đạo hàm giải tích của sự suy giảm hiệu suất lốp theo tuổi lốp a:
     ∇t_deg(a) = d1(c) + 2 * d2(c) * a
     """
     coeffs = deg_coeffs or DEG_COEFFS
-    d1, d2 = coeffs.get(compound, (0.080, 0.0030))
+    val = coeffs.get(compound, (0.080, 0.0030))
+    d1, d2 = _extract_d1_d2(val)
     return float(d1 + 2.0 * d2 * max(1, age))
 
 
 def degradation_acceleration(
     compound: str,
-    deg_coeffs: Optional[Dict[str, Tuple[float, float]]] = None
+    deg_coeffs: Optional[Union[Dict[str, Tuple[float, float]], Dict[str, Any]]] = None
 ) -> float:
     """Đạo hàm bậc hai (Gia tốc mòn lốp): ∇^2 t_deg(a) = 2 * d2(c) > 0 (Hàm lồi nghiêm ngặt)."""
     coeffs = deg_coeffs or DEG_COEFFS
-    _, d2 = coeffs.get(compound, (0.080, 0.0030))
+    val = coeffs.get(compound, (0.080, 0.0030))
+    _, d2 = _extract_d1_d2(val)
     return float(2.0 * d2)
 
 
 def closed_form_stint_degradation(
     length: int,
     compound: str,
-    deg_coeffs: Optional[Dict[str, Tuple[float, float]]] = None
+    deg_coeffs: Optional[Union[Dict[str, Tuple[float, float]], Dict[str, Any]]] = None
 ) -> float:
     """Tổng độ mòn của stint dài L vòng bằng công thức đóng Faulhaber O(1):
     D_stint = d1 * L*(L+1)/2 + d2 * L*(L+1)*(2L+1)/6
@@ -79,7 +99,8 @@ def closed_form_stint_degradation(
     if length <= 0:
         return 0.0
     coeffs = deg_coeffs or DEG_COEFFS
-    d1, d2 = coeffs.get(compound, (0.080, 0.0030))
+    val = coeffs.get(compound, (0.080, 0.0030))
+    d1, d2 = _extract_d1_d2(val)
     l_val = float(length)
     sum_a = l_val * (l_val + 1.0) / 2.0
     sum_a2 = l_val * (l_val + 1.0) * (2.0 * l_val + 1.0) / 6.0
@@ -249,7 +270,7 @@ def physics_guided_repair(
     # Nếu có stint vượt quá L_max, điều chuyển các vòng vượt ngưỡng sang stint có dung sai an toàn
     for i in range(len(repaired)):
         c, l = repaired[i]
-        cliff = c_limits.get(c, 35)
+        cliff = _extract_cliff(c_limits.get(c, 35))
         if l > cliff:
             excess = l - cliff
             for _ in range(excess):
@@ -258,7 +279,7 @@ def physics_guided_repair(
                 for j in range(len(repaired)):
                     if j != i:
                         cj, lj = repaired[j]
-                        cliff_j = c_limits.get(cj, 35)
+                        cliff_j = _extract_cliff(c_limits.get(cj, 35))
                         cap_j = cliff_j - lj
                         if cap_j > 0:
                             grad_j = tyre_deg_derivative(cj, lj, d_coeffs)
@@ -282,7 +303,7 @@ def physics_guided_repair(
             best_idx = 0
             best_score = -float('inf')
             for i, (c, l) in enumerate(repaired):
-                cliff = c_limits.get(c, 35)
+                cliff = _extract_cliff(c_limits.get(c, 35))
                 capacity = cliff - l
                 grad = tyre_deg_derivative(c, l, d_coeffs)
                 if capacity > 0:
@@ -305,7 +326,7 @@ def physics_guided_repair(
             worst_score = -float('inf')
             for i in valid_indices:
                 c, l = repaired[i]
-                cliff = c_limits.get(c, 35)
+                cliff = _extract_cliff(c_limits.get(c, 35))
                 over_cliff = max(0, l - cliff)
                 grad = tyre_deg_derivative(c, l, d_coeffs)
                 score = over_cliff * 20.0 + grad * 5.0 + (l / total_laps)

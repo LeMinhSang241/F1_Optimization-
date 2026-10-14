@@ -66,22 +66,30 @@ class BellmanDPSolver:
                             # Lựa chọn 1: Chạy tiếp (Stay)
                             best_val = 1e9
                             best_act = ("STAY", c)
-                            if a < self.safe_limits[c]:
+                            if lap == self.N:
+                                # Vòng cuối cùng: Kết thúc chặng đua trên hợp chất hiện tại
+                                # Đạt chuẩn FIA nếu tổng số hợp chất khác nhau >= 2
+                                popcount = bin(m).count('1')
+                                val_stay = t_lap + (0.0 if popcount >= 2 else 1e9)
+                            elif a < self.safe_limits[c]:
                                 val_stay = t_lap + prev_V.get((c, a + 1, k, m), 1e9)
-                                if val_stay < best_val:
-                                    best_val = val_stay
-                                    best_act = ("STAY", c)
+                            else:
+                                val_stay = 1e9
+
+                            if val_stay < best_val:
+                                best_val = val_stay
+                                best_act = ("STAY", c)
 
                             # Lựa chọn 2: Vào pit đổi sang hợp chất khác c' (Pit)
-                            if a >= 4 and k < max_stops:
+                            # Bắt buộc còn đủ tối thiểu 4 vòng đua cho stint tiếp theo
+                            if a >= 4 and k < max_stops and (self.N - lap) >= 4:
                                 for next_c in range(3):
                                     if next_c != c:
                                         next_m = m | (1 << next_c)
-                                        penalty_traffic = self.traffic_penalty if k >= 1 else 0.0
                                         val_pit = (
                                             t_lap
                                             + self.pit_loss
-                                            + penalty_traffic
+                                            + self.traffic_penalty
                                             + prev_V.get((next_c, 1, k + 1, next_m), 1e9)
                                         )
                                         if val_pit < best_val:

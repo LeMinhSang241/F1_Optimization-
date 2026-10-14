@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 
+from src.tyre_model.pirelli_physics import PirelliPhysicsTyreModel
 from src.simulator.race_sim import F1RaceSimulator
 from src.ga_strategy.optimizer import F1StrategyGAOptimizer
 
@@ -20,7 +21,7 @@ st.set_page_config(
 st.title("🏎️ F1 Pit-Stop & Tyre Strategy Optimization (Genetic Algorithm)")
 st.markdown("""
 **Đồ án môn học DS106: Tối ưu hóa và Ứng dụng** | *Khoa Khoa học Dữ liệu - UIT (ĐHQG-HCM)*  
-Hệ thống ứng dụng **Giải thuật Di truyền cải tiến (Improved GA - Zhao et al., 2024)** và **Mô hình suy giảm lốp Ensemble (Kaya et al., 2024)** để tìm kiếm chiến lược dừng pit tối ưu nhất.
+Hệ thống ứng dụng **Giải thuật Di truyền Thích nghi Động (DAGA-F1)** và **Mô hình suy giảm lốp giải tích Pirelli & Động lực học nhiệt TV3** để tìm kiếm chiến lược dừng pit tối ưu nhất.
 """)
 
 st.sidebar.header("⚙️ Cấu hình Chặng đua & Thuật toán")
@@ -30,12 +31,19 @@ race_choice = st.sidebar.selectbox(
     ["Monza GP (Ý - 53 vòng)", "Silverstone GP (Anh - 52 vòng)"]
 )
 
-total_laps = 53 if "Monza" in race_choice else 52
-default_pit_loss = 23.2 if "Monza" in race_choice else 20.8
+circuit_name = "Silverstone" if "Silverstone" in race_choice else "Monza"
+total_laps = 53 if circuit_name == "Monza" else 52
+default_pit_loss = 23.2 if circuit_name == "Monza" else 21.5
+default_t_ref = 30.0 if circuit_name == "Monza" else 28.0
 
 pit_loss = st.sidebar.slider(
     "Tổn thất thời gian vào Pit (Pit Loss - Giây)",
     min_value=15.0, max_value=32.0, value=default_pit_loss, step=0.5
+)
+
+track_temp = st.sidebar.slider(
+    "Nhiệt độ mặt đường T_track (°C)",
+    min_value=15.0, max_value=60.0, value=default_t_ref, step=1.0
 )
 
 pop_size = st.sidebar.slider("Kích thước Quần thể (Population Size)", 20, 150, 60, step=10)
@@ -46,10 +54,12 @@ col1, col2 = st.columns([1, 2])
 with col1:
     st.subheader("🏁 Thiết lập & Khởi chạy")
     st.info(f"""
+    - **Chặng đua:** {circuit_name} GP
     - **Tổng số vòng đua:** {total_laps} vòng
     - **Tổn thất Pit:** {pit_loss} s/lần dừng
+    - **Nhiệt độ mặt đường:** {track_temp}°C (Tham chiếu: {default_t_ref}°C)
     - **Ràng buộc FIA:** Bắt buộc dùng tối thiểu 2 loại lốp khô khác nhau.
-    - **Chế độ GA:** Improved GA (Khởi tạo có trọng số + Thích nghi động)
+    - **Giải thuật:** DAGA-F1 (Tách/Gộp Stint + Faulhaber O(1) + Kiểm soát vách lốp L_max)
     """)
 
     run_btn = st.button("🚀 BẮT ĐẦU TỐI ƯU HÓA CHIẾN LƯỢC", type="primary", use_container_width=True)
@@ -57,7 +67,8 @@ with col1:
 if run_btn:
     with st.spinner("Đang chạy Giải thuật Di truyền qua các thế hệ..."):
         start_time = time.time()
-        simulator = F1RaceSimulator(total_laps=total_laps, pit_loss=pit_loss)
+        tyre_model = PirelliPhysicsTyreModel(track=circuit_name, t_track=track_temp, t_ref=default_t_ref)
+        simulator = F1RaceSimulator(total_laps=total_laps, pit_loss=pit_loss, tyre_model=tyre_model)
         optimizer = F1StrategyGAOptimizer(
             simulator=simulator,
             pop_size=pop_size,

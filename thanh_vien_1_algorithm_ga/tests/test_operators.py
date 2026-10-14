@@ -187,6 +187,29 @@ class TestGAOperators(unittest.TestCase):
         grad_med = tyre_deg_derivative('Medium', 10, deg_coeffs=silverstone_coeffs)
         self.assertAlmostEqual(grad_med, 0.141, places=5)
 
+    def test_08_tv3_dict_params_polymorphism(self):
+        """Kiểm chứng toán tử GA chấp nhận cấu trúc tham số dạng dict lồng chuẩn TV3."""
+        tv3_compound_params = {
+            'Soft': {'d1': 0.1229, 'd2': 0.0048, 'l_max': 22},
+            'Medium': {'d1': 0.0641, 'd2': 0.0021, 'l_max': 35},
+            'Hard': {'d1': 0.0414, 'd2': 0.0009, 'l_max': 48}
+        }
+        # Đạo hàm giải tích với dict
+        grad = tyre_deg_derivative('Soft', age=10, deg_coeffs=tv3_compound_params)
+        expected = 0.1229 + 2.0 * 0.0048 * 10
+        self.assertAlmostEqual(grad, expected, places=4)
+
+        # Toán tử sửa chữa với dict
+        raw = [('Soft', 30), ('Hard', 10)] # Lỗi: Soft vượt cliff 22, tổng thiếu 13 vòng
+        repaired = physics_guided_repair(
+            raw,
+            total_laps=53,
+            cliff_limits=tv3_compound_params,
+            deg_coeffs=tv3_compound_params
+        )
+        self.assertEqual(sum(l for _, l in repaired), 53)
+        self.assertGreaterEqual(len({c for c, _ in repaired}), 2)
+
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

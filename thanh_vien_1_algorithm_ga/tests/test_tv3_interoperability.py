@@ -13,9 +13,11 @@ from src.tyre_model.pirelli_physics import PirelliPhysicsTyreModel
 from tyre.derivatives import (
     marginal_degradation as tv3_marginal_deg,
     closed_form_stint_degradation as tv3_closed_deg,
-    closed_form_stint_lap_time as tv3_closed_stint_time
+    closed_form_stint_lap_time as tv3_closed_stint_time,
+    fix_total_laps as tv3_fix_total_laps
 )
 from tyre.thermal import adjust_degradation_parameters as tv3_adjust_thermal
+import json
 
 
 class TestTV3Interoperability(unittest.TestCase):
@@ -76,6 +78,39 @@ class TestTV3Interoperability(unittest.TestCase):
 
                 self.assertAlmostEqual(tv1_d1, tv3_d1, places=9)
                 self.assertAlmostEqual(tv1_d2, tv3_d2, places=9)
+
+    def test_tv3_json_params_consistency(self):
+        """Kiểm chứng tính nhất quán giữa file JSON mô hình lốp TV3 và tham số TV1."""
+        json_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'tyre', 'models', 'tyre_params_monza.json'))
+        if os.path.exists(json_path):
+            with open(json_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            self.assertEqual(data['circuit'], 'monza')
+            self.assertEqual(data['total_laps'], 53)
+            self.assertAlmostEqual(data['alpha_fuel'], 0.058, places=3)
+            self.assertAlmostEqual(data['gamma_track'], 0.022, places=3)
+            self.assertAlmostEqual(data['t_pit'], 23.2, places=1)
+            # Khẳng định các hợp chất Soft, Medium, Hard có trong JSON
+            self.assertIn('Soft', data['compounds'])
+            self.assertIn('Medium', data['compounds'])
+            self.assertIn('Hard', data['compounds'])
+
+    def test_tv3_fix_total_laps_preservation(self):
+        """Kiểm tra hàm fix_total_laps của TV3 bảo toàn bất biến tổng 53 vòng."""
+        compound_params = {
+            'Soft': {'d1': 0.12, 'd2': 0.005, 'l_max': 22},
+            'Medium': {'d1': 0.07, 'd2': 0.002, 'l_max': 35},
+            'Hard': {'d1': 0.04, 'd2': 0.001, 'l_max': 48}
+        }
+        test_cases = [
+            ([10, 20, 10], ['Soft', 'Medium', 'Hard']), # 40 laps (thiếu 13)
+            ([25, 25, 25], ['Medium', 'Hard', 'Medium']), # 75 laps (thừa 22)
+            ([14, 20, 19], ['Soft', 'Medium', 'Hard'])  # Đúng 53 vòng
+        ]
+        for lengths, compounds in test_cases:
+            fixed = tv3_fix_total_laps(lengths, compounds, target_laps=53, compound_params=compound_params)
+            self.assertEqual(sum(fixed), 53)
+            self.assertTrue(all(l >= 4 for l in fixed))
 
 
 if __name__ == '__main__':

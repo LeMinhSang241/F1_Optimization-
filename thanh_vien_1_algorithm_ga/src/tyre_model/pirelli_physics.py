@@ -89,24 +89,37 @@ class PirelliPhysicsTyreModel:
             thermal_runaway = max(0.0, self.delta_t) ** 2
             d2_adj = d2_nom * (1.0 + k2 * self.delta_t + th2 * thermal_runaway)
 
-            self.deg_coeffs[c] = (max(0.0, float(d1_adj)), max(0.0, float(d2_adj)))
+            # Đảm bảo chặn dưới vật lý ngay cả khi trời rét cực đoan (Las Vegas đêm < 15°C)
+            # Ngăn ngừa d2 bị triệt tiêu về 0 hoặc âm do k2 * delta_T < -1
+            self.deg_coeffs[c] = (
+                max(d1_nom * 0.20, float(d1_adj)),
+                max(d2_nom * 0.10, float(d2_adj))
+            )
 
             # Giảm tuổi thọ an toàn nếu mặt đường quá nhiệt (nhiệt độ tăng làm rộp lốp sớm)
             nom_limit = self.nominal_safe_limits[c]
             if self.delta_t > 0.20:
-                heat_reduction = int(round(nom_limit * 0.15 * min(1.0, self.delta_t)))
+                heat_reduction = int(round(nom_limit * 0.20 * min(1.5, self.delta_t)))
                 self.safe_limits[c] = max(8, nom_limit - heat_reduction)
             else:
                 self.safe_limits[c] = nom_limit
 
-    def predict_lap_time(self, compound: str, tyre_age: int, race_lap: int, **kwargs) -> float:
+    def predict_lap_time(
+        self,
+        compound: str,
+        tyre_age: int,
+        race_lap: int,
+        total_laps: Optional[int] = None,
+        **kwargs
+    ) -> float:
         """Tính toán chính xác thời gian hoàn thành vòng đua:
         t_lap = t_base + (d1*a + d2*a^2) + alpha_fuel*(N - lap) - gamma_track*lap
         """
         base = self.base_times.get(compound, 82.50)
         d1, d2 = self.deg_coeffs.get(compound, (0.080, 0.0030))
         deg_delta = d1 * tyre_age + d2 * (tyre_age ** 2)
-        fuel_delta = self.alpha_fuel * (self.total_laps - race_lap)
+        n_laps = total_laps if total_laps is not None else kwargs.get('total_laps', self.total_laps)
+        fuel_delta = self.alpha_fuel * (n_laps - race_lap)
         track_delta = self.gamma_track * race_lap
 
         return float(base + deg_delta + fuel_delta - track_delta)
@@ -144,7 +157,13 @@ class PirelliPhysicsTyreModel:
         sum_a2 = l_val * (l_val + 1.0) * (2.0 * l_val + 1.0) / 6.0
         return float(d1 * sum_a + d2 * sum_a2)
 
-    def closed_form_stint_lap_time(self, compound: str, length: int, start_lap: int) -> float:
+    def closed_form_stint_lap_time(
+        self,
+        compound: str,
+        length: int,
+        start_lap: int,
+        total_laps: Optional[int] = None
+    ) -> float:
         """Tổng thời gian hoàn thành toàn bộ stint dài L vòng xuất phát từ vòng start_lap:
         Tính giải tích đóng O(1) triệt tiêu hoàn toàn vòng lặp for.
         """
@@ -153,9 +172,10 @@ class PirelliPhysicsTyreModel:
         l_val = float(length)
         base = self.base_times.get(compound, 82.50)
         deg = self.closed_form_stint_degradation(compound, length)
+        n_laps = total_laps if total_laps is not None else self.total_laps
 
         sum_i = l_val * float(start_lap) + l_val * (l_val - 1.0) / 2.0
-        fuel_term = self.alpha_fuel * (l_val * float(self.total_laps) - sum_i)
+        fuel_term = self.alpha_fuel * (l_val * float(n_laps) - sum_i)
         track_term = self.gamma_track * sum_i
 
         return float(l_val * base + deg + fuel_term - track_term)
