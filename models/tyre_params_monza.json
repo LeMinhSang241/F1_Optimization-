@@ -1,0 +1,61 @@
+{
+  "circuit": "monza",
+  "circuit_name": "Autodromo Nazionale Monza",
+  "total_laps": 53,
+  "alpha_fuel": 0.058,
+  "gamma_track": 0.022,
+  "t_pit": 23.2,
+  "compounds": {
+    "Soft": {
+      "code": "C4",
+      "t_base": 81.4883,
+      "d1": 0.122925,
+      "d2": 0.0048471,
+      "l_max": 22,
+      "metrics": {
+        "r2": 0.9959,
+        "r2_adj": 0.9958,
+        "rmse": 0.0903,
+        "mae": 0.0579,
+        "mape": 0.0685,
+        "aic": -1412.55,
+        "bic": -1401.48,
+        "sample_size": 295
+      }
+    },
+    "Medium": {
+      "code": "C3",
+      "t_base": 82.2272,
+      "d1": 0.064163,
+      "d2": 0.0021567,
+      "l_max": 35,
+      "metrics": {
+        "r2": 0.9726,
+        "r2_adj": 0.9725,
+        "rmse": 0.2293,
+        "mae": 0.1408,
+        "mape": 0.1652,
+        "aic": -1466.77,
+        "bic": -1454.12,
+        "sample_size": 500
+      }
+    },
+    "Hard": {
+      "code": "C2",
+      "t_base": 82.9931,
+      "d1": 0.041434,
+      "d2": 0.0009683,
+      "l_max": 48,
+      "metrics": {
+        "r2": 0.9498,
+        "r2_adj": 0.9496,
+        "rmse": 0.2639,
+        "mae": 0.1762,
+        "mape": 0.2062,
+        "aic": -1813.79,
+        "bic": -1800.21,
+        "sample_size": 683
+      }
+    }
+  }
+}

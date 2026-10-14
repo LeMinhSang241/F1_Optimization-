@@ -1,0 +1,61 @@
+{
+  "circuit": "silverstone",
+  "circuit_name": "Silverstone Circuit",
+  "total_laps": 52,
+  "alpha_fuel": 0.06,
+  "gamma_track": 0.024,
+  "t_pit": 25.0,
+  "compounds": {
+    "Soft": {
+      "code": "C3",
+      "t_base": 89.2145,
+      "d1": 0.142398,
+      "d2": 0.0065553,
+      "l_max": 18,
+      "metrics": {
+        "r2": 0.9976,
+        "r2_adj": 0.9976,
+        "rmse": 0.0602,
+        "mae": 0.0448,
+        "mape": 0.0489,
+        "aic": -1281.19,
+        "bic": -1270.89,
+        "sample_size": 229
+      }
+    },
+    "Medium": {
+      "code": "C2",
+      "t_base": 89.8439,
+      "d1": 0.087278,
+      "d2": 0.0026697,
+      "l_max": 30,
+      "metrics": {
+        "r2": 0.9856,
+        "r2_adj": 0.9855,
+        "rmse": 0.161,
+        "mae": 0.1007,
+        "mape": 0.1084,
+        "aic": -1477.09,
+        "bic": -1465.07,
+        "sample_size": 406
+      }
+    },
+    "Hard": {
+      "code": "C1",
+      "t_base": 90.604,
+      "d1": 0.047398,
+      "d2": 0.0014823,
+      "l_max": 42,
+      "metrics": {
+        "r2": 0.9625,
+        "r2_adj": 0.9623,
+        "rmse": 0.2436,
+        "mae": 0.1605,
+        "mape": 0.1723,
+        "aic": -1674.68,
+        "bic": -1661.52,
+        "sample_size": 595
+      }
+    }
+  }
+}
