@@ -587,7 +587,7 @@
       \begin{tikzpicture}
         \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
           {\Large \bfseries \color{f1green!85!black} 5.2 ms}\\[2pt]
-          {\tiny \bfseries \color{f1slate} Tái tối ưu 35 vòng (nhanh gấp 15 lần DP)}
+          {\tiny \bfseries \color{f1slate} Tái tối ưu 35 vòng (gấp 15 lần DP: $65\text{--}85\,\text{ms}$)}
         };
       \end{tikzpicture}
       \vspace{0.15cm}
@@ -612,10 +612,10 @@
           Vòng 32 & $\mathbf{4.1\,\text{ms}}$ & $4487.597\,\text{s}$ & \texttt{BOX (Attack)} \\
           \bottomrule
         \end{tabularx}
-        \vspace{0.1cm}
+        \vspace{0.08cm}
         \begin{itemize}
-          \item Phản xạ \textbf{$4\text{--}5\,\text{ms}$} $\implies$ Nhanh gấp \textbf{600 lần} cửa sổ $3\,\text{s}$ của Pit-wall!
-          \item Cho phép kỹ sư ra lệnh "BOX BOX" trước khi xe tới lối vào pit.
+          \item Phản xạ \textbf{$4.1\text{--}5.5\,\text{ms}$} (nhanh gấp \textbf{15 lần} DP re-solve $65\text{--}85\,\text{ms}$).
+          \item Nhanh gấp \textbf{600 lần} cửa sổ 3s Pit-wall $\implies$ Ra lệnh "BOX BOX" kịp thời!
         \end{itemize}
       \end{alertblock}
     \end{column}
@@ -639,12 +639,15 @@
           \midrule
           Bellman DP (Ground Truth) & $4497.997$ & $4497.997$ & $0.00$ & $100\%$ & $0.0000\%$ \\
           \midrule
-          \textbf{DAGA-F1 (Đầy đủ)} & $\mathbf{4497.997}$ & $\mathbf{4498.000}$ & $\mathbf{0.00}$ & $\mathbf{100\%}$ & $\mathbf{0.0000\%}$ \\
+          \textbf{DAGA-F1 (Đề xuất)} & $\mathbf{4497.997}$ & $\mathbf{4497.997}$ & $\mathbf{0.00}$ & $\mathbf{100\%}$ & $\mathbf{0.0000\%}$ \\
           Variant B (w/o Repair) & $4497.997$ & $4501.373$ & $4.14$ & $45.4\%$ & $+0.0751\%$ \\
           Variant C (w/o Split/Merge) & $4508.197$ & $4508.197$ & $0.00$ & $100\%$ & $+0.2268\%$ \\
           Standard Holland GA & $4508.197$ & $4508.197$ & $0.00$ & $0.0\%$ & $+0.2268\%$ \\
           \bottomrule
         \end{tabularx}
+        \vspace{0.05cm}
+        \centering
+        \tiny \textbf{Baseline:} Holland GA ($+10.20\,\text{s}$), Greedy Heuristic ($4508.864\,\text{s}$, $+10.86\,\text{s}$).
       \end{block}
     \end{column}
 
@@ -653,14 +656,14 @@
       \begin{tikzpicture}
         \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
           {\normalsize \bfseries \color{f1green!85!black} Optimality Gap: 0.0000\%}\\[1.5pt]
-          {\tiny \color{f1slate} Khớp 100\% nghiệm chân lý Bellman DP}
+          {\tiny \color{f1slate} Khớp 100\% Bellman DP trên mọi seeds}
         };
       \end{tikzpicture}
       \vspace{0.1cm}
       \begin{tikzpicture}
         \node[fill=f1red!8, draw=f1red, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
           {\normalsize \bfseries \color{f1red} Wilcoxon: $p < 0.001$}\\[1.5pt]
-          {\tiny \color{f1darkred} $p = 3.59 \times 10^{-7}$, vượt trội có ý nghĩa}
+          {\tiny \color{f1darkred} $p = 9.77 \times 10^{-4}$ (10s) \& $3.59 \times 10^{-7}$ (30s)}
         };
       \end{tikzpicture}
     \end{column}
