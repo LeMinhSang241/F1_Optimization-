@@ -22,102 +22,133 @@
 \usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc, shadows, backgrounds}
 
 % ==============================================================================
-% ĐỊNH NGHĨA BẢNG MÀU PHONG CÁCH F1 CHUYÊN NGHIỆP & SANG TRỌNG
+% HỆ THỐNG MÀU SẮC CAO CẤP (EXECUTIVE ACADEMIC & MODERN F1 PALETTE)
 % ==============================================================================
-\definecolor{f1navy}{RGB}{15, 23, 42}       % Deep Navy Slate #0F172A
-\definecolor{f1red}{RGB}{225, 6, 0}         % F1 Racing Red #E10600
-\definecolor{f1darkred}{RGB}{185, 28, 28}   % Dark Crimson
-\definecolor{f1gold}{RGB}{234, 179, 8}      % Pirelli Medium Yellow #EAB308
-\definecolor{f1silver}{RGB}{241, 245, 249}  % Light Slate Card #F1F5F9
-\definecolor{f1cardgray}{RGB}{248, 250, 252}% Card Background #F8FAFC
-\definecolor{f1border}{RGB}{203, 213, 225}  % Border Gray #CBD5E1
-\definecolor{f1slate}{RGB}{71, 85, 105}     % Slate Gray #475569
-\definecolor{f1green}{RGB}{16, 185, 129}    % Emerald Green #10B981
-\definecolor{softred}{RGB}{239, 68, 68}     % Soft Tyre Red #EF4444
+\definecolor{slidebg}{RGB}{248, 250, 252}    % Soft Canvas #F8FAFC (Chống lóa, mắt nhìn êm ái)
+\definecolor{cardbg}{RGB}{255, 255, 255}     % Pure White Card #FFFFFF (Nổi bật nội dung)
+\definecolor{f1navy}{RGB}{26, 36, 56}        % Deep Slate Navy #1A2438 (Chủ đạo học thuật uy nghiêm)
+\definecolor{f1dark}{RGB}{15, 23, 42}        % Obsidian Slate #0F172A (Tiêu đề, văn bản chính)
+\definecolor{f1crimson}{RGB}{185, 28, 28}    % Refined Racing Crimson #B91C1C (F1 Accent thanh lịch)
+\definecolor{f1amber}{RGB}{217, 119, 6}      % Muted Ochre / Medium Yellow #D97706 (Cảnh báo, ấm áp)
+\definecolor{f1teal}{RGB}{15, 118, 110}      % Deep Sea Teal #0F766E (Kết quả tích cực, tối ưu)
+\definecolor{f1emerald}{RGB}{16, 149, 110}   % Muted Emerald #10956E
+\definecolor{f1slate}{RGB}{71, 85, 105}      % Slate Gray #475569 (Văn bản phụ)
+\definecolor{f1border}{RGB}{226, 232, 240}   % 1px Card Border #E2E8F0 (Viền phẳng hiện đại)
+\definecolor{textdark}{RGB}{15, 23, 42}      % Primary Text #0F172A
+\definecolor{textmuted}{RGB}{100, 116, 139}  % Secondary Text #64748B
 
 % ==============================================================================
-% TÙY BIẾN BEAMER THEME HIỆN ĐẠI
+% TÙY BIẾN BEAMER THEME HIỆN ĐẠI & HÀI HÒA
 % ==============================================================================
 \usetheme{Madrid}
 \usefonttheme{professionalfonts}
 
+% Màu nền Canvas & Font cơ bản
+\setbeamercolor{background canvas}{bg=slidebg}
+\setbeamercolor{normal text}{fg=textdark}
+
+% Bảng màu hệ thống Beamer
 \setbeamercolor{palette primary}{bg=f1navy,fg=white}
-\setbeamercolor{palette secondary}{bg=f1red,fg=white}
+\setbeamercolor{palette secondary}{bg=f1crimson,fg=white}
 \setbeamercolor{palette tertiary}{bg=f1slate,fg=white}
 \setbeamercolor{structure}{fg=f1navy}
 \setbeamercolor{title}{bg=f1navy,fg=white}
 \setbeamercolor{frametitle}{bg=f1navy,fg=white}
+
+% Chuẩn hóa Khối Thẻ (Cards / Blocks) phẳng, thân thẻ màu trắng tinh khôi, viền mềm mại
+\setbeamertemplate{blocks}[rounded][shadow=false]
 \setbeamercolor{block title}{bg=f1navy,fg=white}
-\setbeamercolor{block body}{bg=f1silver,fg=black}
-\setbeamercolor{block title alerted}{bg=f1red,fg=white}
-\setbeamercolor{block body alerted}{bg=f1red!8,fg=black}
-\setbeamercolor{block title example}{bg=f1green!85!black,fg=white}
-\setbeamercolor{block body example}{bg=f1green!8,fg=black}
+\setbeamercolor{block body}{bg=cardbg,fg=textdark}
+
+\setbeamercolor{block title alerted}{bg=f1crimson,fg=white}
+\setbeamercolor{block body alerted}{bg=cardbg,fg=textdark}
+
+\setbeamercolor{block title example}{bg=f1teal,fg=white}
+\setbeamercolor{block body example}{bg=cardbg,fg=textdark}
 
 \setbeamertemplate{navigation symbols}{}
 
-% Tùy biến thanh tiêu đề Slide với vạch đỏ F1 Racing Stripe
+% Tùy biến thanh tiêu đề Slide với vạch chỉ huy F1 Crimson tinh tế
 \setbeamertemplate{frametitle}{
-  \begin{beamercolorbox}[wd=\paperwidth,ht=3.2ex,dp=1.2ex,leftskip=1.0cm]{frametitle}
+  \vspace{-1pt}%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.4ex,dp=1.2ex,leftskip=0.8cm]{frametitle}
     \textbf{\insertframetitle}
   \end{beamercolorbox}%
   \vspace{-1pt}%
   \begin{tikzpicture}
-    \fill[f1red] (0,0) rectangle (\paperwidth, 2.5pt);
+    \fill[f1crimson] (0,0) rectangle (\paperwidth, 2.0pt);
   \end{tikzpicture}%
 }
 
-% Tùy biến thanh chân trang Slide (Footline)
+% Tùy biến thanh chân trang (Footline) liền mạch, thanh lịch, chuyên nghiệp
 \setbeamertemplate{footline}{
   \leavevmode%
+  \begin{tikzpicture}
+    \fill[f1border] (0, 0) rectangle (\paperwidth, 0.6pt);
+  \end{tikzpicture}%
+  \vspace{-2.5pt}%
   \hbox{%
-  \begin{beamercolorbox}[wd=.38\paperwidth,ht=2.5ex,dp=1ex,leftskip=0.8cm]{palette primary}%
-    \tiny \textbf{DS106: Tối Ưu Hóa \& Ứng Dụng} | Đề Án F1
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.42\paperwidth,ht=2.5ex,dp=1ex,center]{palette tertiary}%
-    \tiny \textbf{Khoa Khoa Học Dữ Liệu} | UIT - ĐHQG-HCM
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[wd=.20\paperwidth,ht=2.5ex,dp=1ex,rightskip=0.8cm,right]{palette secondary}%
-    \tiny \insertframenumber{} / \inserttotalframenumber
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.6ex,dp=1.0ex,leftskip=0.8cm,rightskip=0.8cm]{palette primary}%
+    \tiny \textcolor{white!70}{\textbf{DS106: Tối Ưu Hóa \& Ứng Dụng}} \quad\textcolor{white!30}{|}\quad \textcolor{white}{\textbf{Đề Án Tối Ưu Chiến Lược Pit-Stop F1}} \hfill
+    \tiny \textcolor{white!70}{Khoa Khoa Học Dữ Liệu -- UIT} \quad\textcolor{white!30}{|}\quad \textcolor{white}{\textbf{\insertframenumber{} / \inserttotalframenumber}}
   \end{beamercolorbox}}%
   \vskip0pt%
 }
 
 % ==============================================================================
-% THIẾT KẾ BADGE HỢP CHẤT LỐP PIRELLI
+% THIẾT KẾ BADGE HỢP CHẤT LỐP PIRELLI CHUẨN MỰC
 % ==============================================================================
-\newcommand{\badgeSoft}{\tikz[baseline=-2.5pt]{\node[fill=softred,text=white,rounded corners=2pt,inner sep=1.8pt,font=\tiny\bfseries]{SOFT};}}
-\newcommand{\badgeMed}{\tikz[baseline=-2.5pt]{\node[fill=f1gold,text=black,rounded corners=2pt,inner sep=1.8pt,font=\tiny\bfseries]{MEDIUM};}}
-\newcommand{\badgeHard}{\tikz[baseline=-2.5pt]{\node[fill=white,draw=f1slate,text=f1navy,rounded corners=2pt,inner sep=1.8pt,font=\tiny\bfseries]{HARD};}}
+\newcommand{\badgeSoft}{\tikz[baseline=-2.2pt]{\node[fill=f1crimson,text=white,rounded corners=2pt,inner sep=1.8pt,font=\tiny\bfseries]{SOFT};}}
+\newcommand{\badgeMed}{\tikz[baseline=-2.2pt]{\node[fill=f1amber,text=white,rounded corners=2pt,inner sep=1.8pt,font=\tiny\bfseries]{MEDIUM};}}
+\newcommand{\badgeHard}{\tikz[baseline=-2.2pt]{\node[fill=white,draw=f1slate,text=f1navy,line width=0.6pt,rounded corners=2pt,inner sep=1.6pt,font=\tiny\bfseries]{HARD};}}
 
 % ==============================================================================
-% THÔNG TIN TRANG TIÊU ĐỀ
-% ==============================================================================
-\title[\textbf{F1 Strategy Optimization}]{\Large \textbf{TỐI ƯU HÓA CHIẾN LƯỢC PIT-STOP \& QUẢN LÝ LỐP\\TRONG ĐUA XE CÔNG THỨC 1 (F1)}}
-\subtitle{\normalsize \textcolor{f1red}{\textbf{Cặp Bài Trùng: Bellman DP Toàn Cục \& DAGA-F1 Tác Chiến Siêu Tốc}}}
-\author[\textbf{Nhóm Đề Án DS106}]{\textbf{NHÓM NGHIÊN CỨU ĐỀ ÁN DS106}}
-\institute[UIT - ĐHQG-HCM]{
-  \small \textbf{Khoa Khoa học Dữ liệu -- Trường Đại học Công nghệ Thông tin (UIT), ĐHQG-HCM}\\
-  \vspace{0.12cm}
-  \footnotesize \textbf{Giảng viên hướng dẫn:} \textbf{TS. Nguyễn Tất Bảo Thiện}
-}
-\date[\today]{\footnotesize Học kỳ I, Năm học 2024--2025}
-
-% ==============================================================================
-% BẮT ĐẦU TÀI LIỆU SLIDE (ĐÚNG 12 SLIDES TINH GỌN, CHUẨN VISUAL-FIRST)
+% BẮT ĐẦU TÀI LIỆU SLIDE (12 SLIDES TINH GỌN, CHUẨN VISUAL-FIRST & HIGH IMPACT)
 % ==============================================================================
 \begin{document}
 
 % ------------------------------------------------------------------------------
-% SLIDE 1: TRANG TIÊU ĐỀ TRANG TRỌNG
+% SLIDE 1: TRANG TIÊU ĐỀ TRANG TRỌNG & HIỆN ĐẠI
 % ------------------------------------------------------------------------------
 \begin{frame}[plain]
-  \titlepage
-  \vspace{-0.6cm}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Canvas background
+    \fill[slidebg] (current page.south west) rectangle (current page.north east);
+    % Top aesthetic banner
+    \fill[f1navy] (current page.north west) rectangle ($(current page.north east) + (0, -0.26cm)$);
+    \fill[f1crimson] ($(current page.north west) + (0, -0.26cm)$) rectangle ($(current page.north east) + (0, -0.31cm)$);
+  \end{tikzpicture}
+
+  \vspace{0.35cm}
   \begin{center}
+    % University & Faculty Tag
     \begin{tikzpicture}
-      \node[fill=f1silver, draw=f1border, rounded corners=3pt, inner sep=4pt] {
-        \tiny \textbf{Dữ liệu thực nghiệm viễn trắc FastF1:} Formula 1 Italian Grand Prix (Monza -- 53 Vòng)
+      \node[fill=white, draw=f1border, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt] {
+        \scriptsize \textbf{\textcolor{f1navy}{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN -- KHOA KHOA HỌC DỮ LIỆU}}
+      };
+    \end{tikzpicture}
+    
+    \vspace{0.30cm}
+    {\footnotesize \textbf{\textcolor{f1crimson}{ĐỀ ÁN MÔN HỌC DS106: TỐI ƯU HÓA VÀ ỨNG DỤNG}}}\\[0.20cm]
+    
+    % Main Title
+    {\Large \bfseries \textcolor{f1navy}{TỐI ƯU HÓA CHIẾN LƯỢC PIT-STOP \& QUẢN LÝ LỐP\\TRONG ĐUA XE CÔNG THỨC 1 (F1)}}\\[0.25cm]
+    
+    % Subtitle Pill
+    \begin{tikzpicture}
+      \node[fill=white, draw=f1navy!25, line width=0.8pt, rounded corners=4pt, inner sep=4.5pt] {
+        \small \bfseries \textcolor{f1navy}{Cặp Bài Trùng:} \textcolor{f1crimson}{Bellman DP Toàn Cục} \textcolor{f1slate}{\&} \textcolor{f1teal}{DAGA-F1 Tác Chiến Siêu Tốc}
+      };
+    \end{tikzpicture}
+    
+    \vspace{0.45cm}
+    % Metadata Card
+    \begin{tikzpicture}
+      \node[fill=white, draw=f1border, line width=0.9pt, rounded corners=5pt, inner sep=7.5pt, text width=0.84\paperwidth, align=center] {
+        \small \textbf{\textcolor{f1navy}{Thực hiện:}} \textbf{Nhóm Nghiên Cứu Đề Án DS106} \quad
+        \textcolor{f1border!150}{|} \quad
+        \small \textbf{\textcolor{f1navy}{Giảng viên hướng dẫn:}} \textbf{TS. Nguyễn Tất Bảo Thiện}\\[4pt]
+        \tiny \textcolor{textmuted}{\textbf{Dữ liệu thực nghiệm viễn trắc FastF1:}} Italian Grand Prix (Monza -- 53 Vòng, $T_{\text{pit}} = 23.2\text{s}$) \quad $\bullet$ \quad Học kỳ I, Năm học 2024--2025
       };
     \end{tikzpicture}
   \end{center}
@@ -130,8 +161,8 @@
   % Key Takeaway Banner
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1navy, text=white, rounded corners=3pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
-        \small \textbf{Trọng tâm chiến thuật:} Dừng pit quyết định \textbf{80\% cơ hội chiến thắng} -- Sai lệch \textbf{1--2 giây} là mất ngôi vô địch!
+      \node[fill=white, draw=f1crimson!50, line width=0.9pt, rounded corners=4pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
+        \small \textcolor{f1crimson}{\textbf{Trọng tâm chiến thuật:}} \textbf{\textcolor{f1navy}{Dừng pit quyết định 80\% cơ hội chiến thắng}} -- Sai lệch \textbf{1--2 giây} là mất ngôi vô địch!
       };
     \end{tikzpicture}
   \end{center}
@@ -147,7 +178,7 @@
         \end{itemize}
         \vspace{0.1cm}
         \centering
-        \tikz{\node[fill=f1red!12, draw=f1red!60, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1red} Suy thoái nhiệt $d_2 a^2$};}
+        \tikz{\node[fill=f1crimson!8, draw=f1crimson!35, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1crimson} Suy thoái nhiệt $d_2 a^2$};}
       \end{block}
     \end{column}
 
@@ -160,7 +191,7 @@
         \end{itemize}
         \vspace{0.1cm}
         \centering
-        \tikz{\node[fill=f1darkred!12, draw=f1darkred!60, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1darkred} $T_{\text{pit}} = 23.2\,\text{s}$ (Monza)};}
+        \tikz{\node[fill=f1amber!10, draw=f1amber!40, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1amber} $T_{\text{pit}} = 23.2\,\text{s}$ (Monza)};}
       \end{alertblock}
     \end{column}
 
@@ -173,7 +204,7 @@
         \end{itemize}
         \vspace{0.1cm}
         \centering
-        \tikz{\node[fill=f1green!12, draw=f1green!60, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1green!85!black} Cuối chặng nhanh nhất};}
+        \tikz{\node[fill=f1teal!10, draw=f1teal!40, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries\color{f1teal} Cuối chặng nhanh nhất};}
       \end{exampleblock}
     \end{column}
   \end{columns}
@@ -181,8 +212,8 @@
   \vspace{0.15cm}
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1silver, draw=f1navy, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
-        \footnotesize $\mathbf{\implies \text{BÀI TOÁN:}}$ \textbf{Dừng 1, 2 hay 3 lần? Vào pit vòng nào? Thay loại lốp gì để tổng thời gian $T_{\text{race}}$ ngắn nhất?}
+      \node[fill=white, draw=f1navy!40, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
+        \footnotesize $\mathbf{\implies \text{BÀI TOÁN:}}$ \textbf{\textcolor{f1navy}{Dừng 1, 2 hay 3 lần? Vào pit vòng nào? Thay loại lốp gì để tổng thời gian $T_{\text{race}}$ ngắn nhất?}}
       };
     \end{tikzpicture}
   \end{center}
@@ -239,8 +270,8 @@
   \vspace{-0.1cm}
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1navy, text=white, rounded corners=4pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
-        \small $\mathbf{t_{\text{lap}}(c, a, i) = \underbrace{t_{\text{base}}(c)}_{\text{Thời gian cơ sở}} + \underbrace{d_1(c) \cdot a}_{\text{Mòn cơ học (tt)}} + \underbrace{d_2(c) \cdot a^2}_{\text{Thoái hóa nhiệt (pt)}} + \underbrace{\alpha_{\text{fuel}} (N - i)}_{\text{Hao tải nhiên liệu}} - \underbrace{\gamma_{\text{track}} \cdot i}_{\text{Bám cao su mặt đường}}}$
+      \node[fill=white, draw=f1navy!50, line width=0.9pt, rounded corners=4pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
+        \small $\mathbf{\textcolor{f1navy}{t_{\text{lap}}(c, a, i)} = \underbrace{t_{\text{base}}(c)}_{\text{Thời gian cơ sở}} + \underbrace{d_1(c) \cdot a}_{\text{Mòn cơ học (tt)}} + \underbrace{\textcolor{f1crimson}{d_2(c) \cdot a^2}}_{\text{Thoái hóa nhiệt (pt)}} + \underbrace{\alpha_{\text{fuel}} (N - i)}_{\text{Hao tải xăng}} - \underbrace{\gamma_{\text{track}} \cdot i}_{\text{Bám cao su đường}}}$
       };
     \end{tikzpicture}
   \end{center}
@@ -282,7 +313,7 @@
 
   \vspace{0.12cm}
   \begin{center}
-    \tikz{\node[fill=f1green!12, draw=f1green!80!black, rounded corners=3pt, inner sep=3.5pt]{\tiny\bfseries\color{f1green!85!black} $\checkmark$ Kết luận: Mô hình Bậc 2 cân bằng hoàn hảo giữa độ chân thực vật lý và khả năng giải tối ưu toán học!};}
+    \tikz{\node[fill=white, draw=f1teal, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt]{\tiny\bfseries\color{f1teal} $\checkmark$ Kết luận: Mô hình Bậc 2 cân bằng hoàn hảo giữa độ chân thực vật lý và khả năng giải tối ưu toán học!};}
   \end{center}
 \end{frame}
 
@@ -369,25 +400,25 @@
   \begin{center}
     \begin{tikzpicture}[xscale=0.92, yscale=0.68, every node/.style={font=\tiny, align=center}]
       % Problem node
-      \node[fill=f1silver, draw=f1navy, rounded corners=3pt, inner sep=4pt, font=\tiny\bfseries] (input) at (0, 0)
-        {\textbf{BÀI TOÁN MONZA}\\53 Vòng, $T_{\text{pit}} = 23.2\text{s}$};
+      \node[fill=white, draw=f1navy, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt, font=\tiny\bfseries] (input) at (0, 0)
+        {\textbf{\textcolor{f1navy}{BÀI TOÁN MONZA}}\\53 Vòng, $T_{\text{pit}} = 23.2\text{s}$};
 
       % DP branch
-      \node[fill=f1navy, text=white, rounded corners=3pt, inner sep=4pt] (dp) at (5.2, 0.95)
+      \node[fill=f1navy, text=white, rounded corners=3pt, inner sep=4.5pt] (dp) at (5.2, 0.95)
         {\textbf{TRỤ CỘT 1: Bellman DP (Ground Truth)}\\30.088 trạng thái, Faulhaber $O(1)$\\$\implies \mathbf{T_{\text{opt}} = 4497.997\,\text{s}}$};
 
       % DAGA branch
-      \node[fill=f1red, text=white, rounded corners=3pt, inner sep=4pt] (ga) at (5.2, -0.95)
+      \node[fill=f1crimson, text=white, rounded corners=3pt, inner sep=4.5pt] (ga) at (5.2, -0.95)
         {\textbf{TRỤ CỘT 2: DAGA-F1 (Tác Chiến Siêu Tốc)}\\Khởi tạo 65-30-5, Gradient $\nabla t_{\text{deg}}$, Split/Merge\\$\implies \mathbf{T_{\text{AGA}} = 4497.997\,\text{s}}$};
 
       % Verification node
-      \node[fill=f1green!85!black, text=white, rounded corners=3pt, inner sep=4pt, font=\tiny\bfseries] (out) at (10.6, 0)
+      \node[fill=f1teal, text=white, rounded corners=3pt, inner sep=4.5pt, font=\tiny\bfseries] (out) at (10.6, 0)
         {\textbf{BẢO CHỨNG TOÀN DIỆN}\\Optimality Gap = $\mathbf{0.0000\%}$\\Wilcoxon $p < 0.001$ ($30$ seeds)};
 
       \draw[-{Stealth[length=3.5pt]}, thick, f1navy] (input.east) -- ++(0.4, 0) |- (dp.west);
-      \draw[-{Stealth[length=3.5pt]}, thick, f1red] (input.east) -- ++(0.4, 0) |- (ga.west);
+      \draw[-{Stealth[length=3.5pt]}, thick, f1crimson] (input.east) -- ++(0.4, 0) |- (ga.west);
       \draw[-{Stealth[length=3.5pt]}, thick, f1navy] (dp.east) -| ++(0.5, -0.95) -- (out.west);
-      \draw[-{Stealth[length=3.5pt]}, thick, f1red] (ga.east) -| ++(0.5, 0.95) -- (out.west);
+      \draw[-{Stealth[length=3.5pt]}, thick, f1crimson] (ga.east) -| ++(0.5, 0.95) -- (out.west);
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -400,7 +431,7 @@
   \begin{columns}[T]
     \begin{column}{0.32\textwidth}
       \begin{tikzpicture}
-        \node[fill=f1silver, draw=f1navy, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+        \node[fill=white, draw=f1navy!40, line width=0.8pt, rounded corners=4pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
           {\Large \bfseries \color{f1navy} 30.088}\\[2pt]
           {\tiny \bfseries \color{f1slate} Không gian trạng thái $\mathbf{s} = (i, c, a, k, m)$}
         };
@@ -409,18 +440,18 @@
 
     \begin{column}{0.32\textwidth}
       \begin{tikzpicture}
-        \node[fill=f1red!8, draw=f1red, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
-          {\Large \bfseries \color{f1red} 4497.997\,s}\\[2pt]
-          {\tiny \bfseries \color{f1darkred} Nghiệm chân lý toàn cục (1h 14m 58s)}
+        \node[fill=white, draw=f1crimson!45, line width=0.8pt, rounded corners=4pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+          {\Large \bfseries \color{f1crimson} 4497.997\,s}\\[2pt]
+          {\tiny \bfseries \color{f1slate} Nghiệm chân lý toàn cục (1h 14m 58s)}
         };
       \end{tikzpicture}
     \end{column}
 
     \begin{column}{0.32\textwidth}
       \begin{tikzpicture}
-        \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
-          {\Large \bfseries \color{f1green!85!black} 0.086\,s}\\[2pt]
-          {\tiny \bfseries \color{f1green!60!black} Thời gian giải DP (Nhờ Faulhaber $O(1)$)}
+        \node[fill=white, draw=f1teal!45, line width=0.8pt, rounded corners=4pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+          {\Large \bfseries \color{f1teal} 0.086\,s}\\[2pt]
+          {\tiny \bfseries \color{f1slate} Thời gian giải DP (Nhờ Faulhaber $O(1)$)}
         };
       \end{tikzpicture}
     \end{column}
@@ -430,10 +461,10 @@
   % Golden Strategy Visual Banner
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1navy, text=white, rounded corners=3pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
+      \node[fill=f1navy, text=white, rounded corners=4pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
         \small \textbf{Chiến Lược Tối Ưu Toàn Cục (Monza 53 Vòng):}\\[3pt]
-        \badgeMed \textbf{ [20 Vòng]} $\;\xrightarrow{\quad\text{\textbf{Pit 1 (23.2s)}}\quad}\;$
-        \badgeSoft \textbf{ [14 Vòng]} $\;\xrightarrow{\quad\text{\textbf{Pit 2 (23.2s)}}\quad}\;$
+        \badgeMed \textbf{ [20 Vòng]} $\;\xrightarrow{\quad\text{\textcolor{white!80}{\textbf{Pit 1 (23.2s)}}}\quad}\;$
+        \badgeSoft \textbf{ [14 Vòng]} $\;\xrightarrow{\quad\text{\textcolor{white!80}{\textbf{Pit 2 (23.2s)}}}\quad}\;$
         \badgeMed \textbf{ [19 Vòng]}
       };
     \end{tikzpicture}
@@ -474,7 +505,7 @@
   \end{columns}
   \vspace{0.1cm}
   \centering
-  \tikz{\node[fill=f1gold!15, draw=f1gold!80!black, rounded corners=2pt, inner sep=2.5pt]{\tiny\bfseries \textbf{Bài học đắt giá:} Chiến lược 2 pit nhanh hơn 1 pit tới \textcolor{f1red}{\textbf{10.20 giây}} vì né tránh hoàn toàn sụp vách mòn (Cliff)!};}
+  \tikz{\node[fill=white, draw=f1amber, line width=0.8pt, rounded corners=3pt, inner sep=2.5pt]{\tiny\bfseries \textbf{\textcolor{f1navy}{Bài học đắt giá:}} Chiến lược 2 pit nhanh hơn 1 pit tới \textcolor{f1crimson}{\textbf{10.20 giây}} vì né tránh hoàn toàn sụp vách mòn (Cliff)!};}
 \end{frame}
 
 % ------------------------------------------------------------------------------
@@ -494,8 +525,8 @@
         \centering
         \begin{tikzpicture}[xscale=0.55, yscale=0.42, every node/.style={font=\tiny}]
           \draw[fill=f1navy, draw=white] (0, 0) rectangle (2.6, 0.5) node[pos=.5, text=white, font=\tiny\bfseries] {65\%};
-          \draw[fill=f1red, draw=white] (2.6, 0) rectangle (3.8, 0.5) node[pos=.5, text=white, font=\tiny\bfseries] {30\%};
-          \draw[fill=f1gold, draw=white] (3.8, 0) rectangle (4.0, 0.5) node[pos=.5, text=black, font=\tiny\bfseries] {5\%};
+          \draw[fill=f1crimson, draw=white] (2.6, 0) rectangle (3.8, 0.5) node[pos=.5, text=white, font=\tiny\bfseries] {30\%};
+          \draw[fill=f1amber, draw=white] (3.8, 0) rectangle (4.0, 0.5) node[pos=.5, text=white, font=\tiny\bfseries] {5\%};
         \end{tikzpicture}
       \end{block}
     \end{column}
@@ -510,7 +541,7 @@
         \end{itemize}
         \vspace{0.08cm}
         \centering
-        \tikz{\node[fill=f1green!15, draw=f1green!80!black, rounded corners=2pt, inner sep=2pt]{\tiny\bfseries\color{f1green!80!black} 100\% Nghiệm hợp lệ!};}
+        \tikz{\node[fill=f1teal!10, draw=f1teal!60, rounded corners=2pt, inner sep=2pt]{\tiny\bfseries\color{f1teal} 100\% Nghiệm hợp lệ!};}
       \end{alertblock}
     \end{column}
 
@@ -524,7 +555,7 @@
         \end{itemize}
         \vspace{0.08cm}
         \centering
-        \tikz{\node[fill=f1navy!10, draw=f1navy!50, rounded corners=2pt, inner sep=2pt]{\tiny\bfseries\color{f1navy} Tự tiến hóa số pit};}
+        \tikz{\node[fill=f1navy!8, draw=f1navy!30, rounded corners=2pt, inner sep=2pt]{\tiny\bfseries\color{f1navy} Tự tiến hóa số pit};}
       \end{exampleblock}
     \end{column}
   \end{columns}
@@ -535,23 +566,23 @@
     \begin{tikzpicture}[xscale=0.88, yscale=0.55, every node/.style={font=\tiny, align=center}]
       % Split flow
       \node[anchor=west, font=\tiny\bfseries\color{f1navy}] at (0, 1.2) {\textbf{Split ($1 \to 2$ Stops):}};
-      \draw[fill=f1gold!35, draw=f1gold!80!black, rounded corners=2pt] (3.0, 0.95) rectangle (4.6, 1.45) node[pos=.5]{\textbf{Med} 34v};
-      \draw[-{Stealth[length=3.5pt]}, thick, f1red] (4.7, 1.2) -- (5.2, 1.2);
-      \draw[fill=f1gold!35, draw=f1gold!80!black, rounded corners=2pt] (5.3, 0.95) rectangle (6.5, 1.45) node[pos=.5]{\textbf{Med} 18v};
-      \draw[fill=softred!35, draw=softred!80!black, rounded corners=2pt] (6.6, 0.95) rectangle (7.8, 1.45) node[pos=.5]{\textbf{Soft} 16v};
+      \draw[fill=f1amber!25, draw=f1amber!80, line width=0.6pt, rounded corners=2pt] (3.0, 0.95) rectangle (4.6, 1.45) node[pos=.5]{\textbf{Med} 34v};
+      \draw[-{Stealth[length=3.5pt]}, thick, f1crimson] (4.7, 1.2) -- (5.2, 1.2);
+      \draw[fill=f1amber!25, draw=f1amber!80, line width=0.6pt, rounded corners=2pt] (5.3, 0.95) rectangle (6.5, 1.45) node[pos=.5]{\textbf{Med} 18v};
+      \draw[fill=f1crimson!20, draw=f1crimson!80, line width=0.6pt, rounded corners=2pt] (6.6, 0.95) rectangle (7.8, 1.45) node[pos=.5]{\textbf{Soft} 16v};
 
       % Merge flow
       \node[anchor=west, font=\tiny\bfseries\color{f1navy}] at (0, 0.25) {\textbf{Merge ($2 \to 1$ Stop):}};
-      \draw[fill=softred!35, draw=softred!80!black, rounded corners=2pt] (3.0, 0.0) rectangle (3.9, 0.5) node[pos=.5]{\textbf{S} 12v};
-      \draw[fill=softred!35, draw=softred!80!black, rounded corners=2pt] (4.0, 0.0) rectangle (4.9, 0.5) node[pos=.5]{\textbf{S} 12v};
-      \draw[-{Stealth[length=3.5pt]}, thick, f1green!80!black] (5.0, 0.25) -- (5.5, 0.25);
-      \draw[fill=f1gold!35, draw=f1gold!80!black, rounded corners=2pt] (5.6, 0.0) rectangle (7.8, 0.5) node[pos=.5]{\textbf{Med} 24v};
+      \draw[fill=f1crimson!20, draw=f1crimson!80, line width=0.6pt, rounded corners=2pt] (3.0, 0.0) rectangle (3.9, 0.5) node[pos=.5]{\textbf{S} 12v};
+      \draw[fill=f1crimson!20, draw=f1crimson!80, line width=0.6pt, rounded corners=2pt] (4.0, 0.0) rectangle (4.9, 0.5) node[pos=.5]{\textbf{S} 12v};
+      \draw[-{Stealth[length=3.5pt]}, thick, f1teal] (5.0, 0.25) -- (5.5, 0.25);
+      \draw[fill=f1amber!25, draw=f1amber!80, line width=0.6pt, rounded corners=2pt] (5.6, 0.0) rectangle (7.8, 0.5) node[pos=.5]{\textbf{Med} 24v};
     \end{tikzpicture}
   \end{center}
 \end{frame}
 
 % ------------------------------------------------------------------------------
-% SLIDE 9: TÍNH NĂNG TÁC CHIẾN: PHẢN XẠ SAFETY CAR TRONG 5 MS
+% SLIDE 9: TÍNH NĂNG TÁC CHIẾN: PHẢN XẠ SAFETY CAR TRONG 5.2 MS
 % ------------------------------------------------------------------------------
 \begin{frame}{8. Tính Năng Tác Chiến: Phản Xạ Safety Car Trong 5.2 ms}
   % SƠ ĐỒ TIKZ TIMELINE SAFETY CAR
@@ -563,20 +594,20 @@
       
       % Lap ticks
       \draw[thick, f1slate] (0, -0.08) -- (0, 0.08) node[below=1.5pt] {Lap 0};
-      \draw[thick, f1red] (4.6, -0.08) -- (4.6, 0.08) node[below=1.5pt, font=\tiny\bfseries\color{f1red}] {Lap 18 (SC)};
+      \draw[thick, f1crimson] (4.6, -0.08) -- (4.6, 0.08) node[below=1.5pt, font=\tiny\bfseries\color{f1crimson}] {Lap 18 (SC)};
       \draw[thick, f1navy] (14.2, -0.08) -- (14.2, 0.08) node[below=1.5pt] {Lap 53};
       
       % Frozen Stints
-      \draw[fill=f1slate!20, draw=f1slate, rounded corners=2pt] (0.05, 0.2) rectangle (4.55, 0.65)
-        node[pos=.5, font=\tiny\bfseries\color{f1navy}] {Lịch sử đã đua: [Soft 14v, Med 4v] (ĐÓNG BĂNG/FROZEN)};
+      \draw[fill=white, draw=f1slate!60, line width=0.7pt, rounded corners=2pt] (0.05, 0.2) rectangle (4.55, 0.65)
+        node[pos=.5, font=\tiny\bfseries\color{f1slate}] {Lịch sử đã đua: [Soft 14v, Med 4v] (ĐÓNG BĂNG/FROZEN)};
         
       % SC Callout
-      \node[fill=f1gold, text=black, rounded corners=2pt, draw=f1red, line width=0.8pt, inner sep=2pt, font=\tiny\bfseries] at (4.6, 1.15) {SAFETY CAR! Tổn thất pit: $23.2\text{s} \to 12.5\text{s}$};
-      \draw[-{Stealth[length=3pt]}, f1red, thick] (4.6, 0.88) -- (4.6, 0.7);
+      \node[fill=white, text=f1crimson, rounded corners=2pt, draw=f1crimson, line width=0.8pt, inner sep=2.5pt, font=\tiny\bfseries] at (4.6, 1.15) {SAFETY CAR! Tổn thất pit: $23.2\text{s} \to 12.5\text{s}$};
+      \draw[-{Stealth[length=3pt]}, f1crimson, thick] (4.6, 0.88) -- (4.6, 0.7);
       
       % Warm start re-opt
-      \draw[fill=f1green!20, draw=f1green!80!black, rounded corners=2pt] (4.65, 0.2) rectangle (14.15, 0.65)
-        node[pos=.5, font=\tiny\bfseries\color{f1green!70!black}] {Warm-Start Pivot: Tái tối ưu 35 vòng trong \textbf{5.2 ms} $\implies$ \textbf{BOX NGAY TẠI LAP 18!}};
+      \draw[fill=f1teal!12, draw=f1teal, line width=0.8pt, rounded corners=2pt] (4.65, 0.2) rectangle (14.15, 0.65)
+        node[pos=.5, font=\tiny\bfseries\color{f1teal}] {Warm-Start Pivot: Tái tối ưu 35 vòng trong \textbf{5.2 ms} $\implies$ \textbf{BOX NGAY TẠI LAP 18!}};
     \end{tikzpicture}
   \end{center}
   \vspace{-0.15cm}
@@ -585,16 +616,16 @@
     \begin{column}{0.40\textwidth}
       % 2 Stat cards
       \begin{tikzpicture}
-        \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
-          {\Large \bfseries \color{f1green!85!black} 5.2 ms}\\[2pt]
-          {\tiny \bfseries \color{f1slate} Tái tối ưu 35 vòng (nhanh gấp 15 lần DP)}
+        \node[fill=white, draw=f1teal!50, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+          {\Large \bfseries \color{f1teal} 5.2 ms}\\[2pt]
+          {\tiny \bfseries \color{f1slate} Tái tối ưu 35 vòng (gấp 15 lần DP: $65\text{--}85\,\text{ms}$)}
         };
       \end{tikzpicture}
       \vspace{0.15cm}
       \begin{tikzpicture}
-        \node[fill=f1red!8, draw=f1red, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
-          {\Large \bfseries \color{f1red} -10.7 s}\\[2pt]
-          {\tiny \bfseries \color{f1darkred} Tiết kiệm pit stop nhờ Free Stop SC}
+        \node[fill=white, draw=f1crimson!50, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+          {\Large \bfseries \color{f1crimson} -10.7 s}\\[2pt]
+          {\tiny \bfseries \color{f1slate} Tiết kiệm pit stop nhờ Free Stop SC}
         };
       \end{tikzpicture}
     \end{column}
@@ -612,10 +643,10 @@
           Vòng 32 & $\mathbf{4.1\,\text{ms}}$ & $4487.597\,\text{s}$ & \texttt{BOX (Attack)} \\
           \bottomrule
         \end{tabularx}
-        \vspace{0.1cm}
+        \vspace{0.08cm}
         \begin{itemize}
-          \item Phản xạ \textbf{$4\text{--}5\,\text{ms}$} $\implies$ Nhanh gấp \textbf{600 lần} cửa sổ $3\,\text{s}$ của Pit-wall!
-          \item Cho phép kỹ sư ra lệnh "BOX BOX" trước khi xe tới lối vào pit.
+          \item Phản xạ \textbf{$4.1\text{--}5.5\,\text{ms}$} (nhanh gấp \textbf{15 lần} DP re-solve $65\text{--}85\,\text{ms}$).
+          \item Nhanh gấp \textbf{600 lần} cửa sổ 3s Pit-wall $\implies$ Ra lệnh "BOX BOX" kịp thời!
         \end{itemize}
       \end{alertblock}
     \end{column}
@@ -639,28 +670,31 @@
           \midrule
           Bellman DP (Ground Truth) & $4497.997$ & $4497.997$ & $0.00$ & $100\%$ & $0.0000\%$ \\
           \midrule
-          \textbf{DAGA-F1 (Đầy đủ)} & $\mathbf{4497.997}$ & $\mathbf{4498.000}$ & $\mathbf{0.00}$ & $\mathbf{100\%}$ & $\mathbf{0.0000\%}$ \\
+          \textbf{DAGA-F1 (Đề xuất)} & $\mathbf{4497.997}$ & $\mathbf{4497.997}$ & $\mathbf{0.00}$ & $\mathbf{100\%}$ & $\mathbf{0.0000\%}$ \\
           Variant B (w/o Repair) & $4497.997$ & $4501.373$ & $4.14$ & $45.4\%$ & $+0.0751\%$ \\
           Variant C (w/o Split/Merge) & $4508.197$ & $4508.197$ & $0.00$ & $100\%$ & $+0.2268\%$ \\
           Standard Holland GA & $4508.197$ & $4508.197$ & $0.00$ & $0.0\%$ & $+0.2268\%$ \\
           \bottomrule
         \end{tabularx}
+        \vspace{0.05cm}
+        \centering
+        \tiny \textbf{Baseline:} Holland GA ($+10.20\,\text{s}$), Greedy Heuristic ($4508.864\,\text{s}$, $+10.86\,\text{s}$).
       \end{block}
     \end{column}
 
     % 2 KPI Cards
     \begin{column}{0.36\textwidth}
       \begin{tikzpicture}
-        \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
-          {\normalsize \bfseries \color{f1green!85!black} Optimality Gap: 0.0000\%}\\[1.5pt]
-          {\tiny \color{f1slate} Khớp 100\% nghiệm chân lý Bellman DP}
+        \node[fill=white, draw=f1teal!50, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
+          {\normalsize \bfseries \color{f1teal} Optimality Gap: 0.0000\%}\\[1.5pt]
+          {\tiny \color{f1slate} Khớp 100\% Bellman DP trên mọi seeds}
         };
       \end{tikzpicture}
       \vspace{0.1cm}
       \begin{tikzpicture}
-        \node[fill=f1red!8, draw=f1red, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
-          {\normalsize \bfseries \color{f1red} Wilcoxon: $p < 0.001$}\\[1.5pt]
-          {\tiny \color{f1darkred} $p = 3.59 \times 10^{-7}$, vượt trội có ý nghĩa}
+        \node[fill=white, draw=f1crimson!50, line width=0.8pt, rounded corners=3pt, inner sep=3.5pt, text width=0.92\linewidth, align=center] {
+          {\normalsize \bfseries \color{f1crimson} Wilcoxon: $p < 0.001$}\\[1.5pt]
+          {\tiny \color{f1slate} $p = 9.77 \times 10^{-4}$ (10s) \& $3.59 \times 10^{-7}$ (30s)}
         };
       \end{tikzpicture}
     \end{column}
@@ -691,8 +725,8 @@
     % Cột trái: 48/48 Tests
     \begin{column}{0.48\textwidth}
       \begin{tikzpicture}
-        \node[fill=f1green!10, draw=f1green!70!black, line width=0.8pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
-          {\Large \bfseries \color{f1green!85!black} 48 / 48 Tests PASSED}\\[2pt]
+        \node[fill=white, draw=f1teal!60, line width=0.9pt, rounded corners=3pt, inner sep=4pt, text width=0.92\linewidth, align=center] {
+          {\Large \bfseries \color{f1teal} 48 / 48 Tests PASSED}\\[2pt]
           {\tiny \bfseries \color{f1slate} Tự động kiểm định 100\% thành công trong 11.7 giây}
         };
       \end{tikzpicture}
@@ -723,7 +757,7 @@
       \end{exampleblock}
       \vspace{0.1cm}
       \centering
-      \tikz{\node[fill=f1silver, draw=f1navy, rounded corners=2pt, inner sep=3pt]{\tiny\bfseries \texttt{streamlit run app.py} $\longrightarrow$ Sẵn sàng demo tương tác trực tiếp};}
+      \tikz{\node[fill=white, draw=f1navy!50, rounded corners=2pt, inner sep=3pt]{\tiny\bfseries \texttt{streamlit run app.py} $\longrightarrow$ Sẵn sàng demo tương tác trực tiếp};}
     \end{column}
   \end{columns}
 \end{frame}
@@ -772,7 +806,7 @@
       \node[fill=f1navy, text=white, rounded corners=6pt, inner sep=10pt, text width=0.92\paperwidth, align=center, drop shadow] {
         {\Large \bfseries XIN TRÂN TRỌNG CẢM ƠN THẦY VÀ HỘI ĐỒNG!}\\[5pt]
         {\small \textbf{Kính mời TS. Nguyễn Tất Bảo Thiện đặt câu hỏi và đóng góp ý kiến}}\\[4pt]
-        {\tiny \color{f1silver} Nhóm Nghiên Cứu Đề Án DS106 -- Khoa Khoa học Dữ liệu, Trường ĐH Công nghệ Thông tin (UIT - ĐHQG-HCM)}
+        {\tiny \color{white!70} Nhóm Nghiên Cứu Đề Án DS106 -- Khoa Khoa học Dữ liệu, Trường ĐH Công nghệ Thông tin (UIT - ĐHQG-HCM)}
       };
     \end{tikzpicture}
   \end{center}
