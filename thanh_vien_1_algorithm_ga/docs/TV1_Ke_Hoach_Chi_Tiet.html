@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Kế Hoạch Chi Tiết & Cẩm Nang Triển Khai - Thành Viên 1 (GA Lead)</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.55;
+    color: #111827;
+    max-width: 980px;
+    margin: 25px auto;
+    font-size: 13pt;
+  }
+  h1 {
+    font-size: 17pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1e3a8a;
+    margin-bottom: 5px;
+  }
+  .sub-title {
+    text-align: center;
+    font-size: 11.5pt;
+    font-style: italic;
+    margin-bottom: 22px;
+    color: #4b5563;
+  }
+  h2 {
+    font-size: 13.5pt;
+    font-weight: bold;
+    color: #1e3a8a;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 4px;
+    margin-top: 28px;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-size: 12.5pt;
+    font-weight: bold;
+    color: #1f2937;
+    margin-top: 18px;
+  }
+  p, li {
+    text-align: justify;
+    margin-bottom: 6px;
+  }
+  ul, ol {
+    margin-top: 4px;
+    margin-bottom: 12px;
+    padding-left: 25px;
+  }
+  .banner-box {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-left: 5px solid #1e3a8a;
+    padding: 12px 16px;
+    margin: 16px 0 22px 0;
+    font-size: 11.5pt;
+  }
+  .alert-box {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 5px solid #2563eb;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 11.5pt;
+  }
+  .success-box {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-left: 5px solid #16a34a;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 11.5pt;
+  }
+  .warn-box {
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    border-left: 5px solid #d97706;
+    padding: 12px 16px;
+    margin: 16px 0;
+    font-size: 11.5pt;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 22px 0;
+    font-size: 11pt;
+  }
+  th, td {
+    border: 1px solid #475569;
+    padding: 8px 10px;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    text-align: center;
+    color: #0f172a;
+  }
+  .code-inline {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 10pt;
+    background-color: #f1f5f9;
+    padding: 2px 5px;
+    border-radius: 3px;
+    color: #0f172a;
+  }
+  .formula-box {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #1e3a8a;
+    padding: 10px 14px;
+    margin: 12px 0;
+    text-align: center;
+    font-size: 11.5pt;
+  }
+  .week-badge {
+    display: inline-block;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+  }
+</style>
+</head>
+<body>
+
+<h1>BẢN ĐẶC TẢ NHIỆM VỤ CHI TIẾT &amp; CẨM NANG THỰC THI</h1>
+<h1>THÀNH VIÊN 1: TRƯỞNG NHÓM THUẬT TOÁN TIẾN HÓA (ALGORITHM &amp; GA LEAD)</h1>
+<div class="sub-title">
+  Đề án DS106: Tối ưu hóa và Ứng dụng | Khoa Khoa học Dữ liệu – Trường ĐH Công nghệ Thông tin, ĐHQG-HCM<br>
+  Giảng viên phụ trách: TS. Nguyễn Tất Bảo Thiện | Thời lượng: 2 Tháng (8 Tuần) | Trọng số đóng góp: 20.0%
+</div>
+
+<div class="banner-box">
+  <strong>SỨ MỆNH TRỌNG TÂM CỦA THÀNH VIÊN 1:</strong><br>
+  Thành viên 1 đảm nhiệm vị trí <strong>Kiến trúc sư trưởng giải thuật (Algorithm &amp; GA Lead)</strong> của dự án. Trách nhiệm then chốt bao gồm: xây dựng cơ sở mô hình hóa toán học cho bài toán tối ưu hóa tổ hợp phi tuyến có ràng buộc; thiết kế và lập trình toàn bộ lõi <strong>Adaptive Genetic Algorithm (AGA)</strong>; phát triển 3 cải tiến thuật toán đột phá (Toán tử Sửa chữa Định hướng Vật lý, Đột biến Đa hình thái 3 cấp độ với Split/Merge, và Cơ chế Tái tối ưu Safety Car Warm-Start Pivot); phụ trách chính việc soạn thảo <strong>Section 3.3 &amp; 3.4 (Methodology)</strong> của bài báo khoa học trên Overleaf; và thuyết trình bảo vệ chuyên sâu về trường phái Metaheuristics trước Hội đồng.
+</div>
+
+<hr>
+
+<h2>1. BẢNG PHÂN RÃ CÔNG VIỆC CHI TIẾT THEO TUẦN (WBS &amp; ROADMAP)</h2>
+
+<!-- TUẦN 1 -->
+<h3><span class="week-badge">TUẦN 1</span> Đặc Tả Toán Học, Không Gian Tìm Kiếm &amp; Biểu Diễn Nhiễm Sắc Thể</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Chuyển hóa bài toán chiến lược F1 thành bài toán Tối ưu hóa tổ hợp phi tuyến nguyên hỗn hợp có ràng buộc (Constrained Non-linear Combinatorial Optimization) với không gian tìm kiếm có số chiều biến thiên.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Thiết kế cấu trúc nhiễm sắc thể mảng stint: <i>S</i> = [ (<i>c</i><sub>1</sub>, <i>l</i><sub>1</sub>), (<i>c</i><sub>2</sub>, <i>l</i><sub>2</sub>), ..., (<i>c</i><sub><i>K</i>+1</sub>, <i>l</i><sub><i>K</i>+1</sub>) ] với <i>K</i> &isin; {1, 2, 3}.<br>
+      2. Định nghĩa hệ thống ràng buộc cứng:
+      <div class="formula-box">
+        (R1) &sum;<sub><i>k</i>=1</sub><sup><i>K</i>+1</sup> <i>l</i><sub><i>k</i></sub> = <i>N</i><sub>total</sub> &nbsp;&nbsp;|&nbsp;&nbsp;
+        (R2) |{<i>c</i><sub>1</sub>, ..., <i>c</i><sub><i>K</i>+1</sub>}| &ge; 2 &nbsp;&nbsp;|&nbsp;&nbsp;
+        (R3) <i>l</i><sub><i>k</i></sub> &le; <i>L</i><sub>max</sub>(<i>c</i><sub><i>k</i></sub>), &forall; <i>k</i> &isin; [1, <i>K</i>+1]
+      </div>
+      3. Xây dựng công thức hàm mục tiêu tổng thời gian chặng kết hợp 2 hàm phạt chính quy: phạt cứng FIA (&Phi;<sub>FIA</sub> = 10<sup>5</sup> giây) và phạt mềm vách lốp (&Phi;<sub>cliff</sub> = &beta;<sub>risk</sub> &times; &sum; max(0, <i>l</i><sub><i>k</i></sub> - <i>L</i><sub>max</sub>(<i>c</i><sub><i>k</i></sub>))).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Nhận từ TV2 (Data Lead):</strong> Thông số chặng đua Monza 2023 (<i>N</i> = 53 vòng, tổn thất làn pit <i>T</i><sub>pit</sub> = 23.2 giây).<br>
+      • <strong>Nhận từ TV3 (Tyre Modeler):</strong> Ngưỡng an toàn vách lốp <i>L</i><sub>max</sub> của từng loại hợp chất (Soft: 22, Medium: 35, Hard: 48).<br>
+      • <strong>Bàn giao cho TV4 (Sim &amp; DP Lead):</strong> Bản đặc tả toán học để TV4 lập trình lớp <code>F1RaceSimulator</code> đồng nhất về hàm mục tiêu.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Tệp tài liệu kỹ thuật toán học chính quy: <code class="code-inline">docs/math_formulation.md</code> (chứa đầy đủ các phương trình toán, định nghĩa biến và hàm phạt).</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Bản đặc tả toán học được cả nhóm thống nhất; TV4 có thể lập trình hàm <code>evaluate_strategy</code> khớp 100% với công thức toán của TV1.</td>
+  </tr>
+</table>
+
+<!-- TUẦN 2 -->
+<h3><span class="week-badge">TUẦN 2</span> Khởi Tạo Quần Thể Có Trọng Số &amp; Toán Tử Sửa Chữa Định Hướng Vật Lý</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Loại bỏ hoàn toàn nghiệm bất khả thi (infeasible solutions) sinh ra trong quá trình tiến hóa; bảo đảm 100% cá thể luôn thỏa mãn tổng số vòng đua và luật lốp của FIA.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Cài đặt hàm <code class="code-inline">heuristic_weighted_initialization(pop_size, total_laps)</code>: khởi tạo theo phân phối thực tế (65% 1-stop, 30% 2-stop, 5% 3-stop); đảm bảo mỗi cá thể sinh ra đều sử dụng ít nhất 2 hợp chất khác nhau.<br>
+      2. Cài đặt hàm <code class="code-inline">physics_guided_repair(individual, total_laps)</code>:
+      <ul>
+        <li><em>Kiểm tra luật FIA:</em> Nếu cá thể chỉ có 1 loại lốp, thay thế hợp chất của stint ngắn nhất bằng loại lốp hợp lệ khác.</li>
+        <li><em>Bù vòng thiếu (&Delta;N = N - &sum; l<sub>k</sub> &gt; 0):</em> Dựa vào đạo hàm suy giảm lốp &nabla;<i>t</i><sub>deg</sub>, tìm stint có dung sai an toàn vách lốp lớn nhất (<i>L</i><sub>max</sub> - <i>l</i><sub><i>k</i></sub>) để cộng thêm vòng vào đó (ưu tiên Hard hoặc Medium).</li>
+        <li><em>Trừ vòng thừa (&Delta;N &lt; 0):</em> Khấu trừ số vòng từ stint dài nhất hoặc lốp Soft mòn nhanh, duy trì điều kiện tối thiểu <i>l</i><sub><i>k</i></sub> &ge; 4.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Nhận từ TV3:</strong> Công thức và giá trị giải tích đạo hàm mòn lốp &nabla;<i>t</i><sub>deg</sub>(<i>a</i>) = <i>d</i><sub>1</sub> + 2&middot;<i>d</i><sub>2</sub>&middot;<i>a</i>.<br>
+      • <strong>Phối hợp cùng TV4:</strong> Chạy thử nghiệm hàm sửa chữa nghiệm trên dữ liệu giả lập để kiểm tra tính toàn vẹn (bảo toàn invariant &sum; <i>l</i><sub><i>k</i></sub> = <i>N</i>).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Mã nguồn Python: <code class="code-inline">src/ga_strategy/operators.py</code> (chứa hàm <code class="code-inline">heuristic_weighted_initialization</code> và <code class="code-inline">physics_guided_repair</code>).</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Chạy kiểm thử 10.000 cá thể ngẫu nhiên qua hàm sửa chữa: 100% cá thể đầu ra đều có &sum; <i>l</i><sub><i>k</i></sub> = 53 và thỏa mãn luật FIA (tỷ lệ vi phạm = 0.000%).</td>
+  </tr>
+</table>
+
+<!-- TUẦN 3 -->
+<h3><span class="week-badge">TUẦN 3</span> Toán Tử Đột Biến Đa Hình Thái 3 Cấp Độ &amp; Lai Ghép Stint Crossover</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Cân bằng hoàn hảo giữa Khai thác sâu (Exploitation) và Khám phá rộng (Exploration); cho phép giải thuật <strong>tự động tiến hóa số lần dừng pit tối ưu <i>K</i></strong> mà không cần gán cứng từ trước.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Cài đặt hàm <code class="code-inline">tri_level_mutation(individual, total_laps, pm)</code> với 3 cấp độ xác suất:
+      <ul>
+        <li><strong>Micro-mutation (60%):</strong> Dịch chuyển vi mô mốc pit giữa 2 stint liền kề (<i>l</i><sub><i>k</i></sub> &plusmn; 1, <i>l</i><sub><i>k</i>+1</sub> &mp; 1) để tinh chỉnh điểm tối ưu cục bộ.</li>
+        <li><strong>Meso-mutation (25%):</strong> Hoán đổi hợp chất lốp thông minh giữa các stint hiện có.</li>
+        <li><strong>Macro-mutation (15%):</strong> Đột biến cấu trúc đa hình:
+          <ul>
+            <li><em>Split Stint:</em> Chia đôi stint dài nhất thành 2 stint lốp khác nhau (chuyển 1-stop &rarr; 2-stop).</li>
+            <li><em>Merge Stint:</em> Gộp 2 stint ngắn liền kề thành 1 stint lốp bền hơn (chuyển 2-stop &rarr; 1-stop).</li>
+          </ul>
+        </li>
+      </ul>
+      2. Cài đặt hàm <code class="code-inline">adaptive_crossover(parent1, parent2, total_laps, pc)</code>: lai ghép 1 điểm cắt cho cá thể cùng số stint, hoán đổi stint cho cá thể khác số stint; luôn kích hoạt bộ sửa chữa vật lý sau lai ghép.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Bàn giao cho TV5 (Benchmark Lead):</strong> Cung cấp các toán tử di truyền để TV5 xây dựng bộ giải Standard GA đối chứng.<br>
+      • <strong>Phối hợp cùng TV4:</strong> Đảm bảo cấu trúc stint trả về tương thích với phương thức đánh giá của Trình mô phỏng chặng đua.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Cập nhật <code class="code-inline">src/ga_strategy/operators.py</code>; tạo tệp kiểm thử chuyên biệt: <code class="code-inline">tests/test_mutation_split_merge.py</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Kiểm thử thành công các ca đột biến Split/Merge: quần thể có thể tự động chuyển đổi qua lại giữa cá thể 1-stop và 2-stop một cách trơn tru.</td>
+  </tr>
+</table>
+
+<!-- TUẦN 4 -->
+<h3><span class="week-badge">TUẦN 4</span> Hoàn Thiện Lõi Adaptive GA (AGA) &amp; Đối Chứng Nghiệm Với Bellman DP</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Xây dựng lớp điều phối tiến hóa thích nghi hoàn chỉnh; kiểm chứng mức độ tiệm cận nghiệm tối ưu toàn cục giải tích của Bellman DP trên chặng Monza 53 vòng (Nghiệm thu Mốc M4 Giai đoạn 1).</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Hoàn thiện lớp <code class="code-inline">AdaptiveGAOptimizer</code> trong <code class="code-inline">src/ga_strategy/optimizer.py</code>:
+      <ul>
+        <li>Lịch làm mát phi tuyến thích nghi: <i>P</i><sub>c</sub>(<i>g</i>) giảm từ 0.88 xuống 0.65 theo lũy thừa 1.5; <i>P</i><sub>m</sub>(<i>g</i>) giảm từ 0.25 xuống 0.08 theo lũy thừa 1.2.</li>
+        <li>Hàm tính toán độ đa dạng quần thể <code class="code-inline">_calculate_diversity</code> dựa trên khoảng cách Hamming và cấu trúc stint.</li>
+        <li>Cơ chế <strong>Tiêm gen hỗn loạn (Cataclysmic Chaos Injection):</strong> nếu độ đa dạng <i>D̄</i><sub>pop</sub> &lt; 0.15 ở 70% thế hệ đầu, nhân <i>P</i><sub>m</sub> lên 2.5 lần để phá vỡ bẫy cực tiểu địa phương.</li>
+        <li>Bảo lưu cá thể tinh hoa (Elitism 5%).</li>
+      </ul>
+      2. Cùng TV4 thực hiện đối chuẩn thực nghiệm: Chạy AGA đối chứng với Bellman DP Ground Truth trên chặng Monza 2023.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Nhận từ TV4:</strong> Bộ giải Bellman DP hoàn chỉnh (<code class="code-inline">src/simulator/bellman_dp.py</code>) và hàm đánh giá của Simulator.<br>
+      • <strong>Nhận từ TV5:</strong> Ma trận suy giảm lốp <i>O</i>(1) (<code class="code-inline">data/degradation_matrix.npy</code>) để tăng tốc độ tính toán GA.<br>
+      • <strong>Phối hợp TV4:</strong> Lập bảng so sánh nghiệm và tính toán Optimality Gap (%).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Mã nguồn hoàn chỉnh: <code class="code-inline">src/ga_strategy/optimizer.py</code>; Sổ tay phân tích đối chứng: <code class="code-inline">notebooks/ga_vs_dp_benchmark.ipynb</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Giải thuật AGA hội tụ ổn định sau 50 thế hệ trong thời gian &lt; 1.0 giây; đạt tỷ lệ trùng khớp hoặc tiệm cận cực sát nghiệm tối ưu toàn cục của DP (Optimality Gap &le; 0.05%).</td>
+  </tr>
+</table>
+
+<!-- TUẦN 5 -->
+<h3><span class="week-badge">TUẦN 5</span> [Nhóm A] Cơ Chế Tái Tối Ưu Xe An Toàn Thời Gian Thực (Warm-Start SC Pivot)</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Hiện thực hóa tính năng tác chiến thời gian thực tại Pit-wall: tái tối ưu hóa chiến lược trong vòng <strong>dưới 0.20 giây</strong> ngay khi cờ Xe An Toàn (Safety Car) được kích hoạt.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Cài đặt phương thức <code class="code-inline">warm_start_optimize(current_lap, sc_pit_loss=12.5, warm_generations=15)</code>:
+      <ul>
+        <li>Đóng băng toàn bộ các vòng đua đã diễn ra [1, <i>L</i><sub>sc</sub>] cùng hợp chất lốp đã sử dụng.</li>
+        <li>Chỉ khởi tạo quần thể và tối ưu hóa các stint cho các vòng đua còn lại [<i>L</i><sub>sc</sub> + 1, <i>N</i><sub>total</sub>].</li>
+        <li>Cập nhật tổn thất thời gian làn pit tức thời từ 23.2 giây xuống 12.5 giây (hiện tượng <em>Free Pit Stop</em>).</li>
+        <li>Rút ngắn số thế hệ tiến hóa xuống 15 thế hệ, kết hợp tái sử dụng các gen ưu tú từ chiến lược hiện tại.</li>
+      </ul>
+      2. Đo đạc thời gian tính toán thực thi (CPU Runtime) để bảo đảm đáp ứng cửa sổ ra quyết định khẩn cấp 3–5 giây trên đường đua.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Nhận từ TV4:</strong> Tham số kịch bản Xe An Toàn (vòng xuất hiện SC, thời gian pit giảm) từ <code class="code-inline">src/simulator/extended_scenarios.py</code>.<br>
+      • <strong>Bàn giao cho TV4:</strong> Module <code class="code-inline">warm_start_optimize</code> để TV4 tích hợp vào giao diện Web Dashboard Streamlit (<code class="code-inline">app.py</code>).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Mã nguồn: <code class="code-inline">src/ga_strategy/warm_start.py</code> (hoặc tích hợp trực tiếp vào <code class="code-inline">optimizer.py</code>); kịch bản kiểm thử giả lập SC.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Thời gian thực thi tái tối ưu hóa hoàn tất trong thời gian <strong>&lt; 0.20 giây</strong>; đưa ra quyết định vào pit hợp lý khi chi phí pit giảm còn 12.5 giây.</td>
+  </tr>
+</table>
+
+<!-- TUẦN 6 -->
+<h3><span class="week-badge">TUẦN 6</span> [Nhóm A] Tối Ưu Hóa Hiệu Năng Tính Toán &amp; Soạn Thảo Section 3 Bài Báo Elsevier</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Hoàn thiện mã nguồn lõi giải thuật ở chuẩn công nghiệp và biên soạn toàn bộ phương pháp luận học thuật giải thuật di truyền thích nghi phục vụ xuất bản bài báo khoa học.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Tối ưu hóa mã nguồn lõi: vector hóa các phép tính quần thể bằng NumPy, loại bỏ sao chép bộ nhớ thừa, bảo đảm code sạch, tuân thủ nghiêm ngặt PEP 8.<br>
+      2. Biên soạn bản thảo <strong>Section 3.3 &amp; Section 3.4 (Methodology: Adaptive Genetic Algorithm)</strong> trên Overleaf theo chuẩn 2 cột Elsevier:
+      <ul>
+        <li>Đặc tả toán học cấu trúc nhiễm sắc thể mảng stint và không gian biến quyết định.</li>
+        <li>Trình bày chi tiết cơ chế Toán tử Sửa chữa Định hướng Vật lý và Đột biến Đa hình thái 3 cấp độ kèm sơ đồ khối minh họa.</li>
+        <li>Viết giả mã (Pseudocode) chuẩn mực cho giải thuật AGA và cơ chế Warm-Start SC Pivot bằng gói <code class="code-inline">algorithm2e</code>.</li>
+        <li>Trình bày công thức thích nghi phi tuyến và tiêm gen hỗn loạn.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Nhận từ TV5 (Paper Lead):</strong> Template dự án Overleaf LaTeX chuẩn Elsevier 2 cột và hướng dẫn định dạng chung.<br>
+      • <strong>Bàn giao cho TV5:</strong> Tệp mã nguồn LaTeX <code class="code-inline">section3_aga.tex</code> và các hình vẽ sơ đồ thuật toán độ phân giải cao (300 DPI).
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Mã nguồn hoàn thiện được tối ưu; Bản thảo bài báo khoa học hoàn chỉnh cho Mục 3.3 &amp; 3.4 trên Overleaf.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Bản thảo biên dịch không lỗi font trên Overleaf; công thức toán học và giả mã thuật toán hiển thị sắc nét, đúng chuẩn Elsevier; TV5 nghiệm thu đưa vào bài báo chung.</td>
+  </tr>
+</table>
+
+<!-- TUẦN 7 -->
+<h3><span class="week-badge">TUẦN 7</span> [Buffer Dự Phòng] Thực Nghiệm Bóc Tách Toán Tử (Ablation Study) &amp; Phân Tích Hội Tụ</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Chứng minh một cách định lượng vai trò độc lập của từng thành phần cải tiến (Repair Operator, Split/Merge Mutation, Chaos Injection); hỗ trợ TV5 trong thực nghiệm kiểm định thống kê qua 30 random seeds.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Thiết lập 4 biến thể thuật toán phục vụ thử nghiệm bóc tách (Ablation Study):
+      <ul>
+        <li><em>Variant A (Proposed AGA):</em> Đầy đủ tất cả các cơ chế cải tiến đề xuất.</li>
+        <li><em>Variant B (AGA w/o Repair):</em> Không dùng hàm sửa chữa, chỉ dùng hàm phạt thuần túy.</li>
+        <li><em>Variant C (AGA w/o Split/Merge):</em> Khóa đột biến đa hình thái, chỉ dùng đột biến vi mô (cố định số lần pit <i>K</i>).</li>
+        <li><em>Variant D (Standard GA):</em> Giải thuật di truyền cổ điển với tham số lai ghép/đột biến cố định.</li>
+      </ul>
+      2. Chạy thử nghiệm lặp lại qua 30 random seeds (seeds 1 đến 30); thu thập các chỉ số: Best Time, Mean Time, Std, Tỷ lệ nghiệm hợp lệ (%), Số thế hệ chạm mốc hội tụ.<br>
+      3. Vẽ đồ thị đường cong hội tụ (Convergence curves) thể hiện rõ điểm rơi bứt phá khi kích hoạt cơ chế tiêm gen hỗn loạn.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Phối hợp cùng TV5:</strong> Chuyển giao toàn bộ bảng số liệu 30 seeds để TV5 thực hiện kiểm định phi tham số Wilcoxon Signed-Rank Test và vẽ biểu đồ Boxplot.<br>
+      • <strong>Bàn giao cho TV4:</strong> Cung cấp đồ thị hội tụ để đưa vào trang phân tích chiến lược của Web Dashboard Streamlit.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Sổ tay thực nghiệm: <code class="code-inline">notebooks/ga_ablation.ipynb</code>; Bảng dữ liệu số học: <code class="code-inline">data/ablation_study_results.json</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Dữ liệu chứng minh Variant A (Proposed AGA) vượt trội có ý nghĩa so với các biến thể còn lại cả về tỷ lệ nghiệm hợp lệ (100% vs &lt; 40%) và thời gian đua tối ưu.</td>
+  </tr>
+</table>
+
+<!-- TUẦN 8 -->
+<h3><span class="week-badge">TUẦN 8</span> [Tổng Duyệt] Soạn Thảo Slide Hội Nghị Chuyên Môn &amp; Diễn Tập Mock Seminar</h3>
+<table>
+  <tr>
+    <th style="width: 20%;">Hạng Mục</th>
+    <th style="width: 80%;">Nội Dung Đặc Tả Kỹ Thuật</th>
+  </tr>
+  <tr>
+    <td><strong>Mục tiêu Kỹ thuật</strong></td>
+    <td>Hoàn thiện phần slide thuyết trình cá nhân đạt chuẩn phong cách hội nghị khoa học; bảo đảm khả năng trình bày lưu loát trong <strong>3 phút chuẩn xác</strong> và trả lời tự tin các câu hỏi phản biện chuyên sâu.</td>
+  </tr>
+  <tr>
+    <td><strong>Công việc Cụ thể</strong></td>
+    <td>
+      1. Thiết kế 5–6 slide thuyết trình chuyên sâu phần của mình:
+      <ul>
+        <li>Slide 1: Bài toán tối ưu hóa tổ hợp phi tuyến &amp; Thách thức không gian tìm kiếm biến thiên.</li>
+        <li>Slide 2: Bản chất cơ chế Toán tử Sửa chữa Định hướng Vật lý (Physics-Guided Repair Operator).</li>
+        <li>Slide 3: Đột biến Đa hình thái 3 cấp độ (Micro-Meso-Macro với Split/Merge).</li>
+        <li>Slide 4: Lịch làm mát phi tuyến &amp; Cơ chế Tiêm gen hỗn loạn phá bẫy cực tiểu địa phương.</li>
+        <li>Slide 5: Cơ chế Tái tối ưu Safety Car Warm-Start Pivot (&lt; 0.20 giây).</li>
+        <li>Slide 6: Đồ thị hội tụ và kết quả phân tích bóc tách thành phần (Ablation Study).</li>
+      </ul>
+      2. Tham gia buổi tổng duyệt Mock Seminar của nhóm: bấm giờ đúng 3 phút trình bày, căn chỉnh nhịp độ nói, giọng điệu tự tin và truyền cảm.<br>
+      3. Chuẩn bị sẵn câu trả lời sắc bén cho 3 câu hỏi phản biện trọng tâm của Giảng viên TS. Nguyễn Tất Bảo Thiện.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Phụ thuộc &amp; Phối hợp</strong></td>
+    <td>
+      • <strong>Phối hợp cùng TV5:</strong> Ghép slide cá nhân vào bộ Slide thuyết trình tổng thể (25–30 slides) của cả nhóm.<br>
+      • <strong>Phối hợp cùng TV4:</strong> Phối hợp nhịp nhàng giữa phần lý thuyết thuật toán GA và phần demo trực quan trên Web Dashboard Streamlit.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Kết quả Kỳ vọng (Deliverable)</strong></td>
+    <td>Bộ Slide thuyết trình TV1 hoàn chỉnh; Kịch bản thuyết trình và bộ câu trả lời phản biện cá nhân.</td>
+  </tr>
+  <tr>
+    <td><strong>Tiêu chuẩn Nghiệm thu</strong></td>
+    <td>Trình bày thử nghiệm đạt đúng khung thời gian quy định (2 phút 50 giây – 3 phút 10 giây); trả lời trơn tru các câu hỏi phản biện lý thuyết thuật toán.</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>2. BẢNG MA TRẬN PHỤ THUỘC &amp; QUAN HỆ KẾT HỢP LIÊN THÀNH VIÊN (CROSS-DEPENDENCIES)</h2>
+<p>Để đảm bảo tiến độ không bị nghẽn (bottleneck), Thành viên 1 cần nắm vững các mối liên kết đầu vào và đầu ra với 4 thành viên còn lại:</p>
+
+<table>
+  <tr>
+    <th style="width: 15%;">Đối Tác Phối Hợp</th>
+    <th style="width: 25%;">Thành Viên 1 Cần Nhận (Input)</th>
+    <th style="width: 25%;">Thành Viên 1 Cần Bàn Giao (Output)</th>
+    <th style="width: 35%;">Thời Điểm &amp; Mục Đích Phối Hợp Then Chốt</th>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 2<br>(Data Lead)</strong></td>
+    <td>
+      • Dữ liệu đặc tả chặng Monza 2023 (53 vòng, <i>T</i><sub>pit</sub> = 23.2s).<br>
+      • Chuỗi viễn trắc nhiệt độ mặt đường.<br>
+      • Chiến lược thực tế của Max Verstappen tại Monza.
+    </td>
+    <td>
+      • Nghiệm tối ưu lý thuyết của giải thuật AGA trên chặng Monza để TV2 đối chiếu với thực tế của Max Verstappen.
+    </td>
+    <td>
+      • <strong>Tuần 1 &amp; Tuần 6:</strong> Nhận tham số chặng để lập mô hình toán ở Tuần 1; bàn giao nghiệm lý thuyết cho TV2 viết Mục 5.3 bài báo ở Tuần 6.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 3<br>(Tyre Modeler)</strong></td>
+    <td>
+      • Ngưỡng an toàn vách lốp <i>L</i><sub>max</sub>(<i>c</i>).<br>
+      • Hàm giải tích đạo hàm suy giảm lốp &nabla;<i>t</i><sub>deg</sub>(<i>a</i>) = <i>d</i><sub>1</sub> + 2&middot;<i>d</i><sub>2</sub>&middot;<i>a</i>.<br>
+      • Bộ tham số lốp giải tích của Soft, Medium, Hard.
+    </td>
+    <td>
+      • Cấu trúc chromosome mảng stint để TV3 xác nhận tính tương thích với hàm vật lý lốp.
+    </td>
+    <td>
+      • <strong>Tuần 2 &amp; Tuần 3:</strong> Tích hợp đạo hàm lốp của TV3 vào hàm <code class="code-inline">physics_guided_repair</code> để thuật toán tự động chọn stint bù/trừ vòng tối ưu nhất.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 4<br>(Sim &amp; DP Lead)</strong><br><em>(Đối tác chia lửa)</em></td>
+    <td>
+      • Trình mô phỏng cuộc đua <code class="code-inline">F1RaceSimulator</code>.<br>
+      • Bộ giải Bellman DP Ground Truth và giá trị nghiệm tối ưu tuyệt đối.<br>
+      • Tham số kịch bản Xe An Toàn từ Simulator mở rộng.
+    </td>
+    <td>
+      • Bản đặc tả toán học mảng stint và hàm phạt.<br>
+      • Lớp giải thuật <code class="code-inline">AdaptiveGAOptimizer</code>.<br>
+      • Phương thức <code class="code-inline">warm_start_optimize</code> để TV4 gắn vào Web Dashboard Streamlit.
+    </td>
+    <td>
+      • <strong>Xuyên suốt Tuần 1 đến Tuần 6:</strong> TV4 nhận chia lửa phần Simulator và DP giúp TV1; hai bên phối hợp chạy đối chứng GA vs DP ở Tuần 4 và tích hợp UI Dashboard ở Tuần 6.
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 5<br>(Benchmark &amp; Paper Lead)</strong></td>
+    <td>
+      • Ma trận tra cứu suy thoái lốp <i>O</i>(1) (<code class="code-inline">degradation_matrix.npy</code>).<br>
+      • Template Overleaf LaTeX chuẩn Elsevier 2 cột.<br>
+      • Kết quả kiểm định thống kê Wilcoxon qua 30 seeds.
+    </td>
+    <td>
+      • Các toán tử GA chuẩn để TV5 dựng Standard GA đối chứng.<br>
+      • Bản thảo Section 3.3 &amp; 3.4 chuẩn LaTeX Overleaf.<br>
+      • Dữ liệu thử nghiệm bóc tách (Ablation Study) 30 seeds.
+    </td>
+    <td>
+      • <strong>Tuần 3, 5, 6, 7:</strong> Nhận ma trận lốp ở Tuần 3 để tăng tốc GA O(1); nộp bản thảo Section 3 cho TV5 ở Tuần 6; phối hợp chạy kiểm định 30 seeds ở Tuần 7.
+    </td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>3. TỔNG HỢP CÁC SẢN PHẨM BÀN GIAO EXPECTED CỦA THÀNH VIÊN 1</h2>
+
+<div class="success-box">
+  <strong>DANH MỤC CÁC SẢN PHẨM (DELIVERABLES) THEO TỪNG GIAI ĐOẠN:</strong><br>
+  <strong>Giai đoạn 1 (Tuần 1 – 4):</strong><br>
+  1. <code class="code-inline">docs/math_formulation.md</code>: Tài liệu đặc tả toán học không gian biến quyết định, hệ ràng buộc cứng và 2 hàm phạt chính quy.<br>
+  2. <code class="code-inline">src/ga_strategy/operators.py</code>: Bộ toán tử GA hoàn chỉnh gồm: Khởi tạo có trọng số tri thức, Toán tử Sửa chữa Định hướng Vật lý, Đột biến Đa hình 3 cấp độ (Micro-Meso-Macro), và Lai ghép mốc pit chuẩn hóa.<br>
+  3. <code class="code-inline">src/ga_strategy/optimizer.py</code>: Lớp <code class="code-inline">AdaptiveGAOptimizer</code> tích hợp lịch làm mát phi tuyến, kiểm soát đa dạng quần thể, và tiêm gen hỗn loạn.<br>
+  4. <code class="code-inline">notebooks/ga_vs_dp_benchmark.ipynb</code>: Sổ tay thực nghiệm đối chuẩn chứng minh sai số tối ưu Optimality Gap &le; 0.05% so với Bellman DP Ground Truth.<br>
+  <br>
+  <strong>Giai đoạn 2 (Tuần 5 – 6):</strong><br>
+  5. <code class="code-inline">src/ga_strategy/warm_start.py</code> (hoặc method trong optimizer): Cơ chế Tái tối ưu Safety Car Warm-Start Pivot chạy &lt; 0.20 giây.<br>
+  6. Bản thảo Overleaf <strong>Section 3.3 &amp; Section 3.4</strong> chuẩn LaTeX 2 cột Elsevier (đầy đủ phương trình toán, pseudocode <code class="code-inline">algorithm2e</code>, và sơ đồ toán tử).<br>
+  <br>
+  <strong>Giai đoạn Dự phòng (Tuần 7 – 8):</strong><br>
+  7. <code class="code-inline">notebooks/ga_ablation.ipynb</code>: Sổ tay thực nghiệm bóc tách thành phần (Ablation Study) qua 30 random seeds độc lập.<br>
+  8. Bộ Slide thuyết trình chuyên môn cá nhân (5–6 slides) và kịch bản Mock Seminar 3 phút.
+</div>
+
+<hr>
+
+<h2>4. KỊCH BẢN TRẢ LỜI PHẢN BIỆN CHUYÊN MÔN DÀNH CHO THÀNH VIÊN 1</h2>
+
+<div class="alert-box">
+  <strong>3 CÂU HỎI HỌC THUẬT THEN CHỐT CỦA THẦY VÀ ĐÁP ÁN BẢO VỆ CHUẨN MỰC:</strong>
+</div>
+
+<h3>Câu hỏi 1: "Tại sao nhóm lại thiết kế Toán tử Sửa chữa Định hướng Vật lý mà không dùng Hàm phạt chết (Death Penalty) hoặc Hàm phạt tĩnh thông thường?"</h3>
+<p>
+  <strong>Đáp án bảo vệ sắc bén:</strong><br>
+  "Trong bài toán chiến lược F1, không gian nghiệm khả thi &Omega; chỉ chiếm một tỷ lệ cực kỳ nhỏ (dưới 0.1%) trong toàn bộ không gian tổ hợp các dãy stint ngẫu nhiên, do ràng buộc bảo toàn tổng số vòng (&sum; <i>l</i><sub><i>k</i></sub> = 53) và luật lốp FIA cực kỳ khắt khe. Nếu áp dụng <em>Hàm phạt chết (Death Penalty)</em> — tức loại bỏ thẳng tay các cá thể vi phạm — thì sau phép lai ghép và đột biến, hơn 90% cá thể sẽ bị tiêu diệt, dẫn đến hiện tượng <strong>kiệt quệ đa dạng sinh học (Genetic Drift)</strong> và thuật toán sẽ chết yểu ngay sau vài thế hệ.<br>
+  Ngược lại, nếu dùng <em>Hàm phạt tĩnh thông thường</em>, thuật toán sẽ mất rất nhiều thế hệ lãng phí chỉ để điều chỉnh tổng số vòng đua thay vì tối ưu hóa thời gian vòng. Do đó, em đã thiết kế <strong>Toán tử Sửa chữa Định hướng Vật lý (Physics-Guided Repair Operator)</strong>: toán tử này dựa trên đạo hàm suy giảm lốp giải tích &nabla;<i>t</i><sub>deg</sub>(<i>a</i>) = <i>d</i><sub>1</sub> + 2&middot;<i>d</i><sub>2</sub>&middot;<i>a</i> để tự động nhận biết stint nào đang còn khoảng cách xa vách mòn an toàn (<i>L</i><sub>max</sub> - <i>l</i><sub><i>k</i></sub>) để bù thêm vòng vào đó, và trừ bớt vòng ở stint mòn nhanh nhất. Cơ chế này bảo đảm 100% cá thể sinh ra đều là nghiệm khả thi ngay lập tức mà vẫn giữ được đặc tính di truyền quý giá của cá thể cha mẹ."
+</p>
+
+<h3>Câu hỏi 2: "Cơ chế nào trong giải thuật giúp quần thể tự động tìm ra số lần dừng pit tối ưu (K = 1, 2, hay 3) mà không cần lập trình gán cứng?"</h3>
+<p>
+  <strong>Đáp án bảo vệ sắc bén:</strong><br>
+  "Hầu hết các nghiên cứu trước đây đều phải cố định trước số lần dừng pit <i>K</i> rồi mới chạy GA cho từng trường hợp. Trong đề tài này, em đã thiết kế <strong>Toán tử Đột biến Đa hình thái 3 Cấp độ (Tri-Level Mutation)</strong>, trong đó cấp độ Macro (15% xác suất) tích hợp 2 toán tử biến thiên cấu trúc:
+  <ul>
+    <li><em>Toán tử Split Stint:</em> Lấy stint dài nhất và chia đôi thành 2 stint lốp khác nhau, chuyển hóa cá thể từ 1-stop sang 2-stop hoặc từ 2-stop sang 3-stop.</li>
+    <li><em>Toán tử Merge Stint:</em> Lấy 2 stint ngắn liền kề và gộp lại thành 1 stint dài hơn trên hợp chất lốp bền hơn, chuyển hóa cá thể từ 2-stop về 1-stop.</li>
+  </ul>
+  Nhờ 2 toán tử này, các cấu trúc chiến lược với số lần pit khác nhau liên tục cạnh tranh độ thích nghi (fitness) trong cùng một quần thể. Qua các thế hệ, cấu trúc nào mang lại tổng thời gian chặng nhỏ hơn sẽ tự động chiếm ưu thế số đông và đào thải cấu trúc kém hiệu quả hơn theo cơ chế chọn lọc tự nhiên."
+</p>
+
+<h3>Câu hỏi 3: "Làm thế nào giải thuật đáp ứng được tính thời gian thực (Real-time) tại Pit-wall khi có biến cố Xe An Toàn (Safety Car)?"</h3>
+<p>
+  <strong>Đáp án bảo vệ sắc bén:</strong><br>
+  "Khi xuất hiện Xe An Toàn tại vòng <i>L</i><sub>sc</sub>, cửa sổ ra quyết định của các kỹ sư chiến lược tại Pit-wall chỉ mở ra trong vòng <strong>3 đến 5 giây</strong> trước khi xe đi qua lối vào làn pit. Nếu chạy lại toàn bộ thuật toán GA từ đầu cho 50 thế hệ, máy tính sẽ mất từ 1.0 đến 1.5 giây, tiềm ẩn rủi ro trễ cửa sổ pit.<br>
+  Để giải quyết triệt để vấn đề này, em đã phát triển cơ chế <strong>Warm-Start SC Pivot</strong>: giải thuật thực hiện đóng băng toàn bộ lịch sử các vòng đã đua [1, <i>L</i><sub>sc</sub>], chỉ tái tối ưu các vòng đua còn lại [<i>L</i><sub>sc</sub> + 1, <i>N</i><sub>total</sub>]; đồng thời tái sử dụng chính cá thể tối ưu hiện tại làm hạt giống (seed) và chỉ chạy trong 15 thế hệ rút gọn với chi phí pit mới (12.5 giây). Nhờ thu hẹp không gian tìm kiếm và thừa hưởng tri thức tiến hóa sẵn có, thuật toán tái hội tụ ra chiến lược mới trong <strong>dưới 0.20 giây</strong>, hoàn toàn đáp ứng tiêu chuẩn phản ứng thời gian thực tại Pit-wall."
+</p>
+
+<hr>
+<div style="text-align: center; font-size: 11pt; color: #4b5563; margin-top: 20px;">
+  <em>Bản đặc tả nhiệm vụ chi tiết – Thành viên 1 (Algorithm &amp; GA Lead) – DS106 UIT 2026</em>
+</div>
+
+</body>
+</html>

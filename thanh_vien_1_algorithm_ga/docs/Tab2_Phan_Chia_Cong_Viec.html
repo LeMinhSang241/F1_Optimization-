@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Tab 2: Kế Hoạch Triển Khai & Phân Công Nhiệm Vụ 5 Thành Viên - DS106</title>
+<style>
+  body {
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    color: #111827;
+    max-width: 980px;
+    margin: 25px auto;
+    font-size: 13pt;
+  }
+  h1 {
+    font-size: 16.5pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #1e3a8a;
+    margin-bottom: 4px;
+  }
+  .sub-title {
+    text-align: center;
+    font-size: 11.5pt;
+    font-style: italic;
+    margin-bottom: 20px;
+    color: #4b5563;
+  }
+  .phase-banner {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-left: 5px solid #1e3a8a;
+    padding: 12px 16px;
+    margin: 15px 0 22px 0;
+    font-size: 11.5pt;
+    border-radius: 2px;
+  }
+  .phase-title {
+    font-weight: bold;
+    color: #1e3a8a;
+  }
+  .member-header {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    padding: 8px 14px;
+    font-size: 12.5pt;
+    font-weight: bold;
+    margin-top: 28px;
+    border-radius: 4px 4px 0 0;
+  }
+  .member-desc {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-top: none;
+    padding: 10px 14px;
+    font-size: 11.5pt;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 22px;
+    font-size: 11pt;
+  }
+  th, td {
+    border: 1px solid #475569;
+    padding: 7px 10px;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    text-align: center;
+    color: #0f172a;
+  }
+  .week-col {
+    text-align: center;
+    font-weight: bold;
+    width: 9%;
+  }
+  .task-col {
+    font-weight: bold;
+    width: 24%;
+    color: #1e3a8a;
+  }
+  .desc-col {
+    width: 38%;
+    text-align: justify;
+  }
+  .input-col {
+    width: 14%;
+    font-size: 10.5pt;
+  }
+  .deliv-col {
+    width: 15%;
+    font-size: 10.5pt;
+    font-family: Consolas, 'Courier New', monospace;
+    font-weight: bold;
+  }
+  .g1-badge {
+    background-color: #e0e7ff;
+    color: #3730a3;
+    font-weight: bold;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9pt;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .team-a-row {
+    background-color: #eff6ff;
+  }
+  .team-b-row {
+    background-color: #faf5ff;
+  }
+  .buffer-row {
+    background-color: #fffaf0;
+    color: #9a3412;
+  }
+  .final-row {
+    background-color: #f0fdf4;
+    color: #166534;
+  }
+  .note-box {
+    border-left: 4px solid #1e3a8a;
+    background-color: #f8fafc;
+    padding: 10px 14px;
+    margin: 16px 0;
+    font-size: 11.5pt;
+  }
+  .audit-box {
+    border-left: 4px solid #059669;
+    background-color: #f0fdf4;
+    padding: 10px 14px;
+    margin: 16px 0;
+    font-size: 11.5pt;
+  }
+  .summary-table {
+    margin-top: 15px;
+  }
+  .summary-table td {
+    vertical-align: middle;
+  }
+  .center-text {
+    text-align: center;
+  }
+  .code-inline {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 10pt;
+    background-color: #f1f5f9;
+    padding: 1px 4px;
+    border-radius: 3px;
+    color: #0f172a;
+  }
+</style>
+</head>
+<body>
+
+<h1>KẾ HOẠCH TRIỂN KHAI VÀ PHÂN CÔNG NHIỆM VỤ NHÓM 5 NGƯỜI</h1>
+<div class="sub-title">
+  Học phần: DS106 – Tối ưu hóa và Ứng dụng | Khoa Khoa học Dữ liệu – Trường ĐH Công nghệ Thông tin, ĐHQG-HCM<br>
+  Giảng viên phụ trách: TS. Nguyễn Tất Bảo Thiện | Thời lượng thực hiện: 2 Tháng (8 Tuần) | Định dạng Báo cáo: Chuẩn Elsevier (Overleaf)
+</div>
+
+<div class="phase-banner">
+  <strong>CƠ CẤU TIẾN ĐỘ 3 GIAI ĐOẠN (CƠ CẤU 4 – 2 – 2 TUẦN):</strong><br>
+  • <span class="phase-title">Giai đoạn 1 (1 tháng = Tuần 1 đến Tuần 4): NỀN TẢNG TOÁN &amp; CODE CORE (Foundation).</span> Tất cả 5 thành viên đều trực tiếp tham gia lập trình thuật toán và mô hình hóa toán học để bảo đảm tính đúng đắn và tính mới (novelty). TV4 chia lửa tối ưu và mô phỏng cùng TV1; TV5 chia lửa mô hình mòn lốp và trắc lượng cùng TV3; TV2 phụ trách toàn diện dữ liệu viễn trắc FastF1.<br>
+  • <span class="phase-title">Giai đoạn 2 (0.5 tháng = Tuần 5 đến Tuần 6): HOÀN THIỆN &amp; BÁO CÁO (Chung 1 template Elsevier, chia làm 2 nhóm song song):</span><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;- <em>Nhóm A (Simulation &amp; UI - TV1 + TV4):</em> Hoàn thiện Trình mô phỏng chặng đua (kịch bản Xe An Toàn SC, VSC, nhiệt độ) và ứng dụng Streamlit Web Dashboard tương tác tại Pit-wall.<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;- <em>Nhóm B (Báo cáo Khoa học PDF - TV2 + TV3 + TV5, do TV5 làm Paper Lead):</em> Tổng hợp toàn bộ số liệu thực nghiệm, viết các Section bài báo trên Overleaf theo phân công chuyên môn và xuất bản PDF toàn văn 8–12 trang chuẩn Elsevier.<br>
+  • <span class="phase-title">Giai đoạn Dự phòng (0.5 tháng = Tuần 7 đến Tuần 8): BUFFER DỰ PHÒNG, KIỂM ĐỊNH THỐNG KÊ &amp; DIỄN TẬP.</span> 2 tuần đệm an toàn để hấp thụ rủi ro, chạy kiểm định phi tham số Wilcoxon Signed-Rank Test qua 30 random seeds độc lập, đóng gói repository zero-config, thiết kế slide và diễn tập Mock Seminar.
+</div>
+
+<hr>
+
+<h2>1. BẢNG PHÂN BỔ NHIỆM VỤ CHI TIẾT TỪNG TUẦN CHO 5 THÀNH VIÊN</h2>
+
+<!-- THÀNH VIÊN 1 -->
+<div class="member-header">1. THÀNH VIÊN 1: TRƯỞNG NHÓM THUẬT TOÁN TIẾN HÓA (ALGORITHM &amp; GA LEAD)</div>
+<div class="member-desc">
+  <strong>Trách nhiệm chính GĐ1:</strong> Thiết kế toán học, cấu trúc nhiễm sắc thể mảng stint, lập trình lõi giải thuật Di truyền Thích nghi (Adaptive Genetic Algorithm - AGA), toán tử đột biến đa hình 3 cấp độ (Micro-Meso-Macro với Split/Merge), lịch làm mát phi tuyến và cơ chế tiêm gen hỗn loạn.<br>
+  <strong>Trách nhiệm chính GĐ2 (Nhóm A - Simulation &amp; UI):</strong> Cài đặt cơ chế Tái tối ưu hóa thời gian thực khi có Xe An Toàn (Safety Car Warm-Start Pivot), tối ưu hóa hiệu năng tính toán lõi AGA, và biên soạn Section 3 (Methodology: AGA) theo template Elsevier.<br>
+  <strong>Phối hợp chia lửa cùng TV4:</strong> Chuyển giao phần lập trình Trình mô phỏng chặng đua (Race Simulator) và bộ giải Quy hoạch động Bellman sang cho TV4 đảm nhiệm.
+</div>
+
+<table>
+  <tr>
+    <th class="week-col">Tuần</th>
+    <th class="task-col">Tên Nhiệm vụ</th>
+    <th class="desc-col">Mô tả Kỹ thuật Chi tiết</th>
+    <th class="input-col">Đầu vào (Input)</th>
+    <th class="deliv-col">Sản phẩm (Deliverables)</th>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 1<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Mô hình Hóa Toán học &amp; Cấu trúc Cá thể</td>
+    <td class="desc-col">Thiết kế không gian tìm kiếm tổ hợp, cấu trúc nhiễm sắc thể mảng stint <i>S</i> = [(<i>c</i><sub><i>k</i></sub>, <i>l</i><sub><i>k</i></sub>)] với số chiều biến thiên; xây dựng công thức toán hàm phạt vi phạm luật FIA (&Phi;<sub>FIA</sub> = 10<sup>5</sup>) và phạt quá tuổi thọ lốp (&Phi;<sub>cliff</sub>).</td>
+    <td class="input-col">Quy chuẩn FIA, Đề cương DS106</td>
+    <td class="deliv-col">docs/math_formulation.md</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 2<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Khởi tạo Trọng số &amp; Toán tử Sửa chữa</td>
+    <td class="desc-col">Lập trình hàm khởi tạo quần thể có trọng số tri thức chuyên gia (65% 1-stop, 30% 2-stop, 5% 3-stop); phối hợp cùng TV4 cài đặt Toán tử sửa chữa định hướng vật lý (<code>repair_operator</code>) dựa trên đạo hàm mòn lốp &nabla;<i>t</i><sub>deg</sub> bảo toàn &sum; <i>l</i><sub><i>k</i></sub> = <i>N</i><sub>total</sub> và luật FIA.</td>
+    <td class="input-col">math_formulation.md, đạo hàm TV3</td>
+    <td class="deliv-col">src/ga_strategy/operators.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 3<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Đột biến Đa hình &amp; Lai ghép Stint</td>
+    <td class="desc-col">Cài đặt Toán tử Đột biến Đa hình thái 3 cấp độ: Micro-mutation (tinh chỉnh vòng &plusmn;1), Meso-mutation (hoán đổi lốp), và Macro-mutation (Split stint chia đôi stint tăng stop / Merge stint gộp stint giảm stop giúp tự động tiến hóa <i>K</i>); hoàn thiện phép lai ghép Stint Crossover.</td>
+    <td class="input-col">operators.py</td>
+    <td class="deliv-col">src/ga_strategy/mutation.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 4<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Lõi AGA Thích nghi &amp; Kiểm định Hội tụ</td>
+    <td class="desc-col">Hoàn thiện lớp <code>AdaptiveGAOptimizer</code> với lịch làm mát phi tuyến <i>P</i><sub>c</sub>(<i>g</i>), <i>P</i><sub>m</sub>(<i>g</i>), giám sát độ đa dạng quần thể và cơ chế tiêm gen hỗn loạn (Cataclysmic Chaos Injection); kết nối cùng bộ giải Bellman DP của TV4 kiểm chứng khả năng chạm nghiệm tối ưu toàn cục.</td>
+    <td class="input-col">Simulator &amp; Bellman DP (TV4)</td>
+    <td class="deliv-col">src/ga_strategy/optimizer.py</td>
+  </tr>
+  <tr class="team-a-row">
+    <td class="week-col">Tuần 5<br><strong>[Nhóm A]</strong></td>
+    <td class="task-col">Cơ chế Tái Tối ưu Xe An Toàn (Warm-Start)</td>
+    <td class="desc-col">Cài đặt cơ chế Tái tối ưu hóa thời gian thực khi có Xe An Toàn (Safety Car Warm-Start Pivot): đóng băng các vòng đã đua [1, <i>L</i><sub>sc</sub>], chỉ tái tối ưu các vòng còn lại dưới 0.20 giây khi tổn thất pit giảm đột ngột từ 23.2 giây xuống 12.5 giây.</td>
+    <td class="input-col">optimizer.py, thông số SC TV4</td>
+    <td class="deliv-col">src/ga_strategy/warm_start.py</td>
+  </tr>
+  <tr class="team-a-row">
+    <td class="week-col">Tuần 6<br><strong>[Nhóm A]</strong></td>
+    <td class="task-col">Tối ưu Hiệu năng &amp; Soạn Thảo Section 3</td>
+    <td class="desc-col">Tối ưu hóa tốc độ thực thi giải thuật (vector hóa NumPy); biên soạn Section 3 (Methodology: Adaptive Genetic Algorithm với Toán tử Sửa chữa Định hướng Vật lý và Đột biến Đa hình) theo chuẩn template Elsevier bàn giao cho TV5.</td>
+    <td class="input-col">Lõi mã nguồn AGA, template Overleaf</td>
+    <td class="deliv-col">Bản thảo Section 3 (Paper)</td>
+  </tr>
+  <tr class="buffer-row">
+    <td class="week-col">Tuần 7<br><em>Buffer</em></td>
+    <td class="task-col">Phân tích Bóc tách Toán tử (Ablation Study)</td>
+    <td class="desc-col">Phối hợp cùng TV5 chạy thực nghiệm bóc tách từng toán tử cải tiến (AGA nguyên bản vs AGA không có Repair vs AGA không có Split/Merge); vẽ biểu đồ đường cong hội tụ và phân tích khả năng thoát bẫy cực tiểu địa phương.</td>
+    <td class="input-col">Lõi AGA hoàn chỉnh, 30 seeds data</td>
+    <td class="deliv-col">notebooks/ga_ablation.ipynb</td>
+  </tr>
+  <tr class="final-row">
+    <td class="week-col">Tuần 8<br><em>Tổng duyệt</em></td>
+    <td class="task-col">Báo cáo Seminar &amp; Nghiệm thu Đề tài</td>
+    <td class="desc-col">Thuyết trình chuyên sâu về cơ sở toán học giải thuật di truyền thích nghi và các toán tử cải tiến; tham gia diễn tập Mock Seminar (3 phút/người) và chuẩn bị trả lời các câu hỏi phản biện về Metaheuristics.</td>
+    <td class="input-col">Toàn bộ kết quả nhóm</td>
+    <td class="deliv-col">Slide thuyết trình TV1</td>
+  </tr>
+</table>
+
+<!-- THÀNH VIÊN 2 -->
+<div class="member-header">2. THÀNH VIÊN 2: KỸ SƯ DỮ LIỆU &amp; TIỀN XỬ LÝ VIỄN TRẮC (DATA LEAD)</div>
+<div class="member-desc">
+  <strong>Trách nhiệm chính GĐ1:</strong> Xây dựng pipeline tự động thu thập dữ liệu từ thư viện <code>FastF1</code> cho cả 2 chặng Monza và Silverstone 2023, lọc cờ xanh, loại bỏ In/Out laps, đo đạc tổn thất làn pit thực tế, và thiết lập công thức toán khử trễ nhiên liệu vật lý.<br>
+  <strong>Trách nhiệm chính GĐ2 (Nhóm B - Báo cáo &amp; Xuất bản PDF):</strong> Trích xuất dữ liệu chuỗi thời gian nhiệt độ mặt đường, lập bảng đối soát chiến thuật thực tế giữa nghiệm AGA và chiến lược vô địch của Max Verstappen tại Monza 2023, và biên soạn Section 2 &amp; Section 5.3.<br>
+  <strong>Đặc thù công việc:</strong> Giữ vững tiến độ thu thập và tiền xử lý dữ liệu chuẩn xác làm đầu vào tin cậy cho toàn bộ mô hình vật lý và trình mô phỏng của nhóm.
+</div>
+
+<table>
+  <tr>
+    <th class="week-col">Tuần</th>
+    <th class="task-col">Tên Nhiệm vụ</th>
+    <th class="desc-col">Mô tả Kỹ thuật Chi tiết</th>
+    <th class="input-col">Đầu vào (Input)</th>
+    <th class="deliv-col">Sản phẩm (Deliverables)</th>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 1<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Thiết lập Pipeline &amp; Thu thập Viễn trắc Thô</td>
+    <td class="desc-col">Xây dựng pipeline tự động hóa truy xuất viễn trắc chính thức từ thư viện <code>FastF1</code> cho chặng Italian GP (Monza 2023 - 53 vòng): lap time, tyre age, compound, track status, pit duration; thiết lập thư mục cache cục bộ <code>data/cache_fastf1</code>.</td>
+    <td class="input-col">FastF1 API, tài khoản F1 Signal</td>
+    <td class="deliv-col">src/data/collector.py, raw_laps.parquet</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 2<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Lọc Nhiễu Sự cố &amp; Khử Trễ Nhiên Liệu</td>
+    <td class="desc-col">Lập trình module làm sạch dữ liệu: lọc cờ xanh (TrackStatus == '1'), loại bỏ các vòng In-lap/Out-lap và cờ vàng; áp dụng bộ lọc trung vị (Median Filter 107%) khử nhiễu xe kẹt; cài đặt công thức toán bóc tách hao hụt xăng: <i>t</i><sub>corr</sub> = <i>t</i><sub>raw</sub> - &alpha;<sub>fuel</sub>&middot;(<i>N</i><sub>total</sub> - <i>i</i>).</td>
+    <td class="input-col">data/raw_laps.parquet</td>
+    <td class="deliv-col">src/data/cleaner.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 3<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Trích xuất Ground Truth Thực tế Monza 2023</td>
+    <td class="desc-col">Trích xuất chiến lược thực tế, thời điểm pit và số vòng chạy từng bộ lốp của các tay đua dẫn đầu (Max Verstappen, Carlos Sainz, Sergio Perez) tại Monza 2023; đo đạc phân phối thời gian tổn thất làn pit thực tế (Pit Lane Delta &approx; 23.2 giây).</td>
+    <td class="input-col">clean_laps.parquet</td>
+    <td class="deliv-col">data/ground_truth_monza.json</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 4<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Chuẩn hóa Dữ liệu Chặng thứ hai (Silverstone)</td>
+    <td class="desc-col">Thu thập, làm sạch và khử trễ nhiên liệu cho bộ dữ liệu chặng thứ hai: British GP (Silverstone 2023 - 52 vòng, đặc tính mòn lốp tốc độ cao) phục vụ đánh giá tính tổng quát hóa của mô hình; đóng gói bộ dữ liệu <code>clean_laps.parquet</code>.</td>
+    <td class="input-col">Dữ liệu viễn trắc Silverstone 2023</td>
+    <td class="deliv-col">data/clean_laps.parquet</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 5<br><strong>[Nhóm B]</strong></td>
+    <td class="task-col">Trích xuất Dữ liệu Chuỗi Nhiệt độ Mặt đường</td>
+    <td class="desc-col">Thu thập chuỗi dữ liệu biến thiên nhiệt độ mặt đường (Track Temperature) và điều kiện thời tiết theo từng vòng đua tại Monza và Silverstone phục vụ các kịch bản mô phỏng mở rộng của TV4.</td>
+    <td class="input-col">FastF1 Weather Telemetry</td>
+    <td class="deliv-col">data/weather_telemetry.parquet</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 6<br><strong>[Nhóm B]</strong></td>
+    <td class="task-col">Soạn thảo Section 2 &amp; Bảng Đối soát Thực tế</td>
+    <td class="desc-col">Viết Section 2 (Data Collection &amp; Physics-Based Preprocessing) và Section 5.3 (Real-World Strategy Benchmark vs Max Verstappen at Monza 2023); xuất các biểu đồ phân tích viễn trắc chất lượng cao (300 DPI) bàn giao cho TV5.</td>
+    <td class="input-col">Số liệu viễn trắc, template Overleaf</td>
+    <td class="deliv-col">Bản thảo Section 2 &amp; 5.3 (Paper)</td>
+  </tr>
+  <tr class="buffer-row">
+    <td class="week-col">Tuần 7<br><em>Buffer</em></td>
+    <td class="task-col">Đóng gói Bộ Dữ liệu Mẫu Offline (Zero-Config)</td>
+    <td class="desc-col">Tạo tập dữ liệu mẫu siêu nhẹ đính kèm repository tại <code>data/demo/</code>, bảo đảm khi nghiệm thu hoặc chấm bài, giảng viên và hội đồng có thể chạy kiểm chứng ngay toàn bộ mã nguồn mà không cần tải dữ liệu từ máy chủ F1.</td>
+    <td class="input-col">clean_laps.parquet</td>
+    <td class="deliv-col">data/demo/sample_laps.parquet</td>
+  </tr>
+  <tr class="final-row">
+    <td class="week-col">Tuần 8<br><em>Tổng duyệt</em></td>
+    <td class="task-col">Báo cáo Seminar &amp; Nghiệm thu Đề tài</td>
+    <td class="desc-col">Thuyết trình phần thu thập dữ liệu viễn trắc và quy trình tiền xử lý khử nhiễu vật lý; tham gia diễn tập Mock Seminar (3 phút/người).</td>
+    <td class="input-col">Slide &amp; số liệu TV2</td>
+    <td class="deliv-col">Slide thuyết trình TV2</td>
+  </tr>
+</table>
+
+<!-- THÀNH VIÊN 3 -->
+<div class="member-header">3. THÀNH VIÊN 3: CHUYÊN VIÊN MÔ HÌNH HÓA VẬT LÝ MÒN LỐP (TYRE DYNAMICS MODELER)</div>
+<div class="member-desc">
+  <strong>Trách nhiệm chính GĐ1:</strong> Khảo sát phương trình thoái hóa lốp bậc hai Pirelli (<i>d</i><sub>1</sub><i>a</i> + <i>d</i><sub>2</sub><i>a</i><sup>2</sup>), ước lượng bộ tham số vật lý cho Soft, Medium, Hard, xác định ngưỡng tuổi thọ vách lốp <i>L</i><sub>max</sub>, và thiết lập công thức giải tích đạo hàm lốp &nabla;<i>t</i><sub>deg</sub>.<br>
+  <strong>Trách nhiệm chính GĐ2 (Nhóm B - Báo cáo &amp; Xuất bản PDF):</strong> Phân tích ý nghĩa vật lý các hệ số suy giảm, nghiên cứu độ nhạy của lốp dưới biến động nhiệt độ, và biên soạn Section 3.1 &amp; Section 4.1 theo chuẩn Elsevier.<br>
+  <strong>Phối hợp chia lửa cùng TV5:</strong> Chuyển giao phần lập trình module đo lường sai số <code>metrics.py</code> và biên dịch mảng tra cứu ma trận mòn lốp sang cho TV5.
+</div>
+
+<table>
+  <tr>
+    <th class="week-col">Tuần</th>
+    <th class="task-col">Tên Nhiệm vụ</th>
+    <th class="desc-col">Mô tả Kỹ thuật Chi tiết</th>
+    <th class="input-col">Đầu vào (Input)</th>
+    <th class="deliv-col">Sản phẩm (Deliverables)</th>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 1<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Khảo sát Vật lý Mòn lốp &amp; Ngưỡng Vách Lốp</td>
+    <td class="desc-col">Khảo sát phương trình động lực học suy thoái lốp Pirelli bậc hai: <i>t</i><sub>deg</sub>(<i>a</i>) = <i>d</i><sub>1</sub>&middot;<i>a</i> + <i>d</i><sub>2</sub>&middot;<i>a</i><sup>2</sup>; phân tích hiện tượng mất độ bám bề mặt (Graining) và sụt giảm độ bám nghiêm trọng (Tyre Cliff); xác lập ngưỡng tuổi thọ giới hạn <i>L</i><sub>max</sub> cho Soft (22 vòng), Medium (32 vòng), Hard (48 vòng) tại Monza.</td>
+    <td class="input-col">Tài liệu kỹ thuật Pirelli F1</td>
+    <td class="deliv-col">docs/tyre_physics_spec.md</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 2<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Ước lượng Tham số Vật lý Giải tích</td>
+    <td class="desc-col">Nhận dữ liệu sạch từ TV2; lập trình thuật toán ước lượng hồi quy bình phương tối thiểu có trọng số (Weighted Least Squares) để bóc tách bộ tham số vật lý cơ sở <i>t</i><sub>base</sub>, <i>d</i><sub>1</sub>, <i>d</i><sub>2</sub> cho từng hợp chất lốp Soft, Medium, Hard trên chặng Monza.</td>
+    <td class="input-col">clean_laps.parquet (TV2)</td>
+    <td class="deliv-col">src/tyre_model/fitter.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 3<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Thiết lập Đạo hàm Suy giảm Lốp Giải tích</td>
+    <td class="desc-col">Thiết lập công thức giải tích tính đạo hàm suy giảm lốp theo độ tuổi &nabla;<i>t</i><sub>deg</sub>(<i>a</i>) = <i>d</i><sub>1</sub> + 2&middot;<i>d</i><sub>2</sub>&middot;<i>a</i>; phối hợp cùng TV1 và TV4 tích hợp đạo hàm này vào hàm sửa chữa nghiệm <code>repair_operator</code> để chọn stint tối ưu khi bù hoặc trừ số vòng.</td>
+    <td class="input-col">fitter.py, mô hình toán TV1</td>
+    <td class="deliv-col">src/tyre_model/derivatives.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 4<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Hiệu chuẩn Tham số Đa Đường đua &amp; Đo Khớp</td>
+    <td class="desc-col">Hiệu chỉnh tham số mô hình lốp cho cả 2 đường đua Monza và Silverstone; phối hợp cùng TV5 chạy <code>metrics.py</code> kiểm tra độ khớp (R<sup>2</sup>, RMSE, MAE) so với dữ liệu viễn trắc thực tế; đóng gói các file cấu hình tham số vật lý.</td>
+    <td class="input-col">clean_laps.parquet, metrics.py (TV5)</td>
+    <td class="deliv-col">models/tyre_params_monza.json, models/tyre_params_silverstone.json</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 5<br><strong>[Nhóm B]</strong></td>
+    <td class="task-col">Phân tích Vật lý &amp; Độ nhạy Nhiệt độ Mặt đường</td>
+    <td class="desc-col">Phân tích ý nghĩa vật lý của các hệ số <i>d</i><sub>1</sub>, <i>d</i><sub>2</sub>; nghiên cứu tác động của biến thiên nhiệt độ mặt đường (&Delta;<i>T</i><sub>track</sub>) làm tăng hệ số <i>d</i><sub>2</sub> của lốp Soft/Medium; vẽ biểu đồ suy giảm lốp của 3 hợp chất dưới các điều kiện nhiệt độ khác nhau.</td>
+    <td class="input-col">Dữ liệu nhiệt độ (TV2), mô hình lốp</td>
+    <td class="deliv-col">docs/tyre_sensitivity_analysis.md</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 6<br><strong>[Nhóm B]</strong></td>
+    <td class="task-col">Biên soạn Section 3.1 &amp; Section 4.1</td>
+    <td class="desc-col">Biên soạn Section 3.1 (Mô hình Hóa Vật Lý Suy Giảm Lốp Giải Tích Pirelli) và Section 4.1 (Đánh Giá Độ Khớp Mô Hình Vật Lý &amp; Phân Tích Độ Nhạy Nhiệt Độ) theo template chuẩn Elsevier bàn giao cho TV5.</td>
+    <td class="input-col">Số liệu mô hình lốp, template Overleaf</td>
+    <td class="deliv-col">Bản thảo Section 3.1 &amp; 4.1 (Paper)</td>
+  </tr>
+  <tr class="buffer-row">
+    <td class="week-col">Tuần 7<br><em>Buffer</em></td>
+    <td class="task-col">Tự động hóa Huấn luyện Tham số Mô hình Lốp</td>
+    <td class="desc-col">Viết script <code>train_tyre_model.py</code> tự động hóa toàn bộ quy trình từ dữ liệu parquet đến xuất tham số JSON, bảo đảm tính tái lập 100% khi áp dụng cho các chặng đua mới trong tương lai.</td>
+    <td class="input-col">Toàn bộ mã nguồn mô hình lốp</td>
+    <td class="deliv-col">src/tyre_model/train_tyre_model.py</td>
+  </tr>
+  <tr class="final-row">
+    <td class="week-col">Tuần 8<br><em>Tổng duyệt</em></td>
+    <td class="task-col">Báo cáo Seminar &amp; Nghiệm thu Đề tài</td>
+    <td class="desc-col">Thuyết trình phần mô hình hóa lốp vật lý và ứng dụng đạo hàm lốp trong toán tử tối ưu định hướng vật lý; tham gia diễn tập Mock Seminar (3 phút/người).</td>
+    <td class="input-col">Slide &amp; kết quả TV3</td>
+    <td class="deliv-col">Slide thuyết trình TV3</td>
+  </tr>
+</table>
+
+<!-- THÀNH VIÊN 4 -->
+<div class="member-header">4. THÀNH VIÊN 4: KỸ SƯ MÔ PHỎNG &amp; QUY HOẠCH ĐỘNG (SIMULATION &amp; BELLMAN DP LEAD - CHIA LỬA TV1)</div>
+<div class="member-desc">
+  <strong>Trách nhiệm chính GĐ1 (Chia lửa TV1):</strong> Lập trình hạt nhân Trình mô phỏng chặng đua (<code>F1RaceSimulator</code>), lập trình bộ giải Quy hoạch động Bellman (<code>bellman_dp.py</code>) trên 30.088 trạng thái rời rạc tìm nghiệm tối ưu toàn cục làm Ground Truth, và thực hiện đối chứng GA vs DP.<br>
+  <strong>Trách nhiệm chính GĐ2 (Nhóm A - Simulation &amp; UI):</strong> Nâng cấp Trình mô phỏng mở rộng (kịch bản Xe An Toàn SC, VSC, nhiệt độ), xây dựng ứng dụng Streamlit Web Dashboard tương tác cho Pit-wall, và biên soạn Section 4.2 (DP vs GA Benchmark).<br>
+  <strong>Vai trò học thuật then chốt:</strong> Nắm giữ luận điểm bảo vệ then chốt: giải thích tường minh vì sao bài toán giải được bằng Bellman DP mà vẫn cần giải thuật tiến hóa AGA trong thực tế.
+</div>
+
+<table>
+  <tr>
+    <th class="week-col">Tuần</th>
+    <th class="task-col">Tên Nhiệm vụ</th>
+    <th class="desc-col">Mô tả Kỹ thuật Chi tiết</th>
+    <th class="input-col">Đầu vào (Input)</th>
+    <th class="deliv-col">Sản phẩm (Deliverables)</th>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 1<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Lập trình Hạt nhân Trình Mô Phỏng Cuộc Đua</td>
+    <td class="desc-col">Xây dựng kiến trúc lớp <code>F1RaceSimulator</code>: mô phỏng rời rạc từng vòng đua (lap-by-lap discrete event simulation), tích lũy thời gian chặng, tính toán lượng xăng tiêu hao (&alpha;<sub>fuel</sub>), độ gom cao su mặt đường (&gamma;<sub>track</sub>) và cộng tổn thất làn pit <i>T</i><sub>pit</sub>.</td>
+    <td class="input-col">Thông số Pit Loss (TV2), công thức lốp (TV3)</td>
+    <td class="deliv-col">src/simulator/race_sim.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 2<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Lập trình Bộ giải Quy hoạch Động Bellman</td>
+    <td class="desc-col">Lập trình bộ giải Quy hoạch động Bellman theo phương pháp quy nạp ngược trên lưới trạng thái rời rạc có mặt nạ bit FIA: <i>S</i> = (<i>lap</i>, <i>compound</i>, <i>age</i>, <i>mask_FIA</i>) gồm 30.088 trạng thái; tìm nghiệm tối ưu toàn cục tuyệt đối (Ground Truth) trong &lt; 25 ms.</td>
+    <td class="input-col">race_sim.py, ma trận lốp (TV5)</td>
+    <td class="deliv-col">src/simulator/bellman_dp.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 3<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Tích hợp Ma trận Lốp &amp; Viết Bộ Unit Test</td>
+    <td class="desc-col">Kết nối ma trận tra cứu độ mòn lốp <i>O</i>(1) của TV5 vào Trình mô phỏng; viết bộ kiểm thử tự động <code>tests/test_simulator.py</code> kiểm chứng đối soát bảo đảm hàm mục tiêu thời gian của Simulator và Bellman DP đồng nhất 100%.</td>
+    <td class="input-col">degradation_matrix.npy (TV5)</td>
+    <td class="deliv-col">tests/test_simulator.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 4<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Chạy Đối chứng Thực nghiệm AGA vs DP</td>
+    <td class="desc-col">Chạy so sánh nghiệm của AGA (TV1) với nghiệm tối ưu toàn cục giải tích của Bellman DP trên chặng Monza 53 vòng; lập bảng định lượng sai số tối ưu (Optimality Gap = (<i>T</i><sub>AGA</sub> - <i>T</i><sub>DP</sub>) / <i>T</i><sub>DP</sub> &times; 100%), kiểm chứng tính hội tụ của AGA.</td>
+    <td class="input-col">optimizer.py (TV1), bellman_dp.py</td>
+    <td class="deliv-col">notebooks/ga_vs_dp_benchmark.ipynb</td>
+  </tr>
+  <tr class="team-a-row">
+    <td class="week-col">Tuần 5<br><strong>[Nhóm A]</strong></td>
+    <td class="task-col">Nâng cấp Trình Mô Phỏng 4 Kịch Bản Động Lực</td>
+    <td class="desc-col">Mở rộng Trình mô phỏng hỗ trợ 4 kịch bản động học: Cờ xanh tiêu chuẩn, Xe An Toàn toàn trường (Full SC - Pit Delta giảm còn 12.5s), Xe An Toàn ảo (VSC - Pit Delta 15.5s), và Kịch bản biến động nhiệt độ mặt đường &plusmn;5&deg;C.</td>
+    <td class="input-col">race_sim.py, dữ liệu thời tiết (TV2)</td>
+    <td class="deliv-col">src/simulator/extended_scenarios.py</td>
+  </tr>
+  <tr class="team-a-row">
+    <td class="week-col">Tuần 6<br><strong>[Nhóm A]</strong></td>
+    <td class="task-col">Phát triển Streamlit UI &amp; Soạn Section 4.2</td>
+    <td class="desc-col">Phát triển giao diện Web Dashboard tương tác tại Pit-wall bằng Streamlit (<code>app.py</code>): trực quan hóa đường cong tốc độ vòng, đồ thị mòn lốp, so sánh chiến thuật và giả lập What-If; biên soạn Section 4.2 (Comparative Benchmark: DP vs AGA) bàn giao cho TV5.</td>
+    <td class="input-col">extended_scenarios.py, AGA Warm-Start</td>
+    <td class="deliv-col">app.py, Bản thảo Section 4.2 (Paper)</td>
+  </tr>
+  <tr class="buffer-row">
+    <td class="week-col">Tuần 7<br><em>Buffer</em></td>
+    <td class="task-col">Thiết kế Kịch bản Live Demo Phục vụ Bảo vệ</td>
+    <td class="desc-col">Chuẩn bị 2 kịch bản demo trực quan trên giao diện Streamlit phục vụ buổi bảo vệ trước TS. Nguyễn Tất Bảo Thiện: (1) Kịch bản xuất hiện Xe An Toàn tại vòng 20 kích hoạt Warm-Start AGA tái tối ưu tức thì, và (2) Kịch bản thời tiết nắng nóng chuyển chiến thuật sang lốp Hard.</td>
+    <td class="input-col">app.py, extended_scenarios.py</td>
+    <td class="deliv-col">docs/demo_scenarios.md</td>
+  </tr>
+  <tr class="final-row">
+    <td class="week-col">Tuần 8<br><em>Tổng duyệt</em></td>
+    <td class="task-col">Báo cáo Seminar &amp; Trả lời Phản biện Bellman DP</td>
+    <td class="desc-col">Thuyết trình phần Trình mô phỏng cuộc đua và bộ giải Quy hoạch động Bellman; đảm nhiệm trả lời câu hỏi phản biện then chốt: <em>"Tại sao bài toán này giải được bằng DP mà vẫn cần GA?"</em>; tham gia diễn tập Mock Seminar.</td>
+    <td class="input-col">Slide &amp; kết quả TV4</td>
+    <td class="deliv-col">Slide thuyết trình TV4</td>
+  </tr>
+</table>
+
+<!-- THÀNH VIÊN 5 -->
+<div class="member-header">5. THÀNH VIÊN 5: KỸ SƯ ĐỐI CHUẨN &amp; TRƯỞNG NHÓM XUẤT BẢN BÁO CÁO (BENCHMARK &amp; PAPER LEAD - CHIA LỬA TV3)</div>
+<div class="member-desc">
+  <strong>Trách nhiệm chính GĐ1 (Chia lửa TV3):</strong> Lập trình thuật toán cơ sở Tham lam (Greedy Baseline), lập trình module đo sai số khoa học <code>metrics.py</code>, biên dịch mảng tra cứu ma trận mòn lốp siêu tốc <i>O</i>(1), cài đặt Standard GA và thiết lập khung thực nghiệm đối chuẩn.<br>
+  <strong>Trách nhiệm chính GĐ2 (Nhóm B - Lead Biên tập Bài báo Elsevier):</strong> Thiết lập template Overleaf 2 cột chuẩn Elsevier, viết Section 1 (Intro) &amp; Section 3.2 (Greedy), điều phối thu thập bản thảo từ 4 thành viên, biên tập toàn văn, viết Section 5 (Discussion) &amp; Section 6 (Conclusion), và xuất bản PDF hoàn chỉnh.<br>
+  <strong>Trách nhiệm chính GĐ3:</strong> Chủ trì chạy kiểm định thống kê Wilcoxon Signed-Rank Test qua 30 random seeds độc lập, thiết kế bộ Slide hội nghị khoa học và chủ trì buổi tổng duyệt Mock Seminar.
+</div>
+
+<table>
+  <tr>
+    <th class="week-col">Tuần</th>
+    <th class="task-col">Tên Nhiệm vụ</th>
+    <th class="desc-col">Mô tả Kỹ thuật Chi tiết</th>
+    <th class="input-col">Đầu vào (Input)</th>
+    <th class="deliv-col">Sản phẩm (Deliverables)</th>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 1<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Lập trình Greedy Baseline &amp; Module Metrics</td>
+    <td class="desc-col">Lập trình thuật toán cơ sở Tham lam (Greedy Strategy Baseline) theo quy tắc phổ thông: chạy bộ lốp cho đến khi chạm ngưỡng suy giảm rồi mới vào pit; lập trình module đo lường sai số khoa học <code>src/utils/metrics.py</code> (RMSE, MAE, Optimality Gap, Mean, Std).</td>
+    <td class="input-col">Quy chuẩn FIA, đề cương DS106</td>
+    <td class="deliv-col">src/simulator/greedy_baseline.py, src/utils/metrics.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 2<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Biên dịch Ma trận Tra cứu Mòn Lốp O(1)</td>
+    <td class="desc-col">Nhận tham số mô hình lốp từ TV3; lập trình hàm tiền tính toán (Pre-computation) và biên dịch ma trận suy giảm lốp 2D (Degradation Matrix) dạng NumPy float32 lưu dưới dạng <code>.npy</code>, giúp Simulator và GA tra cứu thời gian vòng đạt độ phức tạp <i>O</i>(1) (&lt; 0.001 ms).</td>
+    <td class="input-col">Tham số lốp TV3</td>
+    <td class="deliv-col">src/tyre_model/matrix_builder.py, data/degradation_matrix.npy</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 3<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Cài đặt Standard GA &amp; Khung Đối chuẩn</td>
+    <td class="desc-col">Cài đặt thuật toán Standard Genetic Algorithm (Holland 1975) với xác suất lai ghép và đột biến cố định (Fixed <i>P</i><sub>c</sub>, <i>P</i><sub>m</sub>) làm đối chứng khoa học; thiết lập khung thực nghiệm đối chuẩn tự động so sánh đa thuật toán.</td>
+    <td class="input-col">operators.py, race_sim.py</td>
+    <td class="deliv-col">src/ga_strategy/standard_ga.py, tests/test_benchmark_framework.py</td>
+  </tr>
+  <tr>
+    <td class="week-col">Tuần 4<br><span class="g1-badge">GĐ1</span></td>
+    <td class="task-col">Thu thập Dữ liệu Ma trận Đối chuẩn 4 Thuật toán</td>
+    <td class="desc-col">Xây dựng ma trận thực nghiệm đối chuẩn 4 thuật toán: Bellman DP, Greedy, Standard GA, AGA; thu thập dữ liệu về thời gian chặng, CPU Runtime và mức độ phân tán nghiệm; đóng gói bảng số liệu thô.</td>
+    <td class="input-col">4 thuật toán (DP, Greedy, Standard GA, AGA)</td>
+    <td class="deliv-col">data/benchmark_raw_results.json</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 5<br><strong>[Nhóm B - Lead]</strong></td>
+    <td class="task-col">Khởi tạo Template Elsevier &amp; Soạn Section 1, 3.2</td>
+    <td class="desc-col">Khởi tạo và cấu hình dự án Overleaf với template chuẩn 2 cột Elsevier (<code>cas-dc</code> hoặc <code>elsarticle</code>) hỗ trợ Tiếng Việt trơn tru; biên soạn Section 1 (Introduction &amp; Novel Contributions) và Section 3.2 (Rule-Based Greedy Baseline Formulation); điều phối tiến độ viết bài của cả 2 nhóm A và B.</td>
+    <td class="input-col">Template Elsevier Overleaf</td>
+    <td class="deliv-col">Dự án Overleaf setup, Bản thảo Section 1 &amp; 3.2</td>
+  </tr>
+  <tr class="team-b-row">
+    <td class="week-col">Tuần 6<br><strong>[Nhóm B - Lead]</strong></td>
+    <td class="task-col">Tổng hợp Toàn văn &amp; Xuất bản Bài báo PDF</td>
+    <td class="desc-col">Thu nhận các Section bản thảo từ cả 4 thành viên (TV1, TV2, TV3, TV4); biên soạn Section 5 (Discussion &amp; Computational Complexity) và Section 6 (Conclusion); căn chỉnh định dạng 2 cột chuẩn Elsevier, rà soát toàn bộ phương trình toán và trích dẫn; biên dịch xuất bản PDF hoàn chỉnh (8–12 trang).</td>
+    <td class="input-col">Bản thảo từ TV1, TV2, TV3, TV4</td>
+    <td class="deliv-col">paper/F1_Strategy_Optimization_Elsevier.pdf</td>
+  </tr>
+  <tr class="buffer-row">
+    <td class="week-col">Tuần 7<br><em>Buffer</em></td>
+    <td class="task-col">Kiểm định Thống kê Wilcoxon Qua 30 Seeds</td>
+    <td class="desc-col">Chủ trì chạy kiểm định thống kê phi tham số Wilcoxon Signed-Rank Test trên 30 random seeds độc lập giữa AGA và Standard GA bằng thư viện <code>scipy.stats</code>; vẽ biểu đồ hộp (Boxplot) và biểu đồ phân phối xác suất; tích hợp kết quả kiểm định chính thức vào bài báo Overleaf.</td>
+    <td class="input-col">Dữ liệu 30 seeds, scipy.stats</td>
+    <td class="deliv-col">notebooks/wilcoxon_statistical_test.ipynb</td>
+  </tr>
+  <tr class="final-row">
+    <td class="week-col">Tuần 8<br><em>Tổng duyệt</em></td>
+    <td class="task-col">Thiết kế Slide Hội nghị &amp; Chủ trì Mock Seminar</td>
+    <td class="desc-col">Thiết kế bộ Slide thuyết trình Seminar chuyên nghiệp (25–30 slides) chuẩn phong cách hội nghị khoa học quốc tế; chủ trì buổi diễn tập Mock Seminar (bấm giờ 3 phút/người); rà soát đóng gói toàn bộ hồ sơ đồ án nộp cho TS. Nguyễn Tất Bảo Thiện.</td>
+    <td class="input-col">Toàn văn bài báo PDF, toàn bộ kết quả</td>
+    <td class="deliv-col">slides/DS106_F1_Strategy_Presentation.pptx, Toàn bộ hồ sơ nghiệm thu</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>2. BẢNG TỔNG HỢP CÂN BẰNG TẢI TRỌNG 5 THÀNH VIÊN (WORKLOAD MATRIX)</h2>
+<p>
+  Nhằm bảo đảm nguyên tắc công bằng, bình đẳng học thuật và phát huy tối đa thế mạnh của từng cá nhân, tải trọng công việc được phân bổ cân bằng tuyệt đối (20% mỗi thành viên) xuyên suốt 3 giai đoạn:
+</p>
+
+<table class="summary-table">
+  <tr>
+    <th style="width: 15%;">Thành viên</th>
+    <th style="width: 20%;">Chức danh &amp; Vai trò</th>
+    <th style="width: 25%;">Giai đoạn 1 (Core Toán &amp; Code)</th>
+    <th style="width: 25%;">Giai đoạn 2 (Nhóm &amp; Mục Báo cáo)</th>
+    <th style="width: 15%;">Tỷ lệ Đóng góp</th>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 1</strong></td>
+    <td>Algorithm &amp; GA Lead</td>
+    <td>Toán tử Di truyền Thích nghi, Đột biến Đa hình Split/Merge, Lịch làm mát phi tuyến.</td>
+    <td><strong>Nhóm A:</strong> Safety Car Warm-Start Pivot, Viết Section 3 (Methodology: AGA).</td>
+    <td class="center-text"><strong>20.0%</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 2</strong></td>
+    <td>Data Lead</td>
+    <td>Pipeline viễn trắc FastF1 (Monza &amp; Silverstone), lọc cờ xanh, khử trễ nhiên liệu.</td>
+    <td><strong>Nhóm B:</strong> Dữ liệu nhiệt độ mặt đường, Viết Section 2 (Data) &amp; Section 5.3 (Đối soát Verstappen).</td>
+    <td class="center-text"><strong>20.0%</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 3</strong></td>
+    <td>Tyre Dynamics Modeler</td>
+    <td>Mô hình suy giảm lốp giải tích Pirelli, ước lượng hệ số mòn, đạo hàm lốp &nabla;<i>t</i><sub>deg</sub>.</td>
+    <td><strong>Nhóm B:</strong> Phân tích vật lý lốp &amp; nhiệt độ, Viết Section 3.1 &amp; Section 4.1.</td>
+    <td class="center-text"><strong>20.0%</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 4</strong></td>
+    <td>Sim &amp; Bellman DP Lead<br><em>(Chia lửa TV1)</em></td>
+    <td>Lập trình Trình mô phỏng chặng đua, Bộ giải Bellman DP 30.088 trạng thái, Đối chứng GA vs DP.</td>
+    <td><strong>Nhóm A:</strong> 4 Kịch bản mô phỏng, Web Dashboard Streamlit, Viết Section 4.2 (DP vs GA).</td>
+    <td class="center-text"><strong>20.0%</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Thành viên 5</strong></td>
+    <td>Benchmark &amp; Paper Lead<br><em>(Chia lửa TV3)</em></td>
+    <td>Greedy Baseline, Module sai số <code>metrics.py</code>, Ma trận mòn lốp <i>O</i>(1), Standard GA.</td>
+    <td><strong>Nhóm B (Lead):</strong> Quản lý Template Elsevier Overleaf, Viết Section 1, 3.2, 5, 6, Xuất bản PDF.</td>
+    <td class="center-text"><strong>20.0%</strong></td>
+  </tr>
+  <tr style="background-color: #f1f5f9; font-weight: bold;">
+    <td colspan="4" style="text-align: right;">TỔNG CỘNG MỨC ĐỘ ĐÓNG GÓP TOÀN NHÓM:</td>
+    <td class="center-text" style="color: #1e3a8a;">100.0%</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>3. LỘ TRÌNH THỰC HIỆN &amp; CÁC MỐC KIỂM SOÁT NGHIỆM THU (MILESTONES)</h2>
+
+<table>
+  <tr>
+    <th style="width: 12%;">Cột mốc</th>
+    <th style="width: 15%;">Thời hạn</th>
+    <th style="width: 48%;">Nội dung Kiểm soát Nghiệm thu Kỹ thuật</th>
+    <th style="width: 25%;">Trách nhiệm Chính</th>
+  </tr>
+  <tr>
+    <td><strong>Mốc 1 (M1)</strong></td>
+    <td>Cuối Tuần 1</td>
+    <td>Hoàn thành tài liệu mô hình toán học chính quy; hoàn thành pipeline tự động tải dữ liệu FastF1 thô chặng Monza 2023; hoàn thành kiến trúc lớp Trình mô phỏng; hoàn thành Greedy Baseline.</td>
+    <td>Cả 5 thành viên</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 2 (M2)</strong></td>
+    <td>Cuối Tuần 2</td>
+    <td>Hoàn thành bộ lọc cờ xanh và công thức khử trễ nhiên liệu; ước lượng xong tham số lốp giải tích Pirelli; hoàn thành bộ giải Bellman DP trên 30.088 trạng thái; biên dịch ma trận lốp <i>O</i>(1).</td>
+    <td>TV2, TV3, TV4, TV5</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 3 (M3)</strong></td>
+    <td>Cuối Tuần 3</td>
+    <td>Hoàn thành toán tử đột biến đa hình Split/Merge; tích hợp đạo hàm suy giảm lốp vào toán tử sửa chữa nghiệm; kết nối ma trận lốp vào Simulator và vượt qua toàn bộ các bài Unit Test; cài đặt xong Standard GA.</td>
+    <td>TV1, TV3, TV4, TV5</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 4 (M4)</strong></td>
+    <td>Cuối Tuần 4</td>
+    <td><strong>NGHIỆM THU GIAI ĐOẠN 1:</strong> Hoàn thiện giải thuật AGA thích nghi; hoàn tất đối chứng thực nghiệm giữa AGA và Bellman DP Ground Truth; thu thập đầy đủ bộ dữ liệu chặng thứ hai (Silverstone 2023).</td>
+    <td>Toàn thể nhóm (TV1 &amp; TV4 chủ trì)</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 5 (M5)</strong></td>
+    <td>Cuối Tuần 5</td>
+    <td>Cài đặt xong cơ chế Safety Car Warm-Start Pivot (&lt; 0.2s); mở rộng Trình mô phỏng 4 kịch bản động học; thiết lập template 2 cột Elsevier trên Overleaf và hoàn thành bản thảo Section 1 &amp; 3.2.</td>
+    <td>Nhóm A (TV1, TV4) &amp; Nhóm B (TV2, TV3, TV5)</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 6 (M6)</strong></td>
+    <td>Cuối Tuần 6</td>
+    <td><strong>NGHIỆM THU GIAI ĐOẠN 2:</strong> Hoàn thiện ứng dụng Streamlit Web Dashboard tương tác tại Pit-wall; hoàn thành toàn bộ các Section bài báo trên Overleaf; xuất bản thành công bản thảo toàn văn PDF chuẩn Elsevier (8–12 trang).</td>
+    <td>Toàn thể nhóm (TV5 chủ trì xuất bản PDF)</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 7 (M7)</strong></td>
+    <td>Cuối Tuần 7</td>
+    <td>Hoàn thành kiểm định phi tham số Wilcoxon Signed-Rank Test qua 30 random seeds độc lập (đạt mức ý nghĩa <i>p</i> &lt; 0.05); đóng gói bộ dữ liệu offline zero-config; chuẩn bị xong 2 kịch bản live demo.</td>
+    <td>Cả 5 thành viên (TV5 &amp; TV1 chủ trì thống kê)</td>
+  </tr>
+  <tr>
+    <td><strong>Mốc 8 (M8)</strong></td>
+    <td>Cuối Tuần 8</td>
+    <td><strong>NGHIỆM THU TOÀN DIỆN ĐỀ TÀI:</strong> Hoàn thiện bộ Slide thuyết trình hội nghị (25–30 slides); hoàn thành buổi diễn tập Mock Seminar (3 phút/người); đóng gói trọn bộ mã nguồn, tài liệu, và bài báo PDF nộp cho TS. Nguyễn Tất Bảo Thiện.</td>
+    <td>Toàn thể 5 thành viên</td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>4. PHÂN CÔNG BIÊN SOẠN BÁO CÁO KHOA HỌC CHUẨN ELSEVIER (OVERLEAF)</h2>
+<p>
+  Báo cáo khoa học được biên soạn trực tiếp trên <strong>Overleaf</strong> theo định dạng <strong>2 cột chuẩn quốc tế của Elsevier</strong> (sử dụng mẫu <code>cas-dc</code> hoặc <code>elsarticle</code>), ngôn ngữ <strong>Tiếng Việt</strong>, độ dài mục tiêu từ <strong>8 đến 12 trang</strong>. Từng thành viên chịu trách nhiệm trực tiếp viết các phần chuyên môn tương ứng với công việc mình đã thực hiện:
+</p>
+
+<table>
+  <tr>
+    <th style="width: 18%;">Mục Bài Báo (Section)</th>
+    <th style="width: 25%;">Tiêu Đề Nội Dung</th>
+    <th style="width: 37%;">Mô Tả Trọng Tâm Học Thuật</th>
+    <th style="width: 20%;">Thành Viên Phụ Trách</th>
+  </tr>
+  <tr>
+    <td><strong>Section 1</strong></td>
+    <td>Giới Thiệu &amp; Đóng Góp Mới<br><em>(Introduction &amp; Contributions)</em></td>
+    <td>Bối cảnh bài toán chiến thuật F1, 3 nghịch lý đối kháng, mục tiêu tối ưu, và tóm tắt 5 đóng góp khoa học chính của đề tài.</td>
+    <td><strong>Thành viên 5</strong><br><em>(Paper Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 2</strong></td>
+    <td>Dữ Liệu &amp; Tiền Xử Lý Vật Lý<br><em>(Data &amp; Preprocessing)</em></td>
+    <td>Mô tả dữ liệu viễn trắc FastF1 (Monza &amp; Silverstone 2023), kỹ thuật lọc cờ xanh, loại bỏ In/Out lap, đo đạc Pit Lane Delta và công thức khử trễ hao hụt xăng.</td>
+    <td><strong>Thành viên 2</strong><br><em>(Data Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 3.1</strong></td>
+    <td>Mô Hình Hóa Vật Lý Mòn Lốp<br><em>(Tyre Degradation Modeling)</em></td>
+    <td>Phương trình giải tích mòn lốp bậc hai Pirelli (<i>d</i><sub>1</sub><i>a</i> + <i>d</i><sub>2</sub><i>a</i><sup>2</sup>), cơ sở vật lý Graining/Cliff, và công thức giải tích đạo hàm lốp &nabla;<i>t</i><sub>deg</sub>.</td>
+    <td><strong>Thành viên 3</strong><br><em>(Tyre Modeler)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 3.2</strong></td>
+    <td>Thuật Toán Tham Lam Cơ Sở<br><em>(Rule-Based Greedy Baseline)</em></td>
+    <td>Đặc tả giải thuật tham lam theo trực giác: chạy lốp đến ngưỡng suy giảm rồi mới vào pit; làm cận dưới so sánh hiệu năng.</td>
+    <td><strong>Thành viên 5</strong><br><em>(Benchmark Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 3.3 &amp; 3.4</strong></td>
+    <td>Giải Thuật Di Truyền Thích Nghi<br><em>(Adaptive GA Formulation)</em></td>
+    <td>Cấu trúc cá thể stint, khởi tạo tri thức chuyên gia, Toán tử sửa chữa vật lý (Repair), Đột biến đa hình 3 cấp độ (Split/Merge), làm mát phi tuyến và Safety Car Warm-Start.</td>
+    <td><strong>Thành viên 1</strong><br><em>(Algorithm Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 3.5</strong></td>
+    <td>Trình Mô Phỏng &amp; Bellman DP<br><em>(Simulation &amp; DP Solver)</em></td>
+    <td>Kiến trúc mô phỏng rời rạc từng vòng; công thức quy hoạch động Bellman trên không gian 30.088 trạng thái rời rạc có mặt nạ bit FIA làm Ground Truth.</td>
+    <td><strong>Thành viên 4</strong><br><em>(Sim &amp; DP Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 4.1</strong></td>
+    <td>Đánh Giá Mô Hình Lốp &amp; Nhiệt Độ<br><em>(Tyre Model Evaluation)</em></td>
+    <td>Bảng số liệu độ khớp (R<sup>2</sup>, RMSE, MAE) của mô hình lốp trên tập dữ liệu kiểm tra; phân tích độ nhạy của lốp trước biến thiên nhiệt độ mặt đường.</td>
+    <td><strong>Thành viên 3</strong><br><em>(Tyre Modeler)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 4.2</strong></td>
+    <td>Đối Chuẩn Thực Nghiệm DP vs GA<br><em>(DP vs GA Comparative Study)</em></td>
+    <td>Bảng số liệu đối chuẩn 4 thuật toán: Bellman DP, Greedy, Standard GA, AGA; định lượng sai số tối ưu (Optimality Gap), tốc độ hội tụ và CPU Runtime.</td>
+    <td><strong>Thành viên 4</strong><br><em>(Sim &amp; DP Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 4.3</strong></td>
+    <td>Kiểm Định Ý Nghĩa Thống Kê<br><em>(Wilcoxon Statistical Test)</em></td>
+    <td>Kết quả kiểm định phi tham số Wilcoxon Signed-Rank Test qua 30 random seeds độc lập (giá trị <i>p</i>-value &lt; 0.05), biểu đồ hộp phân bố nghiệm (Boxplot).</td>
+    <td><strong>Thành viên 5</strong><br><em>(Benchmark Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 5.1 &amp; 5.2</strong></td>
+    <td>Thảo Luận &amp; Độ Phức Tạp<br><em>(Discussion &amp; Complexity)</em></td>
+    <td>Phân tích ý nghĩa học thuật, luận giải câu hỏi *"Tại sao bài toán giải được bằng DP mà vẫn cần GA?"*, và phân tích độ phức tạp thời gian/không gian.</td>
+    <td><strong>Thành viên 5</strong><br><em>(Paper Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 5.3</strong></td>
+    <td>Đối Soát Thực Tế vs Verstappen<br><em>(Real-World Case Study)</em></td>
+    <td>So sánh nghiệm tối ưu lý thuyết của AGA với chiến lược thực tế của Max Verstappen tại Monza 2023; luận giải khoảng cách giữa lý thuyết Free air và thực tế Dirty air.</td>
+    <td><strong>Thành viên 2</strong><br><em>(Data Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Section 6</strong></td>
+    <td>Kết Luận &amp; Hướng Phát Triển<br><em>(Conclusions &amp; Future Work)</em></td>
+    <td>Tổng kết các đóng góp chính của đề tài, các giới hạn hiện tại, và định hướng mở rộng sang mô hình tối ưu hóa đa xe (Game Theory) và điều kiện trời mưa.</td>
+    <td><strong>Thành viên 5</strong><br><em>(Paper Lead)</em></td>
+  </tr>
+  <tr>
+    <td><strong>Toàn văn</strong></td>
+    <td>Quản Lý Dự Án Overleaf &amp; Định Dạng<br><em>(Overleaf Management &amp; PDF)</em></td>
+    <td>Khởi tạo repository Overleaf, thiết lập cấu hình font Tiếng Việt, chuẩn hóa biểu mẫu tài liệu tham khảo (.bib), đồng bộ định dạng 2 cột và xuất bản bản PDF chính thức.</td>
+    <td><strong>Thành viên 5</strong><br><em>(Paper Lead)</em></td>
+  </tr>
+</table>
+
+<hr>
+
+<h2>5. QUY TẮC PHỐI HỢP KỸ THUẬT &amp; KIỂM SOÁT PHIÊN BẢN (COLLABORATION PROTOCOL)</h2>
+<div class="note-box">
+  <strong>QUY TRÌNH PHỐI HỢP MÃ NGUỒN VÀ DỮ LIỆU:</strong><br>
+  1. <strong>Môi trường lập trình thống nhất:</strong> Toàn bộ 5 thành viên sử dụng phiên bản <strong>Python 3.10+</strong>, quản lý thư viện qua tệp <code class="code-inline">requirements.txt</code> cố định phiên bản (<code class="code-inline">numpy</code>, <code class="code-inline">pandas</code>, <code class="code-inline">fastf1</code>, <code class="code-inline">scipy</code>, <code class="code-inline">matplotlib</code>, <code class="code-inline">streamlit</code>).<br>
+  2. <strong>Phân nhánh Git chuẩn mực:</strong> Nhánh <code class="code-inline">main</code> luôn ở trạng thái sẵn sàng chạy không lỗi; mỗi thành viên làm việc trên nhánh riêng (<code class="code-inline">feature/ga-core</code>, <code class="code-inline">feature/data-pipeline</code>, <code class="code-inline">feature/tyre-model</code>, <code class="code-inline">feature/simulator-dp</code>, <code class="code-inline">feature/benchmark-metrics</code>) và chỉ merge vào <code class="code-inline">main</code> sau khi vượt qua toàn bộ unit test.<br>
+  3. <strong>Bảo toàn dữ liệu ngoại tuyến:</strong> Tuyệt đối không đẩy các tệp dữ liệu thô quá lớn lên GitHub; toàn bộ dữ liệu mẫu chạy thử nghiệm được chuẩn hóa vào thư mục <code class="code-inline">data/demo/sample_laps.parquet</code> (&lt; 2 MB).<br>
+  4. <strong>Đồng bộ Overleaf:</strong> TV5 cấp quyền truy cập dự án Overleaf cho cả 4 thành viên; mỗi thành viên chỉ chỉnh sửa tệp <code class="code-inline">.tex</code> tương ứng với Section được phân công, bảo đảm không xảy ra xung đột mã nguồn LaTeX.
+</div>
+
+<hr>
+<div style="text-align: center; font-size: 11pt; color: #4b5563; margin-top: 20px;">
+  <em>Bảng kế hoạch triển khai và phân công nhiệm vụ – Nhóm Nghiên cứu Tối ưu hóa Chiến lược F1 – DS106 UIT 2026</em>
+</div>
+
+</body>
+</html>
