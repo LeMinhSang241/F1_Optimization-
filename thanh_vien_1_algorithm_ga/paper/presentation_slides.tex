@@ -3,6 +3,7 @@
 % ==============================================================================
 % CẤU HÌNH GÓI VÀ FONT TIẾNG VIỆT CHUẨN XÁC (TƯƠNG THÍCH OVERLEAF & LOCAL)
 % ==============================================================================
+\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[utf8]{vietnam}
@@ -10,8 +11,6 @@
 \else
   \usepackage{fontspec}
 \fi
-
-\usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{multirow}
@@ -157,11 +156,11 @@
 % ------------------------------------------------------------------------------
 % SLIDE 2: BÀI TOÁN THỰC TẾ F1: THẾ KIỀNG 3 CHÂN MÂU THUẪN
 % ------------------------------------------------------------------------------
-\begin{frame}{1. Bài Toán Thực Tế: Thế Kiềng 3 Chân Động Lực Học F1}
+\begin{frame}{Bài Toán Thực Tế: Thế Kiềng 3 Chân Động Lực Học F1}
   % Key Takeaway Banner
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=white, draw=f1crimson!50, line width=0.9pt, rounded corners=4pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
+      \node[fill=white, draw=f1crimson!50, line width=0.9pt, rounded corners=4pt, inner sep=4.5pt, text width=\linewidth, align=center] {
         \small \textcolor{f1crimson}{\textbf{Trọng tâm chiến thuật:}} \textbf{\textcolor{f1navy}{Dừng pit quyết định 80\% cơ hội chiến thắng}} -- Sai lệch \textbf{1--2 giây} là mất ngôi vô địch!
       };
     \end{tikzpicture}
@@ -212,7 +211,7 @@
   \vspace{0.15cm}
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=white, draw=f1navy!40, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt, text width=0.96\paperwidth, align=center] {
+      \node[fill=white, draw=f1navy!40, line width=0.8pt, rounded corners=3pt, inner sep=4.5pt, text width=\linewidth, align=center] {
         \footnotesize $\mathbf{\implies \text{BÀI TOÁN:}}$ \textbf{\textcolor{f1navy}{Dừng 1, 2 hay 3 lần? Vào pit vòng nào? Thay loại lốp gì để tổng thời gian $T_{\text{race}}$ ngắn nhất?}}
       };
     \end{tikzpicture}
@@ -222,7 +221,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 3: THUẬT NGỮ CỐT TỬ & MÔ HÌNH TOÁN HỌC
 % ------------------------------------------------------------------------------
-\begin{frame}{2. Thuật Ngữ Cốt Tử \& Mô Hình Tối Ưu Tổ Hợp}
+\begin{frame}{Thuật Ngữ Cốt Tử \& Mô Hình Tối Ưu Tổ Hợp}
   \begin{columns}[T]
     % Cột trái: Bảng mini 4 thuật ngữ
     \begin{column}{0.44\textwidth}
@@ -247,7 +246,9 @@
       \begin{alertblock}{\textbf{Hàm Mục Tiêu Tối Thiểu Hóa Thời Gian Cuộc Đua}}
         \scriptsize
         Mã hóa chiến lược: $\mathbf{S} = \big[ (c_1, l_1), \dots, (c_{K+1}, l_{K+1}) \big]$ với $K \in \{1, 2, 3\}$.
-        $$\mathbf{\min_{\mathbf{S}} \; T_{\text{race}}(\mathbf{S}) = \sum_{k=1}^{K+1} \sum_{a=1}^{l_k} t_{\text{lap}}(c_k, a, i) + K \cdot T_{\text{pit}}}$$
+        \[
+          \mathbf{\min_{\mathbf{S}} \; T_{\text{race}}(\mathbf{S}) = \sum_{k=1}^{K+1} \sum_{a=1}^{l_k} t_{\text{lap}}(c_k, a, i) + K \cdot T_{\text{pit}}}
+        \]
       \end{alertblock}
 
       \begin{block}{\textbf{Hệ Thống 3 Ràng Buộc Cứng (Hard Constraints)}}
@@ -265,12 +266,12 @@
 % ------------------------------------------------------------------------------
 % SLIDE 4: MÔ HÌNH LỐP PIRELLI (CƠ SỞ VẬT LÝ)
 % ------------------------------------------------------------------------------
-\begin{frame}{3. Mô Hình Động Lực Học Lốp Pirelli (CƠ SỞ VẬT LÝ)}
+\begin{frame}{Mô Hình Động Lực Học Lốp Pirelli (CƠ SỞ VẬT LÝ)}
   % Phương trình phân rã vật lý
   \vspace{-0.1cm}
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=white, draw=f1navy!50, line width=0.9pt, rounded corners=4pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
+      \node[fill=white, draw=f1navy!50, line width=0.9pt, rounded corners=4pt, inner sep=5pt, text width=\linewidth, align=center] {
         \small $\mathbf{\textcolor{f1navy}{t_{\text{lap}}(c, a, i)} = \underbrace{t_{\text{base}}(c)}_{\text{Thời gian cơ sở}} + \underbrace{d_1(c) \cdot a}_{\text{Mòn cơ học (tt)}} + \underbrace{\textcolor{f1crimson}{d_2(c) \cdot a^2}}_{\text{Thoái hóa nhiệt (pt)}} + \underbrace{\alpha_{\text{fuel}} (N - i)}_{\text{Hao tải xăng}} - \underbrace{\gamma_{\text{track}} \cdot i}_{\text{Bám cao su đường}}}$
       };
     \end{tikzpicture}
@@ -283,7 +284,7 @@
         \scriptsize
         \begin{itemize}
           \item Trễ đàn hồi nhớt cao su:
-          $$Q_{\text{gen}} = \pi f E'' \epsilon^2$$
+          \[ Q_{\text{gen}} = \pi f E'' \epsilon^2 \]
           \item Tích nhiệt phi tuyến phá vỡ liên kết polymer.
           \item Số hạng \textbf{$d_2 a^2$} mô phỏng chính xác vách mòn (Cliff).
         \end{itemize}
@@ -320,13 +321,13 @@
 % ------------------------------------------------------------------------------
 % SLIDE 5: DỮ LIỆU THỰC TẾ & BÓC TÁCH THAM SỐ WLS
 % ------------------------------------------------------------------------------
-\begin{frame}{4. Dữ Liệu Thực Tế Monza \& Hai Khám Phá Toán Học}
+\begin{frame}{Dữ Liệu Thực Tế Monza \& Hai Khám Phá Toán Học}
   \begin{columns}[T]
     % Cột trái: Bảng tham số Monza
     \begin{column}{0.48\textwidth}
       \begin{block}{\textbf{Bảng Tham Số Bóc Tách WLS (Monza GP)}}
         \scriptsize
-        \renewcommand{\arraystretch}{1.15}
+        \renewcommand{\arraystretch}{1.04}
         \begin{tabularx}{\linewidth}{lccc}
           \toprule
           \textbf{Tham số viễn trắc} & \badgeSoft & \badgeMed & \badgeHard \\
@@ -348,7 +349,9 @@
     \begin{column}{0.50\textwidth}
       \begin{alertblock}{\textbf{Khám Phá 1: Đạo Hàm Tốc Độ Mòn Biên $\nabla t_{\text{deg}}$}}
         \scriptsize
-        $$\mathbf{\nabla t_{\text{deg}}(c, a) = \frac{\partial \Delta t_{\text{deg}}}{\partial a} = d_1(c) + 2 d_2(c) a}$$
+        \[
+          \mathbf{\nabla t_{\text{deg}}(c, a) = \frac{\partial \Delta t_{\text{deg}}}{\partial a} = d_1(c) + 2 d_2(c) a}
+        \]
         \begin{itemize}
           \item $\nabla^2 t = 2d_2 > 0 \implies$ Tính lồi nghiêm ngặt, 1 cực tiểu duy nhất.
           \item Đóng vai trò \textbf{"la bàn" gradient vật lý} để sửa nghiệm di truyền.
@@ -357,7 +360,9 @@
 
       \begin{exampleblock}{\textbf{Khám Phá 2: Đột Phá Tổng Đóng Faulhaber $O(1)$}}
         \scriptsize
-        $$\mathbf{D_{\text{stint}}(c, L) = d_1 \frac{L(L+1)}{2} + d_2 \frac{L(L+1)(2L+1)}{6}}$$
+        \[
+          \mathbf{D_{\text{stint}}(c, L) = d_1 \frac{L(L+1)}{2} + d_2 \frac{L(L+1)(2L+1)}{6}}
+        \]
         \begin{itemize}
           \item Biến toàn bộ vòng lặp $O(L)$ thành phép tính giải tích \textbf{$O(1)$}.
           \item \textbf{Tăng tốc tính toán gấp 50 lần}, giúp DP giải 30.088 trạng thái trong $< 0.1\,\text{s}$.
@@ -370,7 +375,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 6: KIẾN TRÚC PHƯƠNG PHÁP LUẬN: CẶP BÀI TRÙNG
 % ------------------------------------------------------------------------------
-\begin{frame}{5. Kiến Trúc Phương Pháp Luận: "Cặp Bài Trùng" Đối Trọng}
+\begin{frame}{Kiến Trúc Phương Pháp Luận: "Cặp Bài Trùng" Đối Trọng}
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
       \begin{block}{\centering \textbf{TRỤ CỘT 1: Bellman DP (Ground Truth)}}
@@ -426,7 +431,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 7: TRỤ CỘT 1: THƯỚC ĐO CHUẨN TUYỆT ĐỐI BELLMAN DP
 % ------------------------------------------------------------------------------
-\begin{frame}{6. Trụ Cột 1: Thước Đo Chuẩn Tuyệt Đối Bellman DP}
+\begin{frame}{Trụ Cột 1: Thước Đo Chuẩn Tuyệt Đối Bellman DP}
   % 3 Stat Cards nổi bật
   \begin{columns}[T]
     \begin{column}{0.32\textwidth}
@@ -461,7 +466,7 @@
   % Golden Strategy Visual Banner
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1navy, text=white, rounded corners=4pt, inner sep=5pt, text width=0.96\paperwidth, align=center] {
+      \node[fill=f1navy, text=white, rounded corners=4pt, inner sep=5pt, text width=\linewidth, align=center] {
         \small \textbf{Chiến Lược Tối Ưu Toàn Cục (Monza 53 Vòng):}\\[3pt]
         \badgeMed \textbf{ [20 Vòng]} $\;\xrightarrow{\quad\text{\textcolor{white!80}{\textbf{Pit 1 (23.2s)}}}\quad}\;$
         \badgeSoft \textbf{ [14 Vòng]} $\;\xrightarrow{\quad\text{\textcolor{white!80}{\textbf{Pit 2 (23.2s)}}}\quad}\;$
@@ -511,7 +516,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 8: TRỤ CỘT 2: ĐỘT PHÁ THUẬT TOÁN DAGA-F1
 % ------------------------------------------------------------------------------
-\begin{frame}{7. Trụ Cột 2: Đột Phá Thuật Toán DAGA-F1}
+\begin{frame}{Trụ Cột 2: Đột Phá Thuật Toán DAGA-F1}
   \begin{columns}[T]
     % Ý tưởng 1
     \begin{column}{0.32\textwidth}
@@ -584,7 +589,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 9: TÍNH NĂNG TÁC CHIẾN: PHẢN XẠ SAFETY CAR TRONG 5.2 MS
 % ------------------------------------------------------------------------------
-\begin{frame}{8. Tính Năng Tác Chiến: Phản Xạ Safety Car Trong 5.2 ms}
+\begin{frame}{Tính Năng Tác Chiến: Phản Xạ Safety Car Trong 5.2 ms}
   % SƠ ĐỒ TIKZ TIMELINE SAFETY CAR
   \vspace{-0.15cm}
   \begin{center}
@@ -656,14 +661,14 @@
 % ------------------------------------------------------------------------------
 % SLIDE 10: ĐỐI CHUẨN THỰC NGHIỆM KHOA HỌC (30 SEEDS ĐỘC LẬP)
 % ------------------------------------------------------------------------------
-\begin{frame}{9. Đối Chuẩn Thực Nghiệm Khoa Học (30 Seeds Độc Lập)}
+\begin{frame}{Đối Chuẩn Thực Nghiệm Khoa Học (30 Seeds Độc Lập)}
   \vspace{-0.25cm}
   \begin{columns}[T]
     % Bảng số liệu đối chuẩn
     \begin{column}{0.62\textwidth}
       \begin{block}{\textbf{Bảng Đối Chuẩn Bóc Tách Thành Phần (Ablation Study)}}
         \tiny
-        \renewcommand{\arraystretch}{1.15}
+        \renewcommand{\arraystretch}{1.04}
         \begin{tabularx}{\linewidth}{lccccc}
           \toprule
           \textbf{Thuật toán} & \textbf{Best (s)} & \textbf{Mean (s)} & \textbf{$\sigma$} & \textbf{Khả thi} & \textbf{Gap DP} \\
@@ -705,13 +710,13 @@
   \begin{columns}[T]
     \begin{column}{0.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth, height=3.35cm, keepaspectratio]{figures/seed_distribution_boxplot.png}
+      \includegraphics[width=\linewidth, height=2.25cm, keepaspectratio]{figures/seed_distribution_boxplot.png}
       \captionof{figure}{\tiny Phân bố 30 seeds: DAGA-F1 co cụm tuyệt đối tại nghiệm tối ưu toàn cục}
     \end{column}
 
     \begin{column}{0.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth, height=3.35cm, keepaspectratio]{figures/convergence_comparison.png}
+      \includegraphics[width=\linewidth, height=2.25cm, keepaspectratio]{figures/convergence_comparison.png}
       \captionof{figure}{\tiny Đường cong hội tụ 50 thế hệ: DAGA-F1 bứt phá khỏi hố kẹt 1-stop}
     \end{column}
   \end{columns}
@@ -720,7 +725,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 11: KIỂM ĐỊNH ĐỘ TIN CẬY: 48/48 TESTS & DASHBOARD
 % ------------------------------------------------------------------------------
-\begin{frame}{10. Kiểm Định Độ Tin Cậy: 48/48 Tests \& Streamlit Dashboard}
+\begin{frame}{Kiểm Định Độ Tin Cậy: 48/48 Tests \& Streamlit Dashboard}
   \begin{columns}[T]
     % Cột trái: 48/48 Tests
     \begin{column}{0.48\textwidth}
@@ -765,7 +770,7 @@
 % ------------------------------------------------------------------------------
 % SLIDE 12: TỔNG KẾT ĐÓNG GÓP & PHIÊN THẢO LUẬN Q&A
 % ------------------------------------------------------------------------------
-\begin{frame}{11. Tổng Kết Đóng Góp \& Phiên Thảo Luận Q\&A}
+\begin{frame}{Tổng Kết Đóng Góp \& Phiên Thảo Luận Q\&A}
   % 3 Stat / Value Cards
   \begin{columns}[T]
     \begin{column}{0.32\textwidth}
@@ -803,7 +808,7 @@
   % Q&A Callout Box
   \begin{center}
     \begin{tikzpicture}
-      \node[fill=f1navy, text=white, rounded corners=6pt, inner sep=10pt, text width=0.92\paperwidth, align=center, drop shadow] {
+      \node[fill=f1navy, text=white, rounded corners=6pt, inner sep=10pt, text width=0.94\linewidth, align=center, drop shadow] {
         {\Large \bfseries XIN TRÂN TRỌNG CẢM ƠN THẦY VÀ HỘI ĐỒNG!}\\[5pt]
         {\small \textbf{Kính mời TS. Nguyễn Tất Bảo Thiện đặt câu hỏi và đóng góp ý kiến}}\\[4pt]
         {\tiny \color{white!70} Nhóm Nghiên Cứu Đề Án DS106 -- Khoa Khoa học Dữ liệu, Trường ĐH Công nghệ Thông tin (UIT - ĐHQG-HCM)}
