@@ -1,3 +1,6 @@
 .venv/
 __pycache__/
 *.pyc
+
+context_init_tv1.md
+*context_init*
