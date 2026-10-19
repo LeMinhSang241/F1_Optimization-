@@ -8,7 +8,7 @@
 4. **Cơ sở Thiết kế và Các Cơ chế của Giải thuật AGA**
 5. **Cơ chế Tái Tối Ưu Thời Gian Thực Khi Có Xe An Toàn (Warm-Start Pivot)**
 6. **Kết quả Thực nghiệm & Đối chuẩn với Bellman DP (Thành viên 4)**
-7. **Q&A với Thầy: Bản chất Tối ưu hóa**
+7. **Q&A với Thầy**
 
 ---
 
@@ -241,7 +241,7 @@ Toàn bộ kết quả dưới đây được ghi nhận từ hệ thống mã n
 
 ---
 
-## 7. Q&A VỚI THẦY: BẢN CHẤT TỐI ƯU HÓA
+## 7. Q&A VỚI THẦY
 
 ### Câu hỏi 1: "Tại sao không dùng Gradient Descent (đạo hàm giảm) giải cho nhanh mà lại dùng GA?"
 > **Trả lời:** "Thưa Thầy, hàm mục tiêu thời gian đua trong F1 là hàm **phi tuyến nguyên hỗn hợp và không liên tục**.  
