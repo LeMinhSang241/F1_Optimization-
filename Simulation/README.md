@@ -1,0 +1,1 @@
+Đây là bản v0 - Chưa hoàn tất - Chỉ cần chạy main.py
