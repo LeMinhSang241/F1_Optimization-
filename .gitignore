@@ -4,3 +4,8 @@ __pycache__/
 
 context_init_tv1.md
 *context_init*
+
+.agents/
+.gemini/
+GEMINI.md
+*gemini*
