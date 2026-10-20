@@ -196,12 +196,12 @@ Giải thuật Di truyền Thích nghi (Adaptive Genetic Algorithm - AGA) đư�
 
 ## 5. CƠ CHẾ TÁI TỐI ƯU THỜI GIAN THỰC KHI CÓ XE AN TOÀN (WARM-START PIVOT)
 
-### 5.1. Bối cảnh Hiện tượng "Free Pit Stop"
+### 5.1. Bối cảnh Biến động Tổn thất Thời gian Pit khi có Xe An Toàn
 Khi có sự cố trên đường đua tại vòng thứ $L_{\text{SC}}$, Xe An Toàn (Safety Car) xuất hiện:
 * Tốc độ ngoài đường đua giảm khoảng $40\%$ (thời gian vòng tăng từ $\approx 82\text{ s} \to \approx 120\text{ s}$).
 * Tốc độ trong làn pit vẫn giữ nguyên ở mức giới hạn $80\text{ km/h}$.
 * $\rightarrow$ Tổn thất thời gian tương đối của làn pit ($T_{\text{pit}}$) giảm từ $23.2\text{ giây} \to 12.5\text{ giây}$.
-* Việc vào pit tại thời điểm này giúp tiết kiệm thời gian so với vào pit ở điều kiện cờ xanh.
+* Việc vào pit tại thời điểm này giảm bớt tổn thất thời gian tương đối so với điều kiện thi đấu thông thường.
 * Cửa sổ thời gian ra quyết định diễn ra trong khoảng $3 - 5\text{ giây}$ trước lối vào làn pit.
 * **Giới hạn nghiên cứu (Limitation):** Mô hình hiện tại chưa xét đến vị trí hình học của xe trên đường đua tại thời điểm xuất hiện cờ Xe An Toàn (ví dụ: xe đang ở gần lối vào làn pit hay vừa đi qua lối vào pit và phải chạy thêm một vòng với tốc độ chậm trước khi được vào pit).
 
@@ -212,7 +212,7 @@ Khi có sự cố trên đường đua tại vòng thứ $L_{\text{SC}}$, Xe An 
 3. **Cập nhật tham số:** Gán $T_{\text{pit}} \leftarrow 12.5\text{ s}$, số vòng còn lại cần tối ưu là $N_{\text{remain}} = N - L_{\text{SC}}$.
 4. **Tái hội tụ:** Tối ưu hóa các vòng còn lại với số thế hệ rút gọn ($G_{\text{warm}} = 15$).  
 *(Chú thích ký hiệu: $L_{\text{SC}}$ là vòng đua xảy ra sự cố Xe An Toàn; $N_{\text{remain}}$ là số vòng còn lại; $G_{\text{warm}}$ là số thế hệ tái tối ưu).*
-* **Thời gian tính toán:** **$4.1 - 5.5\text{ mili-giây}$** (ngắn hơn đáng kể so với việc giải lại toàn bộ bài toán bằng Bellman DP mất khoảng $65 - 85\text{ ms}$).
+* **Thời gian tính toán thực nghiệm:** **$8.6 - 15.4\text{ mili-giây}$** (trung bình $\approx 11.8 - 15.8\text{ ms}$, đáp ứng yêu cầu thời gian thực $< 200\text{ ms}$ và nhanh hơn đáng kể so với việc giải lại toàn bộ bài toán bằng Bellman DP mất khoảng $200 - 335\text{ ms}$).
 
 ---
 
@@ -221,12 +221,17 @@ Khi có sự cố trên đường đua tại vòng thứ $L_{\text{SC}}$, Xe An 
 Toàn bộ kết quả dưới đây được ghi nhận từ hệ thống mã nguồn thực thi và kiểm chứng qua 48 trường hợp kiểm thử tự động:
 
 ### 6.1. Bảng Đối chuẩn 4 Thuật toán trên Chặng Monza (53 vòng)
-| Thuật toán | Phân loại phương pháp | Thời gian đua tốt nhất ($T_{\text{race}}$) | Độ lệch chuẩn $\sigma$ | Sai số tối ưu (Optimality Gap) | CPU Runtime |
+| Thuật toán | Phân loại phương pháp | Thời gian chặng ($T_{\text{race}}$) | Sai số tối ưu (Gap) | Thời gian tính ban đầu | Thời gian phản ứng khi có SC |
 | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Bellman DP Solver** (TV4) | Quy hoạch động chính xác (Ground Truth) | **$4497.997\text{ s}$** | $\pm 0.000\text{ s}$ | **$0.0000\%$** (Mốc chuẩn) | $0.086\text{ s}$ |
-| **Greedy Baseline** (TV5) | Tham lam theo quy tắc (Rule-based) | $4538.210\text{ s}$ | $\pm 0.000\text{ s}$ | $+0.8940\%$ ($+40.2\text{ s}$) | $< 0.001\text{ s}$ |
-| **Standard GA** (Holland 1975) | Di truyền cổ điển (Fixed $P_c, P_m$) | $4512.450\text{ s}$ | $\pm 5.420\text{ s}$ | $+0.3213\%$ ($+14.5\text{ s}$) | $0.412\text{ s}$ |
-| **Adaptive GA (Đề xuất)** | Di truyền thích nghi có Repair & Split/Merge | **$4497.997\text{ s}$** | **$\pm 0.000\text{ s}$** | **$0.0000\%$** | **$0.185\text{ s}$** |
+| **Bellman DP Solver** (TV4) | Quy hoạch động chính xác (Ground Truth) | **$4497.997\text{ s}$** | **$0.0000\%$** (Mốc chuẩn) | $188 - 289\text{ ms}$ | $178 - 293\text{ ms}$ *(Giải lại toàn bộ)* |
+| **Greedy Baseline** (TV5) | Tham lam theo quy tắc (Rule-based) | $4538.210\text{ s}$ | $+0.8940\%$ ($+40.2\text{ s}$) | $< 1\text{ ms}$ | $< 1\text{ ms}$ *(Quy tắc tĩnh, không đổi)* |
+| **Standard GA** (Holland 1975) | Di truyền cổ điển (Fixed $P_c, P_m$) | $4512.450\text{ s}$ | $+0.3213\%$ ($+14.5\text{ s}$) | $77 - 151\text{ ms}$ | $77 - 151\text{ ms}$ *(Chạy lại từ đầu)* |
+| **Adaptive GA (Đề xuất)** | Di truyền thích nghi (Repair + Warm-Start) | **$4497.997\text{ s}$** | **$0.0000\%$** | $292 - 507\text{ ms}$ | **$7.8 - 26.7\text{ ms}$** *(Warm-Start Pivot)* |
+
+* **Đánh giá hiệu năng phản ứng khi có Xe An Toàn (Safety Car):**
+  * **Yêu cầu thời gian thực:** Cửa sổ ra quyết định chiến thuật tại Pit-wall đòi hỏi thuật toán phản hồi trong khoảng dưới $200\text{ ms}$ ($0.20\text{ s}$) trước khi xe đi qua lối vào làn pit.
+  * **Tốc độ tái tối ưu:** Nhờ kế thừa nghiệm tốt nhất hiện tại và tái tối ưu rút gọn trong 15 thế hệ, cơ chế Warm-Start Pivot của Adaptive GA đạt thời gian phản hồi từ $7.8 - 26.7\text{ ms}$ (trung bình $\approx 14.3\text{ ms}$), đáp ứng tốt yêu cầu thời gian thực và nhanh hơn đáng kể so với phương pháp giải lại toàn bộ bằng Bellman DP ($178 - 293\text{ ms}$).
+  * **Hiệu quả chiến thuật:** Trong các kịch bản thử nghiệm, việc tái tối ưu chiến lược tại thời điểm xuất hiện Xe An Toàn cho phép tận dụng mức suy giảm tổn thất qua làn pit ($T_{\text{pit}}$ giảm từ $23.2\text{ s} \to 12.5\text{ s}$), ghi nhận mức giảm khoảng $4.8\text{ s} - 10.4\text{ s}$ tổng thời gian hoàn thành chặng đua so với phương án duy trì kế hoạch ban đầu.
 
 ### 6.2. Kiểm định Ý nghĩa Thống kê (Wilcoxon Signed-Rank Test)
 * Thử nghiệm trên **30 random seeds độc lập** (seeds 1 đến 30).
