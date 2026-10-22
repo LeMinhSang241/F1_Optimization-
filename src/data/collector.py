@@ -5,17 +5,17 @@ import pandas as pd
 
 
 YEAR = 2023
-EVENT = "Italian Grand Prix"
+EVENT = "British Grand Prix"
 SESSION = "Race"
 CACHE_PATH = Path("f1_cache")
-OUTPUT_PATH = Path("raw_laps.parquet")
+OUTPUT_PATH = Path("silverstone_2023") / "raw_laps.parquet"
 
 
 def collect_laps(
     output_path: Path = OUTPUT_PATH,
     cache_path: Path = CACHE_PATH,
 ) -> pd.DataFrame:
-    """Extract lap data and pit durations for the 2023 Italian Grand Prix."""
+    """Extract lap data and pit durations for the 2023 British Grand Prix."""
     fastf1.Cache.enable_cache(str(cache_path))
 
     session = fastf1.get_session(YEAR, EVENT, SESSION)

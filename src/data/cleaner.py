@@ -3,12 +3,12 @@ from pathlib import Path
 import pandas as pd
 
 
-INPUT_PATH = Path("raw_laps.parquet")
-OUTPUT_PATH = Path("clean_laps.parquet")
+INPUT_PATH = Path("silverstone_2023") / "raw_laps.parquet"
+OUTPUT_PATH = Path("silverstone_2023") / "clean_laps.parquet"
 
-# Fuel-effect correction parameters for Monza 2023
+# Fuel-effect correction parameters for Silverstone 2023
 ALPHA_FUEL = 0.058  # seconds per lap
-N_TOTAL = 53         # Total race laps
+N_TOTAL = 52         # Total race laps
 
 
 def clean_laps(
