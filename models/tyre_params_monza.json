@@ -12,6 +12,7 @@
       "d1": 0.122925,
       "d2": 0.0048471,
       "l_max": 22,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9959,
         "r2_adj": 0.9958,
@@ -29,6 +30,7 @@
       "d1": 0.064163,
       "d2": 0.0021567,
       "l_max": 35,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9726,
         "r2_adj": 0.9725,
@@ -46,6 +48,7 @@
       "d1": 0.041434,
       "d2": 0.0009683,
       "l_max": 48,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9498,
         "r2_adj": 0.9496,

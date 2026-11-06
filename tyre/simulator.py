@@ -152,62 +152,113 @@ class RaceSimulator:
         pop_size: int = 50,
         seed: int = 42
     ) -> Dict[str, Any]:
+        """Tối ưu hóa chiến lược bằng Giải thuật Di truyền Thích nghi (AGA).
+        Hỗ trợ tìm kiếm toàn diện trên các chiến lược 1-stop và 2-stop thỏa quy định FIA.
+        """
+        # Thử kết nối với module AGA hoàn chỉnh của TV1 nếu khả dụng
+        try:
+            from src.ga_strategy.optimizer import AdaptiveGAOptimizer
+            from src.simulator.race_sim import F1RaceSimulator
+            from src.tyre_model.pirelli_physics import PirelliPhysicsTyreModel
+
+            model = PirelliPhysicsTyreModel(
+                track="Monza" if self.total_laps == 53 else "Silverstone"
+            )
+            sim = F1RaceSimulator(
+                total_laps=self.total_laps,
+                pit_loss=self.t_pit,
+                tyre_model=model
+            )
+            opt = AdaptiveGAOptimizer(simulator=sim, pop_size=pop_size, generations=generations)
+            best_strat, best_t, details = opt.optimize(seed=seed)
+            comps = [c for c, _ in best_strat]
+            lens = [l for _, l in best_strat]
+            pit_laps = list(np.cumsum(lens)[:-1])
+            return {
+                "stops": len(best_strat) - 1,
+                "compounds": comps,
+                "stint_lengths": lens,
+                "pit_laps": pit_laps,
+                "total_time": best_t
+            }
+        except Exception:
+            pass
+
+        # Bộ giải AGA độc lập hỗ trợ đa chiến thuật (1-stop & 2-stop)
         rng = np.random.default_rng(seed)
-        compounds_pool = ["Medium", "Soft", "Medium"]
-        
-        population: List[List[int]] = []
-        for _ in range(pop_size):
-            cuts = sorted(rng.choice(np.arange(10, self.total_laps - 10), size=2, replace=False))
-            l1 = int(cuts[0])
-            l2 = int(cuts[1] - cuts[0])
-            l3 = int(self.total_laps - cuts[1])
-            repaired = fix_total_laps([l1, l2, l3], compounds_pool, self.total_laps, self.circuit_params)
-            population.append(repaired)
+        candidate_pools = [
+            ["Medium", "Hard"],
+            ["Soft", "Hard"],
+            ["Hard", "Medium"],
+            ["Medium", "Soft", "Medium"],
+            ["Soft", "Medium", "Hard"],
+            ["Medium", "Hard", "Soft"]
+        ]
+
+        overall_best_time = float("inf")
+        overall_best_res = {}
+
+        for compounds_pool in candidate_pools:
+            k_stints = len(compounds_pool)
+            population: List[List[int]] = []
             
-        best_lengths = population[0]
-        best_time = self.evaluate_strategy(compounds_pool, best_lengths)
-        
-        for _ in range(generations):
-            fitness = [1.0 / self.evaluate_strategy(compounds_pool, ind) for ind in population]
-            fit_probs = np.array(fitness) / sum(fitness)
-            
-            new_pop: List[List[int]] = []
-            elite_idx = int(np.argmax(fitness))
-            new_pop.append(list(population[elite_idx]))
-            
-            while len(new_pop) < pop_size:
-                p1_idx, p2_idx = rng.choice(pop_size, size=2, p=fit_probs)
-                parent1, parent2 = population[p1_idx], population[p2_idx]
-                
-                alpha = rng.uniform(0.2, 0.8)
-                child = [
-                    int(round(alpha * parent1[0] + (1 - alpha) * parent2[0])),
-                    int(round(alpha * parent1[1] + (1 - alpha) * parent2[1])),
-                    int(round(alpha * parent1[2] + (1 - alpha) * parent2[2]))
-                ]
-                
-                if rng.random() < 0.2:
-                    m_idx = rng.integers(0, 3)
-                    child[m_idx] += int(rng.choice([-2, -1, 1, 2]))
-                    
-                child = [max(4, val) for val in child]
-                repaired = fix_total_laps(child, compounds_pool, self.total_laps, self.circuit_params)
-                new_pop.append(repaired)
-                
-            population = new_pop
-            for ind in population:
-                val = self.evaluate_strategy(compounds_pool, ind)
-                if val < best_time:
-                    best_time = val
-                    best_lengths = list(ind)
-                    
-        return {
-            "stops": 2,
-            "compounds": compounds_pool,
-            "stint_lengths": best_lengths,
-            "pit_laps": [best_lengths[0], best_lengths[0] + best_lengths[1]],
-            "total_time": best_time
-        }
+            for _ in range(pop_size):
+                if k_stints == 2:
+                    p1 = int(rng.integers(10, self.total_laps - 10))
+                    lens = [p1, self.total_laps - p1]
+                else:
+                    cuts = sorted(rng.choice(np.arange(10, self.total_laps - 10), size=2, replace=False))
+                    lens = [int(cuts[0]), int(cuts[1] - cuts[0]), int(self.total_laps - cuts[1])]
+                repaired = fix_total_laps(lens, compounds_pool, self.total_laps, self.circuit_params)
+                population.append(repaired)
+
+            pool_best_lengths = population[0]
+            pool_best_time = self.evaluate_strategy(compounds_pool, pool_best_lengths)
+
+            for _ in range(max(20, generations // len(candidate_pools))):
+                fitness = [1.0 / self.evaluate_strategy(compounds_pool, ind) for ind in population]
+                fit_probs = np.array(fitness) / sum(fitness)
+
+                new_pop: List[List[int]] = []
+                elite_idx = int(np.argmax(fitness))
+                new_pop.append(list(population[elite_idx]))
+
+                while len(new_pop) < pop_size:
+                    p1_idx, p2_idx = rng.choice(pop_size, size=2, p=fit_probs)
+                    parent1, parent2 = population[p1_idx], population[p2_idx]
+
+                    alpha = rng.uniform(0.2, 0.8)
+                    child = [
+                        int(round(alpha * parent1[j] + (1 - alpha) * parent2[j]))
+                        for j in range(k_stints)
+                    ]
+
+                    if rng.random() < 0.2:
+                        m_idx = rng.integers(0, k_stints)
+                        child[m_idx] += int(rng.choice([-2, -1, 1, 2]))
+
+                    child = [max(4, val) for val in child]
+                    repaired = fix_total_laps(child, compounds_pool, self.total_laps, self.circuit_params)
+                    new_pop.append(repaired)
+
+                population = new_pop
+                for ind in population:
+                    val = self.evaluate_strategy(compounds_pool, ind)
+                    if val < pool_best_time:
+                        pool_best_time = val
+                        pool_best_lengths = list(ind)
+
+            if pool_best_time < overall_best_time:
+                overall_best_time = pool_best_time
+                overall_best_res = {
+                    "stops": k_stints - 1,
+                    "compounds": compounds_pool,
+                    "stint_lengths": pool_best_lengths,
+                    "pit_laps": list(np.cumsum(pool_best_lengths)[:-1]),
+                    "total_time": pool_best_time
+                }
+
+        return overall_best_res
 
     def simulate_monte_carlo_sc(
         self,

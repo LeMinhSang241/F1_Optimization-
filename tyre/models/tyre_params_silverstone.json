@@ -2,9 +2,9 @@
   "circuit": "silverstone",
   "circuit_name": "Silverstone Circuit",
   "total_laps": 52,
-  "alpha_fuel": 0.06,
-  "gamma_track": 0.024,
-  "t_pit": 25.0,
+  "alpha_fuel": 0.062,
+  "gamma_track": 0.025,
+  "t_pit": 21.5,
   "compounds": {
     "Soft": {
       "code": "C3",
@@ -12,6 +12,7 @@
       "d1": 0.142398,
       "d2": 0.0065553,
       "l_max": 18,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9976,
         "r2_adj": 0.9976,
@@ -29,6 +30,7 @@
       "d1": 0.087278,
       "d2": 0.0026697,
       "l_max": 30,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9856,
         "r2_adj": 0.9855,
@@ -46,6 +48,7 @@
       "d1": 0.047398,
       "d2": 0.0014823,
       "l_max": 42,
+      "data_source": "synthetic",
       "metrics": {
         "r2": 0.9625,
         "r2_adj": 0.9623,

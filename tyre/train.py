@@ -1,18 +1,29 @@
 import os
 import sys
+from pathlib import Path
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Thêm root workspace vào sys.path
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 import json
 import argparse
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 import numpy as np
+import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from tyre.fitter import WLSFitter, isolate_response_variable
 from tyre.metrics import calculate_metrics
+
+# Nạp cấu hình chuẩn hóa từ Single Source of Truth: data/race_configs.py
+try:
+    from data.race_configs import RACE_CONFIGS
+except ImportError:
+    RACE_CONFIGS = None
 
 CIRCUITS_CONFIG: Dict[str, Dict[str, Any]] = {
     "monza": {
@@ -30,9 +41,9 @@ CIRCUITS_CONFIG: Dict[str, Dict[str, Any]] = {
     "silverstone": {
         "name": "Silverstone Circuit",
         "total_laps": 52,
-        "alpha_fuel": 0.060,
-        "gamma_track": 0.024,
-        "t_pit": 25.0,
+        "alpha_fuel": 0.062,      # Chuẩn hóa đồng bộ 0.062 (khớp race_configs)
+        "gamma_track": 0.025,     # Chuẩn hóa đồng bộ 0.025 (khớp race_configs)
+        "t_pit": 21.5,            # Chuẩn hóa đồng bộ 21.5s (khớp race_configs & slide)
         "compounds": {
             "Soft": {"code": "C3", "t_base": 89.20, "d1": 0.145, "d2": 0.0065, "l_max": 18},
             "Medium": {"code": "C2", "t_base": 89.85, "d1": 0.085, "d2": 0.0028, "l_max": 30},
@@ -41,7 +52,44 @@ CIRCUITS_CONFIG: Dict[str, Dict[str, Any]] = {
     }
 }
 
+
+def load_real_circuit_telemetry(circuit_key: str) -> Optional[Dict[str, Dict[str, np.ndarray]]]:
+    """Đọc dữ liệu sạch từ FastF1 (clean_laps.parquet) do TV2 xử lý."""
+    parquet_path = ROOT_DIR / "src" / "data" / f"{circuit_key}_2023" / "clean_laps.parquet"
+    if not parquet_path.exists():
+        return None
+
+    try:
+        df = pd.read_parquet(parquet_path)
+    except Exception:
+        return None
+
+    comp_col = "Compound" if "Compound" in df.columns else None
+    if not comp_col:
+        return None
+
+    result: Dict[str, Dict[str, np.ndarray]] = {}
+    for comp_name in ["Soft", "Medium", "Hard"]:
+        sub_df = df.loc[df[comp_col].astype(str).str.upper() == comp_name.upper()].copy()
+        if len(sub_df) >= 15:
+            # Có đủ số lượng mẫu thực tế để fit
+            age_arr = pd.to_numeric(sub_df.get("TyreLife", sub_df["LapNumber"]), errors="coerce").fillna(1.0).to_numpy(dtype=np.float64)
+            lap_arr = pd.to_numeric(sub_df["LapNumber"], errors="coerce").fillna(1).to_numpy(dtype=np.int64)
+            time_arr = pd.to_numeric(sub_df["LapTimeSeconds"], errors="coerce").to_numpy(dtype=np.float64)
+            
+            valid_mask = ~np.isnan(age_arr) & ~np.isnan(lap_arr) & ~np.isnan(time_arr) & (age_arr > 0)
+            result[comp_name] = {
+                "age": age_arr[valid_mask],
+                "lap": lap_arr[valid_mask],
+                "lap_time": time_arr[valid_mask],
+                "is_clean": np.ones(np.sum(valid_mask), dtype=bool),
+                "source": "fastf1_real"
+            }
+    return result if result else None
+
+
 def generate_circuit_telemetry(circuit_key: str, seed: int = 42) -> Dict[str, Dict[str, np.ndarray]]:
+    """Tạo dữ liệu telemetry mô phỏng bán thực nghiệm bổ trợ."""
     rng = np.random.default_rng(seed)
     cfg = CIRCUITS_CONFIG[circuit_key]
     n_total = cfg["total_laps"]
@@ -94,18 +142,45 @@ def generate_circuit_telemetry(circuit_key: str, seed: int = 42) -> Dict[str, Di
             "age": np.array(ages_list, dtype=np.float64),
             "lap": np.array(laps_list, dtype=np.int64),
             "lap_time": np.array(times_list, dtype=np.float64),
-            "is_clean": np.array(is_clean_list, dtype=bool)
+            "is_clean": np.array(is_clean_list, dtype=bool),
+            "source": "synthetic"
         }
         
     return dataset
 
-def run_training_pipeline(circuit_key: str, weighting: str = "inverse_age_variance", seed: int = 42) -> Dict[str, Any]:
+
+def get_combined_telemetry(circuit_key: str, seed: int = 42, prefer_real: bool = True) -> Dict[str, Dict[str, np.ndarray]]:
+    """Kết hợp dữ liệu FastF1 thực tế của TV2 với dữ liệu phụ trợ của TV3."""
+    synth_data = generate_circuit_telemetry(circuit_key, seed=seed)
+    if not prefer_real:
+        return synth_data
+
+    real_data = load_real_circuit_telemetry(circuit_key)
+    if not real_data:
+        return synth_data
+
+    combined: Dict[str, Dict[str, np.ndarray]] = {}
+    for c_name in CIRCUITS_CONFIG[circuit_key]["compounds"].keys():
+        if c_name in real_data and len(real_data[c_name]["age"]) >= 20:
+            combined[c_name] = real_data[c_name]
+        else:
+            # Fallback sang synthetic nếu hợp chất đó ít dữ liệu thực (ví dụ Soft tại Monza)
+            combined[c_name] = synth_data[c_name]
+
+    return combined
+
+
+def run_training_pipeline(
+    circuit_key: str,
+    weighting: str = "inverse_age_variance",
+    seed: int = 42,
+    prefer_real: bool = True
+) -> Dict[str, Any]:
     cfg = CIRCUITS_CONFIG[circuit_key]
-    data = generate_circuit_telemetry(circuit_key, seed=seed)
+    data = get_combined_telemetry(circuit_key, seed=seed, prefer_real=prefer_real)
     fitter = WLSFitter(tikhonov_lambda=1e-9, delta_huber=1.2)
     
     use_age_weight = (weighting == "inverse_age_variance")
-    
     fitted_params: Dict[str, Any] = {}
     validation_plot_data: Dict[str, Any] = {}
     
@@ -129,12 +204,14 @@ def run_training_pipeline(circuit_key: str, weighting: str = "inverse_age_varian
             use_huber=True
         )
         
+        data_source = sub.get("source", "synthetic")
         fitted_params[c_name] = {
             "code": cp["code"],
             "t_base": round(res["t_base"], 4),
             "d1": round(res["d1"], 6),
             "d2": round(res["d2"], 7),
             "l_max": cp["l_max"],
+            "data_source": data_source,
             "metrics": {
                 "r2": round(res["metrics"]["r2"], 4),
                 "r2_adj": round(res["metrics"]["r2_adj"], 4),
@@ -151,7 +228,8 @@ def run_training_pipeline(circuit_key: str, weighting: str = "inverse_age_varian
             "ages": ages_clean,
             "y_iso": y_iso,
             "pred_curve": res["beta"][0] + res["beta"][1] * np.arange(1, cp["l_max"] + 5) + res["beta"][2] * (np.arange(1, cp["l_max"] + 5) ** 2),
-            "curve_ages": np.arange(1, cp["l_max"] + 5)
+            "curve_ages": np.arange(1, cp["l_max"] + 5),
+            "data_source": data_source
         }
 
     for d in ["tyre/models", "models", "tyre/figures", "figures"]:
@@ -209,7 +287,8 @@ def run_training_pipeline(circuit_key: str, weighting: str = "inverse_age_varian
     
     for c_name, pdata in validation_plot_data.items():
         color = c_colors.get(c_name, "#ffffff")
-        ax.scatter(pdata["ages"], pdata["y_iso"], color=color, alpha=0.25, s=16, label=f"{c_name} Samples")
+        src_label = f" ({pdata['data_source']})" if pdata.get('data_source') == 'fastf1_real' else ""
+        ax.scatter(pdata["ages"], pdata["y_iso"], color=color, alpha=0.25, s=16, label=f"{c_name} Samples{src_label}")
         ax.plot(pdata["curve_ages"], pdata["pred_curve"], color=color, linewidth=2.5, label=f"{c_name} WLS Fit")
         
     ax.set_title(f"Pirelli Degradation Fit Validation - {cfg['name']}", color="#ffffff", fontsize=14, fontweight="bold", pad=12)
@@ -229,18 +308,23 @@ def run_training_pipeline(circuit_key: str, weighting: str = "inverse_age_varian
     
     return model_payload
 
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--circuit", type=str, default="monza", choices=["monza", "silverstone"])
     parser.add_argument("--weighting", type=str, default="inverse_age_variance")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--no-real-data", action="store_true", help="Bo qua du lieu that FastF1 va chi dung synthetic")
     args = parser.parse_args()
     
-    res = run_training_pipeline(args.circuit, args.weighting, args.seed)
+    prefer_real = not args.no_real_data
+    res = run_training_pipeline(args.circuit, args.weighting, args.seed, prefer_real=prefer_real)
     print(f"Successfully trained tyre model for {args.circuit.upper()}")
     for c_name, cp in res["compounds"].items():
         m = cp["metrics"]
-        print(f"[{c_name}] t_base={cp['t_base']:.3f} d1={cp['d1']:.5f} d2={cp['d2']:.6f} | R2={m['r2']:.4f} RMSE={m['rmse']:.4f}s MAE={m['mae']:.4f}s")
+        src = cp.get("data_source", "unknown")
+        print(f"[{c_name}] (Nguon: {src}) t_base={cp['t_base']:.3f} d1={cp['d1']:.5f} d2={cp['d2']:.6f} | R2={m['r2']:.4f} RMSE={m['rmse']:.4f}s MAE={m['mae']:.4f}s")
+
 
 if __name__ == "__main__":
     main()

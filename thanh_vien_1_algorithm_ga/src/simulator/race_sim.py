@@ -20,11 +20,15 @@ class F1RaceSimulator:
         total_laps: int = 53,
         pit_loss: float = 23.2,
         tyre_model: Optional[Any] = None,
-        traffic_penalty: float = 0.0
+        traffic_penalty: float = 0.0,
+        cliff_penalty_linear: float = 50.0,
+        cliff_penalty_quadratic: float = 5.0
     ):
         self.total_laps = total_laps
         self.pit_loss = pit_loss
         self.traffic_penalty = traffic_penalty
+        self.cliff_penalty_linear = cliff_penalty_linear
+        self.cliff_penalty_quadratic = cliff_penalty_quadratic
         self.tyre_model = tyre_model or PirelliPhysicsTyreModel()
 
     def evaluate_strategy(
@@ -104,8 +108,8 @@ class F1RaceSimulator:
             limit = safe_limits.get(compound, 40)
             if length > limit:
                 over = length - limit
-                # Phạt tuyến tính kết hợp phi tuyến bậc hai mô tả vách đá tụt độ bám
-                penalty += (over * 50.0 + (over ** 2) * 5.0)
+                # Phạt tuyến tính kết hợp phi tuyến (mặc định tuyến tính 50.0 s/vòng theo đúng tài liệu lý thuyết)
+                penalty += (over * self.cliff_penalty_linear + (over ** 2) * self.cliff_penalty_quadratic)
 
         details = {
             'pure_race_time': total_time,
